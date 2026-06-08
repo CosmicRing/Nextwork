@@ -30,7 +30,8 @@ a {
 
 .topbar,
 .dashboard,
-.bottom-grid {
+.bottom-grid,
+.gaokao-layout {
   display: grid;
   gap: 16px;
 }
@@ -84,6 +85,44 @@ h3 {
   justify-content: flex-end;
 }
 
+.top-actions {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+.mode-switch {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #d7dde7;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.mode-switch button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #475467;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.mode-switch button.active {
+  background: #111827;
+  color: #ffffff;
+}
+
 .pipeline span {
   display: inline-flex;
   align-items: center;
@@ -106,7 +145,8 @@ h3 {
 .profile-panel,
 .main-panel,
 .jobs-panel,
-.advice-panel {
+.advice-panel,
+.source-section {
   border: 1px solid #d7dde7;
   border-radius: 8px;
   background: #ffffff;
@@ -169,13 +209,15 @@ h3 {
   padding: 16px;
 }
 
-.insight-grid {
+.insight-grid,
+.signal-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
-.insight-card {
+.insight-card,
+.signal-card {
   min-height: 174px;
   padding: 16px;
   border: 1px solid #e3e8ef;
@@ -194,7 +236,18 @@ h3 {
   color: #1261a6;
 }
 
+.icon-box.green {
+  background: #e9f9ef;
+  color: #16803c;
+}
+
+.icon-box.amber {
+  background: #fff4d8;
+  color: #995d00;
+}
+
 .insight-card p,
+.signal-card p,
 .badge-card p,
 .job-meta {
   color: #667085;
@@ -202,7 +255,8 @@ h3 {
   font-weight: 800;
 }
 
-.insight-card strong {
+.insight-card strong,
+.signal-card strong {
   display: block;
   margin: 8px 0;
   color: #111827;
@@ -211,8 +265,15 @@ h3 {
 }
 
 .insight-card span,
+.signal-card span,
 .job-row span,
+.track-row p,
+.track-row span,
 .advice-item p,
+.roadmap-item p,
+.source-card span,
+.principle-box p,
+.risk-note p,
 .claude-note p {
   color: #667085;
   font-size: 13px;
@@ -285,7 +346,8 @@ h3 {
 }
 
 .jobs-panel,
-.advice-panel {
+.advice-panel,
+.source-section {
   padding: 18px;
 }
 
@@ -401,8 +463,184 @@ h3 {
   color: #1261a6;
 }
 
+.gaokao-layout {
+  grid-template-columns: 360px minmax(0, 1fr);
+  align-items: start;
+}
+
+.gaokao-profile {
+  border-color: #c8dbff;
+}
+
+.principle-box,
+.risk-note {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #d7dde7;
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.principle-box {
+  border-color: #b9d6ff;
+  background: #eef6ff;
+  color: #1261a6;
+}
+
+.risk-note {
+  border-color: #ffd7a8;
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.gaokao-main {
+  display: grid;
+  gap: 16px;
+}
+
+.signal-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.major-section {
+  border: 1px solid #d7dde7;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(16, 24, 40, 0.08);
+  padding: 18px;
+}
+
+.major-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.major-card {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.major-card .tag-line {
+  grid-column: 1 / -1;
+}
+
+.major-card p {
+  margin-top: 6px;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.score-ring {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#111827 0 78%, #e3e8ef 78% 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.track-list,
+.roadmap-list {
+  display: grid;
+  gap: 10px;
+}
+
+.track-row {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.track-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.track-head > span {
+  color: #14532d;
+  font-weight: 900;
+  text-align: right;
+}
+
+.roadmap-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.roadmap-item > span {
+  display: grid;
+  width: 52px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.roadmap-item h3 {
+  margin-bottom: 4px;
+}
+
+.source-section {
+  margin-top: 16px;
+}
+
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.source-card {
+  display: block;
+  min-height: 132px;
+  padding: 14px;
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  background: #fbfcfe;
+  color: inherit;
+  text-decoration: none;
+}
+
+.source-card p {
+  margin-bottom: 8px;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.source-card h3 {
+  margin-bottom: 8px;
+}
+
 @media (max-width: 1180px) {
-  .insight-grid {
+  .insight-grid,
+  .signal-grid,
+  .source-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -419,11 +657,14 @@ h3 {
 
   .topbar,
   .dashboard,
-  .bottom-grid {
+  .bottom-grid,
+  .gaokao-layout {
     grid-template-columns: 1fr;
   }
 
+  .top-actions,
   .pipeline {
+    justify-items: start;
     justify-content: flex-start;
   }
 
@@ -438,7 +679,10 @@ h3 {
   }
 
   .insight-grid,
-  .badge-wall {
+  .signal-grid,
+  .badge-wall,
+  .major-grid,
+  .source-grid {
     grid-template-columns: 1fr;
   }
 
@@ -450,5 +694,22 @@ h3 {
     grid-template-columns: auto auto;
     justify-content: space-between;
     justify-items: start;
+  }
+
+  .major-card,
+  .track-head {
+    grid-template-columns: 1fr;
+  }
+
+  .track-head {
+    display: grid;
+  }
+
+  .track-head > span {
+    text-align: left;
+  }
+
+  .mode-switch {
+    width: 100%;
   }
 }

@@ -108,7 +108,7 @@ export function getLearningAdvice(jobs: Job[], profile: StudentProfile) {
   }));
 }
 
-function topEntries<T>(map: Map<T, number>, limit: number) {
+export function topEntries<T>(map: Map<T, number>, limit: number) {
   return Array.from(map.entries())
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit);

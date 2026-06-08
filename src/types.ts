@@ -58,3 +58,50 @@ export type MarketInsight = {
   value: string;
   detail: string;
 };
+
+export type AppMode = "talent" | "gaokao";
+
+export type GaokaoProfile = {
+  name: string;
+  goal: string;
+  traits: string[];
+};
+
+export type GaokaoTrait = {
+  id: string;
+  label: string;
+  description: string;
+};
+
+export type StartupTrack = {
+  id: string;
+  name: string;
+  heat: number;
+  opportunity: string;
+  demandBreakdown: string[];
+  abilityTags: string[];
+  relatedMajors: string[];
+  fitTraits: string[];
+  caution: string;
+};
+
+export type MajorPath = {
+  id: string;
+  group: string;
+  majors: string[];
+  score: number;
+  why: string;
+  careerTargets: string[];
+  startupRoutes: string[];
+  coreAbilities: string[];
+  fitTraits: string[];
+  firstYearPlan: string[];
+  watchOut: string;
+};
+
+export type SourceNote = {
+  title: string;
+  publisher: string;
+  url: string;
+  note: string;
+};
