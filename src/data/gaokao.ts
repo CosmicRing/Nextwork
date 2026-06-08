@@ -183,9 +183,9 @@ export const gaokaoSourceNotes: SourceNote[] = [
     note: "用于校准 2025 年新增专业和国家战略、市场需求、科技前沿的分类口径。",
   },
   {
-    title: "2026年政府工作报告相关产业方向",
-    publisher: "中国网",
-    url: "https://www.china.org.cn/2026-03/19/content_118384399.shtml",
+    title: "政府工作报告热词解读：向新、向智、向未来",
+    publisher: "中国人大网",
+    url: "https://www.npc.gov.cn/npc/c2/c30834/202603/t20260306_452216.html",
     note: "用于校准人工智能+、低空经济、生物医药、未来能源、具身智能、脑机接口、6G 等政策信号。",
   },
 ];
