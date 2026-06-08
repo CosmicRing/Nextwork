@@ -1,0 +1,217 @@
+{
+  "generatedAt": "2026-06-06T12:17:32.812Z",
+  "modelRole": "ClaudeCode-compatible analyzer",
+  "datasetSize": 10,
+  "insights": [
+    {
+      "title": "大厂发力方向",
+      "value": "LLM / MLOps / 推理服务 / 平台工程 / GPU 调度",
+      "detail": "样例岗位集中在大模型平台、Agent、推荐、云基础设施、智能驾驶和即时履约优化。"
+    },
+    {
+      "title": "岗位供给热区",
+      "value": "AI Engineering / Data / Backend",
+      "detail": "AI 工程和数据算法岗位占比更高，前端和后台更偏业务效率与交易转化。"
+    },
+    {
+      "title": "基础能力",
+      "value": "Python / SQL / 数据分析 / 沟通协作 / 工程稳定性 / 问题定位",
+      "detail": "跨岗位重复出现的基础项通常是编程、数据意识、系统理解、沟通协作和问题定位。"
+    },
+    {
+      "title": "学习优先级",
+      "value": "Python / SQL / C++ / 分布式系统 / 机器学习 / 数据分析",
+      "detail": "先补重复出现的基础技能，再围绕目标公司方向补专门技能，投入产出更清晰。"
+    }
+  ],
+  "recommendations": [
+    {
+      "jobId": "ali-agent",
+      "companyName": "阿里巴巴",
+      "title": "AI Agent 应用工程师",
+      "category": "AI Engineering",
+      "direction": "企业智能体与云上应用",
+      "matchScore": 67,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "TypeScript",
+        "Python",
+        "RAG",
+        "API 设计"
+      ],
+      "missingSkills": [
+        "Prompt Engineering",
+        "产品理解"
+      ]
+    },
+    {
+      "jobId": "bd-llm-platform",
+      "companyName": "字节跳动",
+      "title": "大模型平台研发工程师",
+      "category": "AI Engineering",
+      "direction": "大模型基础设施与应用平台",
+      "matchScore": 33,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "Python",
+        "沟通协作"
+      ],
+      "missingSkills": [
+        "分布式系统",
+        "深度学习框架",
+        "模型服务",
+        "工程稳定性"
+      ]
+    },
+    {
+      "jobId": "bd-reco",
+      "companyName": "字节跳动",
+      "title": "推荐算法工程师",
+      "category": "Data",
+      "direction": "内容推荐与增长",
+      "matchScore": 33,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "Python",
+        "SQL"
+      ],
+      "missingSkills": [
+        "机器学习",
+        "推荐系统",
+        "A/B 实验",
+        "数据分析"
+      ]
+    },
+    {
+      "jobId": "mt-local-life-fe",
+      "companyName": "美团",
+      "title": "到店业务前端工程师",
+      "category": "Frontend",
+      "direction": "本地生活交易体验",
+      "matchScore": 33,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "React",
+        "TypeScript"
+      ],
+      "missingSkills": [
+        "小程序",
+        "工程化",
+        "数据埋点",
+        "跨团队沟通"
+      ]
+    },
+    {
+      "jobId": "mt-dispatch",
+      "companyName": "美团",
+      "title": "配送调度算法工程师",
+      "category": "Data",
+      "direction": "即时配送与运筹优化",
+      "matchScore": 33,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "Python",
+        "SQL"
+      ],
+      "missingSkills": [
+        "运筹优化",
+        "机器学习",
+        "实时系统",
+        "业务建模"
+      ]
+    },
+    {
+      "jobId": "tx-game-ai",
+      "companyName": "腾讯",
+      "title": "游戏 AI 研发工程师",
+      "category": "AI Engineering",
+      "direction": "游戏智能与内容生成",
+      "matchScore": 17,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "Python"
+      ],
+      "missingSkills": [
+        "C++",
+        "强化学习",
+        "图形学基础",
+        "游戏引擎",
+        "团队协作"
+      ]
+    },
+    {
+      "jobId": "baidu-autodrive",
+      "companyName": "百度",
+      "title": "自动驾驶感知算法工程师",
+      "category": "AI Engineering",
+      "direction": "智能驾驶",
+      "matchScore": 17,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "PyTorch"
+      ],
+      "missingSkills": [
+        "计算机视觉",
+        "C++",
+        "传感器融合",
+        "模型部署",
+        "论文复现"
+      ]
+    },
+    {
+      "jobId": "jd-supply-chain",
+      "companyName": "京东",
+      "title": "供应链数据产品经理",
+      "category": "Product",
+      "direction": "零售供应链数字化",
+      "matchScore": 17,
+      "earnedBadge": false,
+      "matchedSkills": [
+        "SQL"
+      ],
+      "missingSkills": [
+        "数据分析",
+        "产品设计",
+        "供应链理解",
+        "项目推进",
+        "沟通表达"
+      ]
+    },
+    {
+      "jobId": "tx-cloud-backend",
+      "companyName": "腾讯",
+      "title": "云产品后台开发工程师",
+      "category": "Backend",
+      "direction": "云计算与企业服务",
+      "matchScore": 0,
+      "earnedBadge": false,
+      "matchedSkills": [],
+      "missingSkills": [
+        "Go",
+        "微服务",
+        "MySQL",
+        "Redis",
+        "Linux",
+        "问题定位"
+      ]
+    },
+    {
+      "jobId": "ali-database",
+      "companyName": "阿里巴巴",
+      "title": "数据库内核研发工程师",
+      "category": "Infrastructure",
+      "direction": "云原生数据库",
+      "matchScore": 0,
+      "earnedBadge": false,
+      "matchedSkills": [],
+      "missingSkills": [
+        "C++",
+        "数据库原理",
+        "操作系统",
+        "分布式系统",
+        "性能优化",
+        "英文资料阅读"
+      ]
+    }
+  ]
+}
