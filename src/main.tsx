@@ -6,15 +6,15 @@ import {
   BookOpenCheck,
   BriefcaseBusiness,
   Check,
+  ChevronRight,
   ClipboardList,
-  Compass,
   ExternalLink,
   Factory,
   Filter,
   GraduationCap,
+  Layers3,
   Medal,
   Rocket,
-  Route,
   ShieldAlert,
   Sparkles,
   Target,
@@ -45,61 +45,232 @@ const categoryLabels: Record<JobCategory | "All", string> = {
   Security: "安全",
 };
 
-const modeCopy: Record<AppMode, { eyebrow: string; title: string; stages: Array<{ icon: React.ReactNode; label: string }> }> = {
-  talent: {
-    eyebrow: "Nextwork Talent Radar",
-    title: "大厂岗位偏好分析与个人技能勋章墙",
-    stages: [
-      { icon: <BriefcaseBusiness size={16} />, label: "官网岗位" },
-      { icon: <Sparkles size={16} />, label: "Claude 标签" },
-      { icon: <Award size={16} />, label: "技能勋章" },
-    ],
-  },
-  gaokao: {
-    eyebrow: "Gaokao Major Navigator",
-    title: "以就业和创业终局倒推高考专业选择",
-    stages: [
-      { icon: <BriefcaseBusiness size={16} />, label: "岗位需求" },
-      { icon: <Rocket size={16} />, label: "创业赛道" },
-      { icon: <GraduationCap size={16} />, label: "专业路径" },
-    ],
-  },
-};
-
 function App() {
   const [mode, setMode] = useState<AppMode>("gaokao");
 
   return (
     <main className="app-shell">
-      <section className="topbar">
+      <header className="app-nav">
         <div>
-          <p className="eyebrow">{modeCopy[mode].eyebrow}</p>
-          <h1>{modeCopy[mode].title}</h1>
+          <p className="nav-kicker">Nextwork</p>
+          <strong>{mode === "gaokao" ? "高考专业导航" : "技能勋章墙"}</strong>
         </div>
-        <div className="top-actions">
-          <div className="mode-switch" aria-label="功能切换">
-            <button className={mode === "gaokao" ? "active" : ""} onClick={() => setMode("gaokao")}>
-              <GraduationCap size={16} />
-              高考选专业
-            </button>
-            <button className={mode === "talent" ? "active" : ""} onClick={() => setMode("talent")}>
-              <Medal size={16} />
-              技能勋章墙
-            </button>
+        <div className="mode-switch" aria-label="功能切换">
+          <button className={mode === "gaokao" ? "active" : ""} onClick={() => setMode("gaokao")}>
+            <GraduationCap size={16} />
+            高考
+          </button>
+          <button className={mode === "talent" ? "active" : ""} onClick={() => setMode("talent")}>
+            <Medal size={16} />
+            求职
+          </button>
+        </div>
+      </header>
+
+      {mode === "gaokao" ? <GaokaoView /> : <TalentView />}
+    </main>
+  );
+}
+
+function GaokaoView() {
+  const [profile, setProfile] = useState<GaokaoProfile>(initialGaokaoProfile);
+  const employmentSignals = useMemo(() => getEmploymentSignals(jobs), []);
+  const rankedTracks = useMemo(() => scoreStartupTracks(startupTracks, profile), [profile]);
+  const rankedMajors = useMemo(() => scoreMajorPaths(majorPaths, profile, startupTracks), [profile]);
+  const topMajor = rankedMajors[0];
+  const secondMajor = rankedMajors[1];
+  const fourYearPlan = useMemo(() => getFourYearPlan(topMajor), [topMajor]);
+
+  const toggleTrait = (traitId: string) => {
+    setProfile((current) => {
+      const traits = current.traits.includes(traitId)
+        ? current.traits.filter((id) => id !== traitId)
+        : [...current.traits, traitId];
+      return { ...current, traits };
+    });
+  };
+
+  return (
+    <>
+      <section className="gaokao-hero">
+        <div className="hero-copy">
+          <p className="eyebrow">从终局倒推志愿</p>
+          <h1>先看未来要成为什么人，再决定现在报什么专业。</h1>
+          <p className="hero-lead">
+            把大厂招聘、创业赛道和政策专业目录拆成能力地图，给高考生一个可解释的专业选择建议。
+          </p>
+          <div className="hero-actions">
+            <a href="#major-recommendations">看推荐专业 <ChevronRight size={16} /></a>
+            <a href="#profile" className="secondary">调整学生画像</a>
           </div>
-          <div className="pipeline">
-            {modeCopy[mode].stages.map((stage) => (
-              <span key={stage.label}>
-                {stage.icon}
-                {stage.label}
-              </span>
+        </div>
+
+        <article className="recommend-card">
+          <div className="recommend-score">
+            <span>{topMajor.score}%</span>
+            <p>当前匹配</p>
+          </div>
+          <div>
+            <p className="eyebrow">首选专业群</p>
+            <h2>{topMajor.group}</h2>
+            <p>{topMajor.why}</p>
+          </div>
+          <div className="mini-tags">
+            {topMajor.majors.slice(0, 4).map((major) => (
+              <span key={major}>{major}</span>
             ))}
+          </div>
+        </article>
+      </section>
+
+      <section className="profile-strip" id="profile">
+        <div className="strip-heading">
+          <div>
+            <p className="eyebrow">学生画像</p>
+            <h2>点选优势和偏好，推荐会即时变化</h2>
+          </div>
+          <span>{profile.traits.length} 项已选</span>
+        </div>
+        <div className="trait-grid">
+          {gaokaoTraits.map((trait) => {
+            const active = profile.traits.includes(trait.id);
+            return (
+              <button key={trait.id} className={active ? "trait-chip active" : "trait-chip"} onClick={() => toggleTrait(trait.id)}>
+                {active && <Check size={14} />}
+                <span>{trait.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="signal-band">
+        <article>
+          <BriefcaseBusiness size={20} />
+          <p>岗位终局</p>
+          <strong>{employmentSignals.directions.slice(0, 3).join(" / ")}</strong>
+        </article>
+        <article>
+          <Rocket size={20} />
+          <p>创业热点</p>
+          <strong>{rankedTracks.slice(0, 2).map((track) => track.name).join(" / ")}</strong>
+        </article>
+        <article>
+          <ClipboardList size={20} />
+          <p>基础能力</p>
+          <strong>{employmentSignals.requirements.slice(0, 4).join(" / ")}</strong>
+        </article>
+      </section>
+
+      <section className="content-section" id="major-recommendations">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Major Recommendations</p>
+            <h2>专业推荐</h2>
+          </div>
+          <p>不是给一个孤立专业名，而是给一组可替换、可保底、可延展的专业群。</p>
+        </div>
+        <div className="major-list">
+          {rankedMajors.slice(0, 4).map((path, index) => (
+            <article key={path.id} className={index === 0 ? "major-item featured" : "major-item"}>
+              <div className="rank-badge">{index + 1}</div>
+              <div className="major-body">
+                <div className="major-title-row">
+                  <div>
+                    <p>{path.score}% 匹配</p>
+                    <h3>{path.group}</h3>
+                  </div>
+                  {index === 0 && <span>首推</span>}
+                </div>
+                <p>{path.why}</p>
+                <div className="mini-tags">
+                  {path.majors.slice(0, 4).map((major) => (
+                    <span key={major}>{major}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="split-section">
+        <div className="content-section compact-section">
+          <div className="section-heading tight">
+            <div>
+              <p className="eyebrow">Startup Tracks</p>
+              <h2>赛道拆解</h2>
+            </div>
+          </div>
+          <div className="track-list">
+            {rankedTracks.slice(0, 4).map((track) => (
+              <article key={track.id} className="track-item">
+                <div>
+                  <p>热度 {track.heat} · 匹配 {track.score}%</p>
+                  <h3>{track.name}</h3>
+                </div>
+                <p>{track.opportunity}</p>
+                <div className="mini-tags">
+                  {track.demandBreakdown.slice(0, 4).map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="content-section compact-section">
+          <div className="section-heading tight">
+            <div>
+              <p className="eyebrow">4-Year Roadmap</p>
+              <h2>大学四年怎么走</h2>
+            </div>
+          </div>
+          <div className="roadmap-list">
+            {fourYearPlan.map((step) => (
+              <article key={step.year} className="roadmap-item">
+                <span>{step.year}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.items.join(" · ")}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="risk-note">
+            <ShieldAlert size={18} />
+            <p>{topMajor.watchOut}</p>
           </div>
         </div>
       </section>
 
-      {mode === "gaokao" ? <GaokaoView /> : <TalentView />}
-    </main>
+      <section className="comparison-strip">
+        <div>
+          <p className="eyebrow">备选策略</p>
+          <h2>如果不想押太重，可以把 {secondMajor.group} 作为第二梯队。</h2>
+        </div>
+        <p>{secondMajor.why}</p>
+      </section>
+
+      <section className="source-section">
+        <div className="section-heading tight">
+          <div>
+            <p className="eyebrow">Sources</p>
+            <h2>依据来源</h2>
+          </div>
+        </div>
+        <div className="source-grid">
+          {gaokaoSourceNotes.map((source) => (
+            <a key={source.url} className="source-card" href={source.url} target="_blank" rel="noreferrer">
+              <p>{source.publisher}</p>
+              <h3>{source.title}</h3>
+              <span>{source.note}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
 
@@ -130,81 +301,70 @@ function TalentView() {
 
   return (
     <>
-      <section className="dashboard">
-        <aside className="profile-panel">
-          <div className="panel-heading">
-            <div>
-              <p className="eyebrow">Student Profile</p>
-              <h2>{profile.name}</h2>
-            </div>
-            <Target size={24} />
-          </div>
-          <p className="target-text">{profile.target}</p>
-          <div className="skill-picker">
-            {selectableSkills.map((skill) => {
-              const active = profileSkills.some((item) => item.name === skill);
-              return (
-                <button key={skill} className={active ? "skill-chip active" : "skill-chip"} onClick={() => toggleSkill(skill)}>
-                  {active && <Check size={14} />}
-                  {skill}
-                </button>
-              );
-            })}
-          </div>
-        </aside>
-
-        <section className="main-panel">
-          <div className="insight-grid">
-            {insights.map((insight) => (
-              <article key={insight.title} className="insight-card">
-                <div className="icon-box">
-                  <BarChart3 size={18} />
-                </div>
-                <p>{insight.title}</p>
-                <strong>{insight.value}</strong>
-                <span>{insight.detail}</span>
-              </article>
-            ))}
-          </div>
-
-          <section className="badge-section">
-            <div className="section-title">
-              <div>
-                <p className="eyebrow">Badge Wall</p>
-                <h2>个人勋章墙</h2>
-              </div>
-              <Medal size={24} />
-            </div>
-            <div className="badge-wall">
-              {badges.map((badge) => (
-                <article
-                  key={badge.id}
-                  className={`badge-card ${badge.status}`}
-                  style={{ "--badge-gradient": badge.gradient } as React.CSSProperties}
-                >
-                  <div className="badge-emblem">
-                    <Factory size={30} />
-                  </div>
-                  <div>
-                    <p>{badge.companyName}</p>
-                    <h3>{badge.title}</h3>
-                    <span>{badge.matchScore}% 匹配</span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        </section>
+      <section className="talent-hero">
+        <div>
+          <p className="eyebrow">Talent Radar</p>
+          <h1>把岗位能力变成可解释的技能勋章。</h1>
+          <p>学生勾选已有技能后，系统会计算大厂岗位匹配度、缺口和学习建议。</p>
+        </div>
+        <div className="skill-picker">
+          {selectableSkills.map((skill) => {
+            const active = profileSkills.some((item) => item.name === skill);
+            return (
+              <button key={skill} className={active ? "trait-chip active" : "trait-chip"} onClick={() => toggleSkill(skill)}>
+                {active && <Check size={14} />}
+                <span>{skill}</span>
+              </button>
+            );
+          })}
+        </div>
       </section>
 
-      <section className="bottom-grid">
-        <section className="jobs-panel">
-          <div className="section-title compact">
+      <section className="signal-band">
+        {insights.slice(0, 3).map((insight) => (
+          <article key={insight.title}>
+            <BarChart3 size={20} />
+            <p>{insight.title}</p>
+            <strong>{insight.value}</strong>
+          </article>
+        ))}
+      </section>
+
+      <section className="content-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Badge Wall</p>
+            <h2>个人勋章墙</h2>
+          </div>
+        </div>
+        <div className="badge-wall">
+          {badges.map((badge) => (
+            <article
+              key={badge.id}
+              className={`badge-card ${badge.status}`}
+              style={{ "--badge-gradient": badge.gradient } as React.CSSProperties}
+            >
+              <div className="badge-emblem">
+                <Factory size={28} />
+              </div>
+              <div>
+                <p>{badge.companyName}</p>
+                <h3>{badge.title}</h3>
+                <span>{badge.matchScore}% 匹配</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="split-section">
+        <div className="content-section compact-section">
+          <div className="section-heading tight">
             <div>
               <p className="eyebrow">Official Jobs Dataset</p>
-              <h2>岗位分类与推荐</h2>
+              <h2>岗位推荐</h2>
             </div>
-            <Filter size={22} />
+            <Filter size={20} />
           </div>
           <div className="tabs">
             {categories.map((category) => (
@@ -218,42 +378,30 @@ function TalentView() {
             ))}
           </div>
           <div className="job-list">
-            {filteredJobs.map(({ job, badge }) => (
+            {filteredJobs.slice(0, 6).map(({ job, badge }) => (
               <article key={job.id} className="job-row">
                 <div>
-                  <p className="job-meta">
-                    {job.companyName} · {job.department} · {job.location}
-                  </p>
+                  <p>{job.companyName} · {job.department}</p>
                   <h3>{job.title}</h3>
                   <span>{job.direction}</span>
                 </div>
-                <div className="job-side">
-                  <strong>{badge.matchScore}%</strong>
-                  <a href={job.sourceUrl} target="_blank" rel="noreferrer" aria-label={`${job.companyName} 招聘官网`}>
-                    <ExternalLink size={18} />
-                  </a>
-                </div>
-                <div className="tag-line">
-                  {job.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
+                <strong>{badge.matchScore}%</strong>
               </article>
             ))}
           </div>
-        </section>
+        </div>
 
-        <section className="advice-panel">
-          <div className="section-title compact">
+        <div className="content-section compact-section">
+          <div className="section-heading tight">
             <div>
               <p className="eyebrow">Learning Adjustment</p>
-              <h2>学习调整建议</h2>
+              <h2>学习建议</h2>
             </div>
-            <BookOpenCheck size={22} />
+            <BookOpenCheck size={20} />
           </div>
-          <div className="advice-list">
+          <div className="roadmap-list">
             {advice.map((item, index) => (
-              <article key={item.skill} className="advice-item">
+              <article key={item.skill} className="roadmap-item">
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <div>
                   <h3>{item.skill}</h3>
@@ -262,195 +410,10 @@ function TalentView() {
               </article>
             ))}
           </div>
-          <div className="claude-note">
-            <Sparkles size={20} />
-            <p>真实接入时，ClaudeCode 负责把官网岗位描述抽成统一 JSON：分类、技能标签、方向判断、基础能力、稀缺能力和学习建议。</p>
-          </div>
-        </section>
-      </section>
-    </>
-  );
-}
-
-function GaokaoView() {
-  const [profile, setProfile] = useState<GaokaoProfile>(initialGaokaoProfile);
-  const employmentSignals = useMemo(() => getEmploymentSignals(jobs), []);
-  const rankedTracks = useMemo(() => scoreStartupTracks(startupTracks, profile), [profile]);
-  const rankedMajors = useMemo(() => scoreMajorPaths(majorPaths, profile, startupTracks), [profile]);
-  const topMajor = rankedMajors[0];
-  const fourYearPlan = useMemo(() => getFourYearPlan(topMajor), [topMajor]);
-
-  const toggleTrait = (traitId: string) => {
-    setProfile((current) => {
-      const traits = current.traits.includes(traitId)
-        ? current.traits.filter((id) => id !== traitId)
-        : [...current.traits, traitId];
-      return { ...current, traits };
-    });
-  };
-
-  return (
-    <>
-      <section className="gaokao-layout">
-        <aside className="profile-panel gaokao-profile">
-          <div className="panel-heading">
-            <div>
-              <p className="eyebrow">Student Snapshot</p>
-              <h2>{profile.name}</h2>
-            </div>
-            <Compass size={24} />
-          </div>
-          <p className="target-text">{profile.goal}</p>
-          <div className="skill-picker">
-            {gaokaoTraits.map((trait) => {
-              const active = profile.traits.includes(trait.id);
-              return (
-                <button
-                  key={trait.id}
-                  className={active ? "skill-chip active" : "skill-chip"}
-                  onClick={() => toggleTrait(trait.id)}
-                  title={trait.description}
-                >
-                  {active && <Check size={14} />}
-                  {trait.label}
-                </button>
-              );
-            })}
-          </div>
-          <div className="principle-box">
-            <Route size={20} />
-            <p>倒推逻辑：就业岗位和创业赛道先拆成能力，再映射到专业群、大学四年任务和可验证作品。</p>
-          </div>
-        </aside>
-
-        <section className="gaokao-main">
-          <div className="signal-grid">
-            <article className="signal-card">
-              <div className="icon-box">
-                <BriefcaseBusiness size={18} />
-              </div>
-              <p>岗位终局信号</p>
-              <strong>{employmentSignals.directions.join(" / ")}</strong>
-              <span>来自当前原型的大厂岗位数据，后续可替换成官网全量抓取和 Claude 标签结果。</span>
-            </article>
-            <article className="signal-card">
-              <div className="icon-box green">
-                <Rocket size={18} />
-              </div>
-              <p>创业赛道信号</p>
-              <strong>{rankedTracks.slice(0, 3).map((track) => track.name).join(" / ")}</strong>
-              <span>把赛道拆成真实要招的人，而不是只展示抽象风口词。</span>
-            </article>
-            <article className="signal-card">
-              <div className="icon-box amber">
-                <ClipboardList size={18} />
-              </div>
-              <p>共同基础能力</p>
-              <strong>{employmentSignals.requirements.slice(0, 5).join(" / ")}</strong>
-              <span>高考选专业不是一次性押宝，优先选能迁移到多个岗位的底层能力。</span>
-            </article>
-          </div>
-
-          <section className="major-section">
-            <div className="section-title">
-              <div>
-                <p className="eyebrow">Recommended Major Groups</p>
-                <h2>专业群推荐</h2>
-              </div>
-              <GraduationCap size={24} />
-            </div>
-            <div className="major-grid">
-              {rankedMajors.slice(0, 4).map((path) => (
-                <article key={path.id} className="major-card">
-                  <div className="score-ring">{path.score}%</div>
-                  <div>
-                    <h3>{path.group}</h3>
-                    <p>{path.why}</p>
-                  </div>
-                  <div className="tag-line">
-                    {path.majors.slice(0, 4).map((major) => (
-                      <span key={major}>{major}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        </section>
-      </section>
-
-      <section className="bottom-grid gaokao-bottom">
-        <section className="jobs-panel">
-          <div className="section-title compact">
-            <div>
-              <p className="eyebrow">Startup Tracks</p>
-              <h2>创业赛道拆解</h2>
-            </div>
-            <Rocket size={22} />
-          </div>
-          <div className="track-list">
-            {rankedTracks.map((track) => (
-              <article key={track.id} className="track-row">
-                <div className="track-head">
-                  <div>
-                    <p className="job-meta">热度 {track.heat} · 匹配 {track.score}%</p>
-                    <h3>{track.name}</h3>
-                  </div>
-                  <span>{track.relatedMajors.slice(0, 2).join(" / ")}</span>
-                </div>
-                <p>{track.opportunity}</p>
-                <div className="tag-line">
-                  {track.demandBreakdown.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="advice-panel">
-          <div className="section-title compact">
-            <div>
-              <p className="eyebrow">Four-Year Roadmap</p>
-              <h2>{topMajor.group}</h2>
-            </div>
-            <BookOpenCheck size={22} />
-          </div>
-          <div className="roadmap-list">
-            {fourYearPlan.map((step) => (
-              <article key={step.year} className="roadmap-item">
-                <span>{step.year}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.items.join(" · ")}</p>
-                </div>
-              </article>
-            ))}
-          </div>
           <div className="risk-note">
-            <ShieldAlert size={20} />
-            <p>{topMajor.watchOut}</p>
+            <Sparkles size={18} />
+            <p>真实接入时，ClaudeCode 会把官网岗位抽成分类、技能、方向、基础能力和学习建议。</p>
           </div>
-        </section>
-      </section>
-
-      <section className="source-section">
-        <div className="section-title compact">
-          <div>
-            <p className="eyebrow">Policy And Catalogue Sources</p>
-            <h2>专业与赛道依据</h2>
-          </div>
-          <ExternalLink size={22} />
-        </div>
-        <div className="source-grid">
-          {gaokaoSourceNotes.map((source) => (
-            <a key={source.url} className="source-card" href={source.url} target="_blank" rel="noreferrer">
-              <p>{source.publisher}</p>
-              <h3>{source.title}</h3>
-              <span>{source.note}</span>
-            </a>
-          ))}
         </div>
       </section>
     </>
