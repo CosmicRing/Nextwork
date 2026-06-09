@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { Counter, Kino, Progress, Reveal, Scene, ScrollTransform, TextReveal } from "react-kino";
 import {
   BarChart3,
   Bell,
@@ -148,15 +149,103 @@ function App() {
   };
 
   return (
-    <div className="life-os">
-      <div className="dashboard-frame">
-        <Sidebar mode={mode} activeNav={activeNav} onModeChange={setMode} onNavigate={navigate} />
-        <main className="workspace">
-          <TopCommand mode={mode} onModeChange={setMode} />
-          {mode === "gaokao" ? <LifeDashboard /> : <TalentDashboard />}
-        </main>
+    <Kino>
+      <Progress type="bar" position="top" color="#d8bd7a" trackColor="rgba(216, 189, 122, 0.12)" className="kino-progress" />
+      <div className="life-os">
+        <CinematicIntro onEnter={() => navigate("overview", "gaokao")} />
+        <div className="dashboard-frame" id="dashboard">
+          <Sidebar mode={mode} activeNav={activeNav} onModeChange={setMode} onNavigate={navigate} />
+          <main className="workspace">
+            <TopCommand mode={mode} onModeChange={setMode} />
+            {mode === "gaokao" ? <LifeDashboard /> : <TalentDashboard />}
+          </main>
+        </div>
       </div>
-    </div>
+    </Kino>
+  );
+}
+
+function CinematicIntro({ onEnter }: { onEnter: () => void }) {
+  return (
+    <section className="kino-shell">
+      <Scene duration="190vh" className="kino-scene">
+        {(progress) => (
+          <div className="kino-stage">
+            <div className="kino-vignette" aria-hidden="true" />
+            <div className="kino-frame-mark top" aria-hidden="true" />
+            <div className="kino-frame-mark bottom" aria-hidden="true" />
+
+            <div className="kino-copy">
+              <Reveal progress={progress} animation="fade-up" at={0.03}>
+                <p className="eyebrow">Nextwork / Career Operating System</p>
+              </Reveal>
+              <TextReveal
+                progress={progress}
+                mode="word"
+                at={0.08}
+                span={0.5}
+                color="#f7f0df"
+                dimColor="rgba(247, 240, 223, 0.18)"
+                className="kino-title"
+              >
+                让数据开口，照亮前途
+              </TextReveal>
+              <Reveal progress={progress} animation="blur" at={0.25}>
+                <p className="kino-subtitle">
+                  从 MBTI 自我画像、企业岗位需求、创业赛道热度倒推专业选择和人生行动表。
+                </p>
+              </Reveal>
+              <Reveal progress={progress} animation="fade-up" at={0.42}>
+                <div className="kino-actions">
+                  <button onClick={onEnter}>进入仪表盘</button>
+                  <a href="#mbti-test">先做 MBTI</a>
+                </div>
+              </Reveal>
+            </div>
+
+            <ScrollTransform
+              progress={progress}
+              from={{ rotateX: 32, rotateY: -18, y: 92, scale: 0.82, opacity: 0.25 }}
+              to={{ rotateX: 0, rotateY: 0, y: 0, scale: 1, opacity: 1 }}
+              at={0.18}
+              span={0.62}
+              perspective={1400}
+              transformOrigin="center bottom"
+              className="kino-board-wrap"
+            >
+              <div className="kino-board">
+                <div className="kino-board-top">
+                  <span>Life Strategy Preview</span>
+                  <strong>2026</strong>
+                </div>
+                <div className="kino-board-grid">
+                  <KinoMetric label="画像完成度" to={86} suffix="%" progress={progress} />
+                  <KinoMetric label="专业路径" to={6} suffix=" 条" progress={progress} />
+                  <KinoMetric label="大厂岗位" to={10} suffix=" 个" progress={progress} />
+                  <KinoMetric label="赛道热度" to={96} suffix="%" progress={progress} />
+                </div>
+                <div className="kino-board-line">
+                  <span>Know Yourself</span>
+                  <i />
+                  <span>Decode Market</span>
+                  <i />
+                  <span>Plan Forward</span>
+                </div>
+              </div>
+            </ScrollTransform>
+          </div>
+        )}
+      </Scene>
+    </section>
+  );
+}
+
+function KinoMetric({ label, to, suffix, progress }: { label: string; to: number; suffix: string; progress: number }) {
+  return (
+    <article className="kino-metric">
+      <Counter from={0} to={to} progress={progress} at={0.2} span={0.5} format={(value) => `${Math.round(value)}${suffix}`} />
+      <span>{label}</span>
+    </article>
   );
 }
 
