@@ -150,7 +150,7 @@ function App() {
 
   return (
     <Kino>
-      <Progress type="bar" position="top" color="#d8bd7a" trackColor="rgba(216, 189, 122, 0.12)" className="kino-progress" />
+      <Progress type="bar" position="top" color="#60A5FA" trackColor="rgba(216, 227, 234, 0.18)" className="kino-progress" />
       <div className="life-os">
         <CinematicIntro onEnter={() => navigate("overview", "gaokao")} />
         <div className="dashboard-frame" id="dashboard">
@@ -184,8 +184,8 @@ function CinematicIntro({ onEnter }: { onEnter: () => void }) {
                 mode="word"
                 at={0.08}
                 span={0.5}
-                color="#f7f0df"
-                dimColor="rgba(247, 240, 223, 0.18)"
+                color="#F1F5F9"
+                dimColor="rgba(216, 227, 234, 0.18)"
                 className="kino-title"
               >
                 让数据开口，照亮前途
