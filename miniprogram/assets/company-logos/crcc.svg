@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="CRCC logo">
+  <rect width="96" height="96" rx="18" fill="#c2182b"/>
+  <path d="M22 30h32c12 0 20 7 20 18 0 8-4 14-11 17l12 13H60L49 66H36v12H22zm14 11v14h17c4 0 7-3 7-7s-3-7-7-7z" fill="#ffffff"/>
+  <path d="M20 20h56v6H20z" fill="#ffd166"/>
+</svg>

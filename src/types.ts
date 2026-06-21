@@ -1,4 +1,20 @@
-export type CompanyId = "bytedance" | "tencent" | "alibaba" | "meituan" | "baidu" | "jd";
+export type CompanyId =
+  | "bytedance"
+  | "tencent"
+  | "alibaba"
+  | "meituan"
+  | "baidu"
+  | "jd"
+  | "huawei"
+  | "kuaishou"
+  | "bilibili"
+  | "xiaomi"
+  | "pdd"
+  | "midea"
+  | "amazon"
+  | "ikea"
+  | "unilever"
+  | "loreal";
 
 export type JobCategory =
   | "AI Engineering"
@@ -8,7 +24,11 @@ export type JobCategory =
   | "Infrastructure"
   | "Product"
   | "Design"
-  | "Security";
+  | "Security"
+  | "Business"
+  | "Operations"
+  | "Finance"
+  | "Service";
 
 export type SkillLevel = "foundation" | "working" | "strong";
 
@@ -24,8 +44,25 @@ export type Job = {
   description: string;
   requirements: string[];
   tags: string[];
+  majorSignals?: string[];
+  abilitySignals?: string[];
+  evidenceSignals?: string[];
   direction: string;
   seniority: "intern" | "junior" | "mid" | "senior";
+  salary: SalaryEstimate;
+};
+
+export type SalaryEstimate = {
+  monthlyMinK: number;
+  monthlyMaxK: number;
+  annualMinK: number;
+  annualMaxK: number;
+  months: number;
+  currency: "CNY";
+  source: "official" | "market-estimate";
+  confidence: "high" | "medium" | "low";
+  updatedAt: string;
+  note: string;
 };
 
 export type Skill = {
@@ -99,9 +136,51 @@ export type MajorPath = {
   watchOut: string;
 };
 
+export type University = {
+  id: string;
+  name: string;
+  city: string;
+  tier: "A+" | "A" | "B";
+  strengths: string[];
+  majors: string[];
+};
+
+export type UniversityMajorJobMatch = {
+  id: string;
+  university: University;
+  majorPath: MajorPath;
+  major: string;
+  job: Job;
+  score: number;
+  reasons: string[];
+  gaps: string[];
+};
+
 export type SourceNote = {
   title: string;
   publisher: string;
   url: string;
   note: string;
+};
+
+export type CareerSignalType = "job" | "salary" | "school" | "official-source";
+
+export type CareerSignal = {
+  id: string;
+  title: string;
+  sourceName: string;
+  sourceUrl: string;
+  publishedAt: string;
+  signalType: CareerSignalType;
+  category: string;
+  summary: string;
+  score: number;
+  selected: boolean;
+  tags: string[];
+  relatedAbilities: string[];
+  relatedMajors: string[];
+  relatedTracks: string[];
+  reason: string;
+  risk: string;
+  confidence: number;
 };

@@ -1,0 +1,136 @@
+.intro {
+  margin-top: 0;
+}
+
+.filter-row {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 22rpx;
+}
+
+.filter-button {
+  min-width: 120rpx;
+  height: 60rpx;
+  border: 1rpx solid #d9cfbd;
+  border-radius: 999rpx;
+  background: #fffdf8;
+  color: #4e4638;
+  font-size: 24rpx;
+  font-weight: 800;
+  line-height: 60rpx;
+  text-align: center;
+}
+
+.filter-button.active {
+  border-color: #191919;
+  background: #191919;
+  color: #ffffff;
+}
+
+.industry-filter-row {
+  width: 100%;
+  margin-top: 14rpx;
+  white-space: nowrap;
+}
+
+.industry-filter-button {
+  display: inline-flex;
+  min-width: 156rpx;
+  height: 58rpx;
+  margin-right: 12rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #d9cfbd;
+  border-radius: 999rpx;
+  background: #fffdf8;
+  color: #594f3d;
+  font-size: 22rpx;
+  font-weight: 800;
+  line-height: 58rpx;
+  text-align: center;
+}
+
+.industry-filter-button.active {
+  border-color: #1f5f46;
+  background: #1f5f46;
+  color: #fffdf8;
+}
+
+.company-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;
+  margin-top: 22rpx;
+}
+
+.company-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.company-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+  padding: 0 4rpx;
+}
+
+.company-section-head text:first-child {
+  color: #191919;
+  font-size: 28rpx;
+  font-weight: 900;
+}
+
+.company-section-head text:last-child {
+  color: #817767;
+  font-size: 21rpx;
+  font-weight: 800;
+}
+
+.company-card {
+  display: flex;
+  gap: 18rpx;
+  min-height: 156rpx;
+  padding: 22rpx;
+  border: 1rpx solid #ded7c8;
+  border-radius: 18rpx;
+  background: #fffdf8;
+  text-align: left;
+}
+
+.company-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.company-title-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.company-name {
+  min-width: 0;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.company-region {
+  flex: 0 0 auto;
+  padding: 4rpx 12rpx;
+  border-radius: 999rpx;
+  background: #efe4cf;
+  color: #594f3d;
+  font-size: 20rpx;
+  font-weight: 800;
+}
+
+.salary {
+  display: block;
+  margin: 10rpx 0 8rpx;
+  color: #9c2f1b;
+  font-size: 28rpx;
+  font-weight: 900;
+}

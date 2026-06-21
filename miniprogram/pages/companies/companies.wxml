@@ -1,0 +1,60 @@
+<view class="page-shell">
+  <view class="section intro">
+    <text class="eyebrow">公司目录</text>
+    <text class="title">国内和海外企业分开看</text>
+    <text class="muted">每家公司用本地 logo、岗位族、薪资区间和官网入口做首屏摘要，详情单独打开。</text>
+  </view>
+
+  <view class="filter-row">
+    <button
+      wx:for="{{filters}}"
+      wx:key="*this"
+      class="filter-button {{activeFilter == item ? 'active' : ''}}"
+      data-filter="{{item}}"
+      bindtap="setFilter"
+    >
+      {{item}}
+    </button>
+  </view>
+
+  <scroll-view class="industry-filter-row" scroll-x enhanced show-scrollbar="{{false}}">
+    <button
+      wx:for="{{industryFilters}}"
+      wx:key="*this"
+      class="industry-filter-button {{activeIndustryFilter == item ? 'active' : ''}}"
+      data-industry="{{item}}"
+      bindtap="setIndustryFilter"
+    >
+      {{item}}
+    </button>
+  </scroll-view>
+
+  <view class="company-list">
+    <view class="company-section" wx:for="{{companySections}}" wx:key="title" wx:for-item="section">
+      <view class="company-section-head">
+        <text>{{section.title}}</text>
+        <text>{{section.count}} 家</text>
+      </view>
+      <button
+        class="company-card"
+        wx:for="{{section.companies}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="viewDetail"
+      >
+        <view class="logo-box">
+          <image src="{{item.logo}}" mode="aspectFit" />
+        </view>
+        <view class="company-main">
+          <view class="company-title-line">
+            <text class="company-name">{{item.name}}</text>
+            <text class="company-region">{{item.region}}</text>
+          </view>
+          <text class="muted">{{item.cnName}} · {{item.industry}}</text>
+          <text class="salary">{{item.salary}}</text>
+          <text class="two-line">{{item.roleText}}</text>
+        </view>
+      </button>
+    </view>
+  </view>
+</view>

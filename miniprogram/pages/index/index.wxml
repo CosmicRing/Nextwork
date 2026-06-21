@@ -1,0 +1,467 @@
+<view class="page-shell">
+  <view class="hero">
+    <text class="eyebrow">看看工资 · 学校专业入口</text>
+    <text class="title">先看学校，再看专业能去哪里、多少钱</text>
+    <input class="school-input" value="{{query}}" placeholder="输入学校，例如 郑州工商学院 / 武汉工商学院 / 重庆移通学院" bindinput="onSchoolInput" />
+    <input class="major-input" value="{{majorQuery}}" placeholder="输入专业/方向，例如 护理学 / 电子商务 / 机械" bindinput="onMajorInput" />
+    <input class="city-input" value="{{cityQuery}}" placeholder="城市线索，可选，例如 新乡 / 洛阳 / 郑州" bindinput="onCityInput" />
+    <scroll-view class="major-preset-row" scroll-x enhanced show-scrollbar="{{false}}">
+      <button
+        wx:for="{{ordinaryMajorPresets}}"
+        wx:key="id"
+        class="major-preset"
+        data-major="{{item.majorName}}"
+        bindtap="applyMajorPreset"
+      >
+        <text>{{item.label}}</text>
+        <text>{{item.roleHint}}</text>
+      </button>
+    </scroll-view>
+  </view>
+
+  <view class="section ordinary-rescue">
+    <view class="section-heading">
+      <text>{{activeRescuePacket.title}}</text>
+      <button class="rescue-packet-button" bindtap="copyRescuePacket">复制入口包</button>
+    </view>
+    <text class="muted">{{activeRescuePacket.subtitle}}</text>
+    <text class="city-hint">城市线索：{{activeRescuePacket.targetCityName || "待补充，本地机会会先用通用检索"}}</text>
+
+    <view class="city-evidence-action-panel" wx:if="{{activeRescuePacket.cityEvidenceActions.length > 0}}">
+      <view class="city-evidence-action-head">
+        <view>
+          <text>城市证据动作清单</text>
+          <text class="muted">先抓可核验来源，再做学校专业判断</text>
+        </view>
+        <text>{{activeRescuePacket.cityEvidenceActions.length}} 项</text>
+      </view>
+      <view class="city-evidence-action-card" wx:for="{{activeRescuePacket.cityEvidenceActions}}" wx:key="id">
+        <view class="city-evidence-action-title-row">
+          <text>{{item.label}}</text>
+          <text>{{item.evidenceSlot}}</text>
+        </view>
+        <text class="muted">{{item.source}}</text>
+        <text class="city-evidence-action-query">{{item.query}}</text>
+        <view class="city-evidence-action-actions">
+          <button class="ghost-button" data-id="{{item.id}}" bindtap="prefillEvidenceDraftFromCityEvidenceAction">填模板</button>
+          <button class="ghost-button" data-id="{{item.id}}" bindtap="copyCityEvidenceAction">复制</button>
+        </view>
+      </view>
+    </view>
+
+    <scroll-view class="rescue-example-row" scroll-x enhanced show-scrollbar="{{false}}">
+      <text class="rescue-example" wx:for="{{activeRescuePacket.examples}}" wx:key="*this">{{item}}</text>
+    </scroll-view>
+
+    <view class="school-type-strategy-card" wx:if="{{activeRescuePacket.typeStrategy}}">
+      <view class="school-type-strategy-head">
+        <view>
+          <text>{{activeRescuePacket.typeStrategy.label}}</text>
+          <text class="muted">{{activeRescuePacket.typeStrategy.reason}}</text>
+        </view>
+        <text>{{activeRescuePacket.typeStrategy.confidenceLabel}}</text>
+      </view>
+      <text class="school-type-strategy-move">{{activeRescuePacket.typeStrategy.firstMove}}</text>
+      <view class="school-type-strategy-focus">
+        <text wx:for="{{activeRescuePacket.typeStrategy.searchFocus}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="school-type-strategy-warning">
+        <text wx:for="{{activeRescuePacket.typeStrategy.warnings}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="school-type-strategy-action-row" wx:if="{{activeRescuePacket.typeStrategyActions.length > 0}}">
+        <button
+          class="school-type-strategy-action"
+          wx:for="{{activeRescuePacket.typeStrategyActions}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="copySchoolTypeStrategyAction"
+        >
+          <text>{{item.label}}</text>
+          <text>{{item.evidenceSlot}}</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="salary-direction-bridge" wx:if="{{activeRescuePacket.salaryDirections.length > 0}}">
+      <view class="salary-direction-head">
+        <view>
+          <text>岗位薪资方向桥</text>
+          <text class="muted">先把专业落到岗位，再每天用官网岗位核验薪资</text>
+        </view>
+        <text>{{activeRescuePacket.salaryDirections.length}} 个方向</text>
+      </view>
+      <view class="salary-direction-card" wx:for="{{activeRescuePacket.salaryDirections}}" wx:key="id">
+        <view class="salary-direction-title-row">
+          <text>{{item.title}}</text>
+          <text>{{item.salary}}</text>
+        </view>
+        <text class="muted">{{item.reason}}</text>
+        <view class="salary-direction-company-row">
+          <text wx:for="{{item.companies}}" wx:key="*this">{{item}}</text>
+        </view>
+        <view class="salary-direction-company-entry-row" wx:if="{{item.companyEntrances.length > 0}}">
+          <button
+            class="salary-direction-company-entry"
+            wx:for="{{item.companyEntrances}}"
+            wx:for-item="company"
+            wx:key="id"
+            data-direction-id="{{item.id}}"
+            data-company-id="{{company.id}}"
+            bindtap="copySalaryDirectionCompanyEntrance"
+          >
+            <text>{{company.name}}</text>
+            <text>{{company.cnName}} · {{company.region}}</text>
+          </button>
+        </view>
+        <view class="salary-direction-local-entry-row" wx:if="{{item.localOpportunityChannels.length > 0}}">
+          <view
+            class="salary-direction-local-entry"
+            wx:for="{{item.localOpportunityChannels}}"
+            wx:for-item="channel"
+            wx:key="id"
+          >
+            <text>{{channel.label}}</text>
+            <text>{{channel.source}} · {{channel.evidenceSlot}}</text>
+            <view class="salary-direction-local-actions">
+              <button
+                class="ghost-button"
+                data-direction-id="{{item.id}}"
+                data-channel-id="{{channel.id}}"
+                bindtap="prefillEvidenceDraftFromLocalOpportunityChannel"
+              >填模板</button>
+              <button
+                class="ghost-button"
+                data-direction-id="{{item.id}}"
+                data-channel-id="{{channel.id}}"
+                bindtap="copyLocalOpportunityChannel"
+              >复制</button>
+            </view>
+          </view>
+        </view>
+        <view class="salary-direction-actions">
+          <text>{{item.updateRule}}</text>
+          <button class="ghost-button" data-id="{{item.id}}" bindtap="prefillEvidenceDraftFromSalaryDirection">填模板</button>
+          <button class="ghost-button" data-id="{{item.id}}" bindtap="copySalaryDirection">复制</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="career-signal-digest" wx:if="{{activeRescuePacket.careerSignalDigest}}">
+      <view class="career-signal-head">
+        <view>
+          <text>职业信号摘要</text>
+          <text class="muted">{{activeRescuePacket.careerSignalDigest.status}}</text>
+        </view>
+        <text>{{activeRescuePacket.careerSignalDigest.scoreLabel}}</text>
+      </view>
+      <text class="career-signal-title">{{activeRescuePacket.careerSignalDigest.title}}</text>
+      <view class="career-signal-metric-row">
+        <text>{{activeRescuePacket.careerSignalDigest.salaryLabel}}</text>
+        <text>{{activeRescuePacket.careerSignalDigest.sourceCoverageText}}</text>
+      </view>
+      <view class="career-signal-tags">
+        <text wx:for="{{activeRescuePacket.careerSignalDigest.tags}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="career-signal-body">
+        <text>{{activeRescuePacket.careerSignalDigest.opportunity}}</text>
+        <text>{{activeRescuePacket.careerSignalDigest.risk}}</text>
+      </view>
+      <view class="career-signal-next-actions">
+        <text>下一步</text>
+        <text wx:for="{{activeRescuePacket.careerSignalDigest.nextActions}}" wx:key="*this">{{index + 1}}. {{item}}</text>
+      </view>
+    </view>
+
+    <view class="source-task-runway rescue-task-list">
+      <view class="source-task-runway-head">
+        <view>
+          <text>先做这 5 步</text>
+          <text class="muted">按顺序补证据，别一上来就相信宣传话术</text>
+        </view>
+        <text>{{evidenceProgressText}}</text>
+      </view>
+      <view class="source-task-card rescue-task-row {{item.done ? 'done' : ''}}" wx:for="{{evidenceProgress}}" wx:key="id">
+        <view class="source-task-index">
+          <text>{{index + 1}}</text>
+          <text>{{item.done ? "已存" : "待补"}}</text>
+        </view>
+        <view class="source-task-body">
+          <text class="source-task-title">{{item.title}}</text>
+          <text>{{item.check}}</text>
+          <text class="muted">{{item.output}}</text>
+        </view>
+        <view class="source-task-actions">
+          <text class="source-task-status-note">证据自动完成</text>
+          <button class="source-task-primary-action" data-task-title="{{item.title}}" bindtap="prefillEvidenceDraftFromTask">填模板</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="source-ladder-panel" wx:if="{{activeRescuePacket.authorityRoutes.length > 0}}">
+      <view class="source-ladder-head">
+        <text>权威入口阶梯</text>
+        <text>{{activeRescuePacket.authorityRoutes.length}} 个入口</text>
+      </view>
+      <view class="source-ladder-card" wx:for="{{activeRescuePacket.authorityRoutes}}" wx:key="tier">
+        <text class="source-ladder-tier">{{item.tier}}</text>
+        <view>
+          <text>{{item.label}}</text>
+          <text class="muted">{{item.source}}</text>
+          <text class="evidence-source-hint">{{item.useFor}}</text>
+        </view>
+        <view class="source-ladder-actions">
+          <button class="ghost-button" data-url="{{item.url}}" bindtap="copyLink">复制</button>
+          <button class="ghost-button" data-tier="{{item.tier}}" bindtap="prefillEvidenceDraftFromAuthorityRoute">填模板</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="rescue-entry-grid">
+      <view class="rescue-entry-card" wx:for="{{activeRescuePacket.entryGroups}}" wx:key="label">
+        <view class="rescue-entry-head">
+          <text>{{item.label}}</text>
+          <text>{{item.trustLevel}}</text>
+        </view>
+        <text class="rescue-source">{{item.source}}</text>
+        <text class="muted">{{item.action}}</text>
+        <view class="rescue-save-fields">
+          <text wx:for="{{item.saveFields}}" wx:key="*this">{{item}}</text>
+        </view>
+        <button class="ghost-button" data-label="{{item.label}}" bindtap="copyRescueEntry">复制</button>
+      </view>
+    </view>
+
+    <view class="evidence-progress-bar">
+      <text>{{evidenceProgressText}}</text>
+      <view>
+        <text style="width: {{evidenceProgressPercent}}%;"></text>
+      </view>
+    </view>
+
+    <view class="progress-brief-card">
+      <text>进度简报</text>
+      <text class="muted">{{progressBriefNextAction}}</text>
+      <button bindtap="copyProgressBrief">复制进度简报</button>
+    </view>
+
+    <view class="candidate-readiness-card {{currentCandidateReadiness.level}}">
+      <view class="candidate-readiness-head">
+        <text>当前候选判断</text>
+        <text>{{currentCandidateReadiness.title}}</text>
+      </view>
+      <text class="muted">{{currentCandidateReadiness.summary}}</text>
+      <view class="readiness-missing-row" wx:if="{{currentCandidateReadiness.missingLabels.length > 0}}">
+        <text class="readiness-missing-label">核心缺口</text>
+        <text wx:for="{{currentCandidateReadiness.missingLabels}}" wx:key="*this">{{item}}</text>
+      </view>
+      <text class="readiness-next-action">{{currentCandidateReadiness.nextAction}}</text>
+    </view>
+
+    <view class="evidence-inbox-panel">
+      <view class="section-heading">
+        <text>证据箱</text>
+        <text>{{evidenceInboxSummary}}</text>
+      </view>
+      <view class="evidence-next-source-panel">
+        <view class="evidence-next-source-head">
+          <text>下一步去哪查</text>
+          <text>{{evidenceNextSourceActions.length}} 个缺口</text>
+        </view>
+        <view class="evidence-next-source-card" wx:for="{{evidenceNextSourceActions}}" wx:key="label">
+          <view>
+            <text>{{item.label}}</text>
+            <text class="muted">{{item.source}} · {{item.trustLevel}}</text>
+            <text class="evidence-source-hint">{{item.action}}</text>
+          </view>
+          <view class="evidence-next-source-actions">
+            <button data-label="{{item.label}}" bindtap="copyEvidenceNextSourceAction">复制</button>
+            <button data-label="{{item.label}}" bindtap="prefillEvidenceDraftFromNextSourceAction">填模板</button>
+          </view>
+        </view>
+        <view class="evidence-next-source-empty" wx:if="{{evidenceNextSourceActions.length == 0}}">
+          <text class="muted">可信证据槽已覆盖，继续核验来源和更新时间。</text>
+        </view>
+      </view>
+      <textarea
+        class="evidence-draft-input"
+        value="{{evidenceDraftText}}"
+        placeholder="粘贴学校官网、就业报告、宣讲会、岗位薪资片段"
+        maxlength="-1"
+        bindinput="onEvidenceDraftInput"
+      />
+      <view class="candidate-action-row">
+        <button bindtap="saveEvidenceDraft">保存证据</button>
+        <button bindtap="parseEvidenceDraftBatch">批量解析证据</button>
+        <button bindtap="importEvidenceFromClipboard">剪贴板解析</button>
+        <button bindtap="copyEvidenceInboxBrief">复制证据汇总</button>
+      </view>
+      <view class="evidence-inbox-card" wx:for="{{evidenceInboxItems}}" wx:key="id">
+        <view>
+          <view class="evidence-inbox-title-row">
+            <text>{{item.slotLabel}}</text>
+            <text class="evidence-trust-badge {{item.trustStatus}}">{{item.trustLabel}}</text>
+            <text class="evidence-privacy-badge" wx:if="{{item.privacyLabel}}">{{item.privacyLabel}}</text>
+          </view>
+          <text class="muted">{{item.trustLevel}} · {{item.title}}</text>
+          <text class="evidence-source-hint">{{item.sourceHint}}</text>
+          <text class="evidence-privacy-warning" wx:if="{{item.privacyWarning}}">{{item.privacyWarning}}</text>
+          <text class="evidence-inbox-detail" wx:if="{{expandedEvidenceInboxItemId == item.id}}">{{item.text}}</text>
+        </view>
+        <view class="evidence-inbox-actions">
+          <button data-id="{{item.id}}" bindtap="toggleEvidenceInboxItemDetail">{{expandedEvidenceInboxItemId == item.id ? "收起" : "详情"}}</button>
+          <button data-id="{{item.id}}" bindtap="removeEvidenceInboxItem">移除</button>
+        </view>
+      </view>
+      <view class="saved-candidate-empty" wx:if="{{evidenceInboxItems.length == 0}}">
+        <text class="muted">先复制上方入口去官网核验，再把关键片段粘贴回来。</text>
+      </view>
+    </view>
+
+    <view class="saved-candidate-panel">
+      <view class="section-heading">
+        <text>候选对比</text>
+        <text>{{savedCandidateSummary}}</text>
+      </view>
+      <view class="candidate-verdict-card">
+        <text class="candidate-verdict-title">候选结论排序</text>
+        <text class="candidate-verdict-strong">{{candidateVerdict.title}}</text>
+        <text class="muted">{{candidateVerdict.reason}}</text>
+        <text class="muted">{{candidateVerdict.missingLabel}}</text>
+      </view>
+      <view class="candidate-action-row">
+        <button bindtap="saveCurrentCandidate">保存当前候选</button>
+        <button bindtap="copyCandidateReport">复制对比报告</button>
+      </view>
+      <view class="saved-candidate-card" wx:for="{{candidateVerdict.ranked}}" wx:key="key">
+        <view class="saved-candidate-main">
+          <view class="saved-candidate-topline">
+            <text>{{index + 1}}. {{item.schoolName}}</text>
+            <text class="candidate-card-score">排序分 {{item.rankScore}}</text>
+          </view>
+          <text class="muted">{{item.majorName}} · {{item.progressText}}</text>
+          <view class="candidate-evidence-snapshot">
+            <text>{{item.cityName}} · {{item.salaryFocus}} · {{item.salaryRange}}</text>
+            <text class="candidate-source-coverage">{{item.sourceCoverageText}}</text>
+            <text class="candidate-next-source">下一条：{{item.nextSourceLabel}}｜{{item.nextSourceAction}}</text>
+            <text class="candidate-next-source-detail" wx:if="{{item.nextSourceSource}}">来源：{{item.nextSourceSource}}</text>
+            <text class="candidate-next-source-detail" wx:if="{{item.nextSourceQuery}}">检索：{{item.nextSourceQuery}}</text>
+          </view>
+          <view class="candidate-card-meta-row">
+            <text class="candidate-card-readiness">{{item.readinessTitle}}</text>
+            <text class="candidate-card-next-action">{{item.nextAction}}</text>
+          </view>
+          <view class="candidate-card-missing-row" wx:if="{{item.missingTasks.length > 0}}">
+            <text>缺口</text>
+            <text wx:for="{{item.missingTasks}}" wx:for-item="task" wx:key="*this">{{task}}</text>
+          </view>
+        </view>
+        <button data-key="{{item.key}}" bindtap="removeSavedCandidate">移除</button>
+      </view>
+      <view class="saved-candidate-empty" wx:if="{{savedCandidates.length == 0}}">
+        <text class="muted">先保存 2-4 个学校和专业，再复制对比报告。</text>
+      </view>
+    </view>
+
+  </view>
+
+  <scroll-view class="school-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <button
+      wx:for="{{filteredSchools}}"
+      wx:key="id"
+      class="school-tab {{selectedSchool.id == item.id ? 'active' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="selectSchool"
+    >
+      <text>{{item.name}}</text>
+      <text>{{item.city}}</text>
+    </button>
+  </scroll-view>
+
+  <view class="section unknown-school-empty" wx:if="{{isUnknownSchool}}">
+    <text>{{unknownSchoolName}} 暂未收录</text>
+    <text class="muted">目标专业：{{activeRescuePacket.targetMajorName}}。上面的入口包已经按这个学校和专业生成，先逐项保存官网、就业和薪资证据。</text>
+    <button class="rescue-packet-button" bindtap="copyRescuePacket">复制 {{unknownSchoolName}} 入口包</button>
+  </view>
+
+  <view class="section" wx:if="{{selectedSchool}}">
+    <text class="eyebrow">{{selectedSchool.type}}</text>
+    <text class="school-name">{{selectedSchool.name}}</text>
+    <text class="muted">{{selectedSchool.summary}}</text>
+
+    <view class="metric-grid">
+      <view class="metric-card" wx:for="{{selectedSchool.metrics}}" wx:key="label">
+        <text class="metric-value">{{item.value}}</text>
+        <text class="metric-label">{{item.label}}</text>
+        <text class="metric-note">{{item.note}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{selectedSchool}}">
+    <view class="section-heading">
+      <text>公开入口</text>
+      <text>复制后在浏览器核验</text>
+    </view>
+    <view class="link-list">
+      <view class="link-row" wx:for="{{selectedSchool.officialLinks}}" wx:key="label">
+        <view>
+          <text class="link-title">{{item.label}}</text>
+          <text class="muted">{{item.kind}}</text>
+        </view>
+        <button class="ghost-button" data-url="{{item.url}}" bindtap="copyLink">复制</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{selectedSchool}}">
+    <view class="section-heading">
+      <text>专业去向</text>
+      <text>点专业看岗位和薪资</text>
+    </view>
+    <view class="major-grid">
+      <button
+        wx:for="{{selectedSchool.majors}}"
+        wx:key="id"
+        class="major-card {{selectedMajor.id == item.id ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="selectMajor"
+      >
+        <text class="major-name">{{item.name}}</text>
+        <text class="muted">{{item.cluster}}</text>
+        <text class="major-salary">{{item.salary}}</text>
+      </button>
+    </view>
+
+    <view class="major-detail">
+      <text class="major-detail-title">{{selectedMajor.name}}</text>
+      <view class="metric-grid">
+        <view class="metric-card">
+          <text class="metric-value">{{selectedMajor.salary}}</text>
+          <text class="metric-label">平均工资参考</text>
+        </view>
+        <view class="metric-card">
+          <text class="metric-value">{{selectedMajor.employmentRate}}</text>
+          <text class="metric-label">就业率口径</text>
+        </view>
+      </view>
+      <view class="tag-wrap">
+        <text class="pill" wx:for="{{selectedMajor.destinations}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="company-line">
+        <text class="muted">常见招聘企业</text>
+        <text>{{selectedMajor.companyText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{selectedSchool}}">
+    <view class="section-heading">
+      <text>近年到校招聘</text>
+      <text>先展示可核验入口</text>
+    </view>
+    <view class="year-row" wx:for="{{selectedSchool.recruitersByYear}}" wx:key="year">
+      <text class="year">{{item.year}}</text>
+      <text class="muted">{{item.companyText}}</text>
+    </view>
+  </view>
+</view>

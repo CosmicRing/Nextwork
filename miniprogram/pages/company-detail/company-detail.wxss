@@ -1,0 +1,59 @@
+.detail-head {
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+  margin-top: 0;
+}
+
+.logo-box.large {
+  width: 120rpx;
+  height: 120rpx;
+  flex-basis: 120rpx;
+  border-radius: 26rpx;
+}
+
+.logo-box.large image {
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.head-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.note {
+  display: block;
+  margin-top: 18rpx;
+  color: #4e4638;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.entrance {
+  margin-top: 22rpx;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 18rpx;
+}
+
+.section-heading text:first-child {
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.section-heading text:last-child {
+  color: #817767;
+  font-size: 22rpx;
+}
+
+.tag-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}

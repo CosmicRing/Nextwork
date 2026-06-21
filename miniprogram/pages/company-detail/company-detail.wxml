@@ -1,0 +1,47 @@
+<view class="page-shell" wx:if="{{company}}">
+  <view class="section detail-head">
+    <view class="logo-box large">
+      <image src="{{company.logo}}" mode="aspectFit" />
+    </view>
+    <view class="head-copy">
+      <text class="eyebrow">{{company.region}} · {{company.industry}}</text>
+      <text class="title">{{company.name}}</text>
+      <text class="muted">{{company.cnName}}</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="metric-grid">
+      <view class="metric-card">
+        <text class="metric-value">{{company.salary}}</text>
+        <text class="metric-label">岗位薪资参考</text>
+      </view>
+      <view class="metric-card">
+        <text class="metric-value">{{company.region}}</text>
+        <text class="metric-label">企业类型</text>
+      </view>
+    </view>
+    <text class="note">{{company.note}}</text>
+    <button class="safe-button entrance" bindtap="copyEntrance">复制官网招聘入口</button>
+  </view>
+
+  <view class="section">
+    <view class="section-heading">
+      <text>岗位族</text>
+      <text>先按方向筛</text>
+    </view>
+    <view class="tag-wrap">
+      <text class="pill" wx:for="{{company.roles}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-heading">
+      <text>关联专业</text>
+      <text>面试前核验岗位 JD</text>
+    </view>
+    <view class="tag-wrap">
+      <text class="pill" wx:for="{{company.majors}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+</view>

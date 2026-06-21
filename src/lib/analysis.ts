@@ -29,17 +29,18 @@ export function scoreJob(job: Job, profile: StudentProfile): Badge {
 }
 
 export function getBadges(jobs: Job[], profile: StudentProfile) {
-  const strongestByCompany = new Map<string, Badge>();
+  const strongestByCompanyCategory = new Map<string, Badge>();
 
   jobs.forEach((job) => {
     const badge = scoreJob(job, profile);
-    const current = strongestByCompany.get(job.companyId);
+    const badgeKey = `${job.companyId}:${job.category}`;
+    const current = strongestByCompanyCategory.get(badgeKey);
     if (!current || current.matchScore < badge.matchScore) {
-      strongestByCompany.set(job.companyId, badge);
+      strongestByCompanyCategory.set(badgeKey, badge);
     }
   });
 
-  return Array.from(strongestByCompany.values()).sort((a, b) => b.matchScore - a.matchScore);
+  return Array.from(strongestByCompanyCategory.values()).sort((a, b) => b.matchScore - a.matchScore);
 }
 
 export function getRecommendedJobs(jobs: Job[], profile: StudentProfile) {
@@ -52,10 +53,14 @@ export function getMarketInsights(jobs: Job[]): MarketInsight[] {
   const tagCounts = new Map<string, number>();
   const categoryCounts = new Map<string, number>();
   const requirementCounts = new Map<string, number>();
+  const majorSignalCounts = new Map<string, number>();
 
   jobs.forEach((job) => {
     categoryCounts.set(job.category, (categoryCounts.get(job.category) ?? 0) + 1);
     job.tags.forEach((tag) => tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1));
+    job.majorSignals?.forEach((major) => {
+      majorSignalCounts.set(major, (majorSignalCounts.get(major) ?? 0) + 1);
+    });
     job.requirements.forEach((skill) => {
       requirementCounts.set(skill, (requirementCounts.get(skill) ?? 0) + 1);
     });
@@ -63,6 +68,7 @@ export function getMarketInsights(jobs: Job[]): MarketInsight[] {
 
   const topTags = topEntries(tagCounts, 5).map(([tag]) => tag).join(" / ");
   const topCategories = topEntries(categoryCounts, 3).map(([category]) => category).join(" / ");
+  const topMajorSignals = topEntries(majorSignalCounts, 5).map(([major]) => major).join(" / ");
   const commonRequirements = topEntries(requirementCounts, 6).map(([skill]) => skill).join(" / ");
   const foundations = foundationSkills
     .filter((skill) => requirementCounts.has(skill))
@@ -83,6 +89,11 @@ export function getMarketInsights(jobs: Job[]): MarketInsight[] {
       title: "基础能力",
       value: foundations || commonRequirements,
       detail: "跨岗位重复出现的基础项通常是编程、数据意识、系统理解、沟通协作和问题定位。",
+    },
+    {
+      title: "专业关联热区",
+      value: topMajorSignals || "待刷新",
+      detail: "从岗位标题、方向、职责和要求反推专业信号，用于把大厂岗位需求映射回高考专业选择。",
     },
     {
       title: "学习优先级",
@@ -122,6 +133,16 @@ function getCompanyGradient(companyId: Job["companyId"]) {
     meituan: "linear-gradient(135deg, #211500, #ffd000 60%, #2f7d32)",
     baidu: "linear-gradient(135deg, #172554, #4f46e5 55%, #ef4444)",
     jd: "linear-gradient(135deg, #4a0d0d, #e1251b 60%, #f8fafc)",
+    huawei: "linear-gradient(135deg, #450a0a, #c7000b 58%, #f8fafc)",
+    kuaishou: "linear-gradient(135deg, #431407, #ff5b00 58%, #fef3c7)",
+    bilibili: "linear-gradient(135deg, #075985, #00a1d6 58%, #f8fafc)",
+    xiaomi: "linear-gradient(135deg, #2f1600, #ff6900 58%, #fff7ed)",
+    pdd: "linear-gradient(135deg, #3f0f14, #d32029 58%, #fff1f2)",
+    midea: "linear-gradient(135deg, #063b4f, #00a3e0 58%, #dff7ff)",
+    amazon: "linear-gradient(135deg, #111827, #ff9900 58%, #f8fafc)",
+    ikea: "linear-gradient(135deg, #003399, #ffcc00 58%, #f8fafc)",
+    unilever: "linear-gradient(135deg, #072a60, #0f7bdc 58%, #dff7ff)",
+    loreal: "linear-gradient(135deg, #111111, #b8924f 58%, #fff7ed)",
   };
 
   return gradients[companyId];

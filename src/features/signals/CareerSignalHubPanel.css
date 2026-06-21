@@ -1,0 +1,259 @@
+.career-signal-hub {
+  display: grid;
+  gap: 16px;
+}
+
+.career-signal-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 16px;
+  align-items: stretch;
+  padding: 22px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(34, 197, 94, 0.14), transparent 28%),
+    linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.82));
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+}
+
+.career-signal-hero h1 {
+  max-width: 820px;
+  margin: 0;
+  color: #F8FAFC;
+  font-size: 34px;
+  line-height: 1.08;
+}
+
+.career-signal-hero p {
+  max-width: 820px;
+  margin: 12px 0 0;
+  color: rgba(226, 232, 240, 0.76);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.career-signal-hero > section {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.12);
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.28);
+}
+
+.career-signal-hero > section span,
+.career-signal-hero > section em {
+  color: rgba(226, 232, 240, 0.68);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.career-signal-hero > section strong {
+  color: #FACC15;
+  font-size: 46px;
+  line-height: 1;
+}
+
+.career-signal-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.career-signal-metrics article {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.career-signal-metrics span,
+.career-signal-metrics em {
+  color: rgba(15, 23, 42, 0.58);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.career-signal-metrics strong {
+  color: #0F172A;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.career-signal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(270px, 0.32fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.career-signal-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.career-signal-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  min-height: 238px;
+  padding: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  color: #0F172A;
+  background: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+}
+
+.career-signal-card.job {
+  border-top: 4px solid #2563EB;
+}
+
+.career-signal-card.salary {
+  border-top: 4px solid #D97706;
+}
+
+.career-signal-card.school {
+  border-top: 4px solid #059669;
+}
+
+.career-signal-card.source {
+  border-top: 4px solid #7C3AED;
+}
+
+.career-signal-card > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.career-signal-card span {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #334155;
+  background: rgba(226, 232, 240, 0.8);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.career-signal-card b {
+  color: #0F172A;
+  font-size: 24px;
+}
+
+.career-signal-card strong {
+  color: #0F172A;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.career-signal-card p,
+.career-signal-card small {
+  margin: 0;
+  color: rgba(15, 23, 42, 0.62);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.career-signal-card footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-self: end;
+}
+
+.career-signal-card footer em {
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #075985;
+  background: rgba(14, 165, 233, 0.1);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.career-signal-taxonomy {
+  display: grid;
+  gap: 12px;
+}
+
+.career-signal-taxonomy section {
+  display: grid;
+  gap: 8px;
+  padding: 15px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.career-signal-taxonomy span {
+  color: rgba(15, 23, 42, 0.52);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.career-signal-taxonomy p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  color: #0F172A;
+  font-size: 13px;
+}
+
+.career-signal-taxonomy p strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.career-signal-taxonomy p em,
+.career-signal-taxonomy b {
+  color: rgba(15, 23, 42, 0.58);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.career-signal-risk-note p {
+  display: block;
+  color: rgba(15, 23, 42, 0.64);
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .career-signal-hero,
+  .career-signal-layout,
+  .career-signal-list,
+  .career-signal-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .career-signal-hero {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .career-signal-hero h1 {
+    font-size: 25px;
+  }
+
+  .career-signal-hero > section strong {
+    font-size: 38px;
+  }
+
+  .career-signal-card {
+    min-height: auto;
+  }
+}

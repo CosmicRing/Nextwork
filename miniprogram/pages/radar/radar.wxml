@@ -1,0 +1,69 @@
+<view class="page-shell">
+  <view class="section radar-hero">
+    <text class="eyebrow">职业雷达</text>
+    <text class="title">输入岗位，看专业关联强度</text>
+    <input class="role-input" value="{{query}}" placeholder="例如 AI 算法工程师 / 产品经理 / 投行分析师" bindinput="onRoleInput" />
+  </view>
+
+  <scroll-view class="role-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <button
+      wx:for="{{radarRoles}}"
+      wx:key="id"
+      class="role-tab {{selectedRole.id == item.id ? 'active' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="selectRole"
+    >
+      {{item.title}}
+    </button>
+  </scroll-view>
+
+  <view class="section">
+    <view class="radar-topline">
+      <view>
+        <text class="eyebrow">当前岗位</text>
+        <text class="role-title">{{selectedRole.title}}</text>
+      </view>
+      <text class="radar-salary">{{selectedRole.salary}}</text>
+    </view>
+    <view class="radar-ring-legend">
+      <text>内圈 = 关联更强</text>
+      <text>外圈 = 可转向补强</text>
+      <button class="radar-report-button" bindtap="copyRadarReport">复制雷达报告</button>
+    </view>
+
+    <view class="radar-chart">
+      <view class="radar-ring ring-a"></view>
+      <view class="radar-ring ring-b"></view>
+      <view class="radar-ring ring-c"></view>
+      <view class="radar-center">
+        <text>{{selectedRole.title}}</text>
+      </view>
+      <view class="major-dot {{item.pointClass}}" wx:for="{{radarRankedMajors}}" wx:key="name">
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+
+    <view class="rank-list">
+      <view class="rank-row" wx:for="{{radarRankedMajors}}" wx:key="name">
+        <view class="rank-info">
+          <text class="rank-name">{{index + 1}}. {{item.name}}</text>
+          <text class="muted">第 {{item.ring}} 圈 · 关联强度 {{item.strength}}</text>
+        </view>
+        <view class="bar-track">
+          <view class="bar-fill" style="width: {{item.strength}}%;"></view>
+        </view>
+      </view>
+    </view>
+    <text class="radar-report-note">薪资为岗位市场参考；填志愿前继续用学校官网、就业报告和企业官网岗位交叉核验。</text>
+  </view>
+
+  <view class="section">
+    <view class="section-heading">
+      <text>常见公司</text>
+      <text>先看岗位族，再核验 JD</text>
+    </view>
+    <view class="tag-wrap">
+      <text class="pill" wx:for="{{selectedRole.companies}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+</view>

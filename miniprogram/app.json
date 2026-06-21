@@ -1,0 +1,39 @@
+{
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/index/index",
+    "pages/companies/companies",
+    "pages/company-detail/company-detail",
+    "pages/radar/radar"
+  ],
+  "window": {
+    "navigationBarTitleText": "看看工资",
+    "navigationBarBackgroundColor": "#f7f5ef",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f5ef",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#6f6a5d",
+    "selectedColor": "#111111",
+    "backgroundColor": "#fffdf8",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "学校"
+      },
+      {
+        "pagePath": "pages/companies/companies",
+        "text": "公司"
+      },
+      {
+        "pagePath": "pages/radar/radar",
+        "text": "雷达"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
