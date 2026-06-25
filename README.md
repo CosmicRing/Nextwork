@@ -105,3 +105,7 @@ npm run verify:career-signals
 - [AI HOT](https://aihot.virxact.com/)
 - [AI HOT Agent 接入](https://aihot.virxact.com/agent)
 - [AI HOT 更新日志](https://aihot.virxact.com/changelog)
+
+## 开源协议
+
+本项目遵循 [MIT License](LICENSE) 开源。

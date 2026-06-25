@@ -1,7 +1,17 @@
 {
   "name": "kankan-salary",
   "version": "0.1.0",
-  "private": true,
+  "description": "Data-driven career planning and salary signal prototype for young people.",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CosmicRing/Nextwork.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CosmicRing/Nextwork/issues"
+  },
+  "homepage": "https://github.com/CosmicRing/Nextwork#readme",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
