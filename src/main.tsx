@@ -2225,15 +2225,15 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
         <CompanyDemandPanel />
         <BigTechOpportunityPanel recommendations={recommendedJobs} searchIntent={searchIntent} />
 
-        <details className="optional-tools-panel">
+        <details className="optional-tools-panel identity-onboarding-panel" open>
           <summary>
             <span>先测画像</span>
             <strong>MBTI 快测、专业路径和赛道信号</strong>
           </summary>
 
-          <section className="panel two-column" id="mbti-test">
+          <section className="panel two-column identity-test-panel" id="mbti-test">
             <div>
-              <PanelHeader kicker="Optional" title="补充个人画像" icon={<Brain size={20} />} />
+              <PanelHeader kicker="Step 01" title="先确认你是谁" icon={<Brain size={20} />} />
               <div className="question-list">
                 {mbtiQuestions.map((question) => (
                   <div key={question.id} className="question-row">
@@ -2258,8 +2258,8 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
             </div>
           </section>
 
-          <section className="panel" id="major-paths">
-            <PanelHeader kicker="Optional" title="从就业终局倒推专业路径" icon={<GraduationCap size={20} />} />
+          <section className="panel identity-path-panel" id="major-paths">
+            <PanelHeader kicker="Step 02" title="再从就业终局倒推专业路径" icon={<GraduationCap size={20} />} />
             <div className="recommend-list">
               {rankedMajors.slice(0, 4).map((path, index) => (
                 <article key={path.id} className="recommend-card">
@@ -2279,9 +2279,9 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
             </div>
           </section>
 
-          <section className="panel split-panel" id="market-signals">
+          <section className="panel split-panel identity-signal-panel" id="market-signals">
             <div>
-              <PanelHeader kicker="Optional" title="社会需求信号" icon={<LineChart size={20} />} />
+              <PanelHeader kicker="Step 03" title="最后看社会正在需要什么" icon={<LineChart size={20} />} />
               <div className="signal-stack">
                 <SignalBar label="岗位方向" value={signals.directions.slice(0, 3).join(" / ")} percent={92} />
                 <SignalBar label="基础能力" value={signals.requirements.slice(0, 4).join(" / ")} percent={86} />

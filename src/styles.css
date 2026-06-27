@@ -16291,6 +16291,96 @@ body {
   font-size: 16px;
 }
 
+.salary-life-page .identity-onboarding-panel {
+  gap: 12px;
+  max-height: min(720px, calc(100dvh - 112px));
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  padding: 14px;
+  border: 1px solid rgb(203 213 225 / 0.66);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 6% 0%, rgb(14 165 233 / 0.11), transparent 30%),
+    linear-gradient(135deg, rgb(255 255 255 / 0.82), rgb(216 227 234 / 0.42)),
+    rgb(241 245 249 / 0.74);
+  box-shadow: 0 18px 48px rgb(15 23 42 / 0.055);
+}
+
+.salary-life-page .identity-onboarding-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.salary-life-page .identity-onboarding-panel::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgb(148 163 184 / 0.48);
+  background-clip: padding-box;
+}
+
+.salary-life-page .identity-onboarding-panel[open] > summary {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-bottom: 12px;
+  backdrop-filter: blur(14px);
+}
+
+.salary-life-page .identity-onboarding-panel > .panel {
+  margin-bottom: 12px;
+}
+
+.salary-life-page .identity-test-panel,
+.salary-life-page .identity-path-panel,
+.salary-life-page .identity-signal-panel {
+  border-radius: 18px !important;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.92), rgb(248 251 255 / 0.78)),
+    rgb(241 245 249 / 0.78) !important;
+}
+
+.salary-life-page .identity-test-panel {
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.52fr);
+}
+
+.salary-life-page .identity-test-panel .question-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.salary-life-page .identity-test-panel .question-row {
+  min-width: 0;
+}
+
+.salary-life-page .identity-test-panel .choice-card {
+  min-height: 68px;
+  padding: 9px;
+  border-radius: 14px;
+}
+
+.salary-life-page .identity-test-panel .choice-card span {
+  font-size: 12px;
+  line-height: 1.38;
+}
+
+.salary-life-page .identity-path-panel .recommend-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.salary-life-page .identity-path-panel .recommend-card {
+  min-height: 132px;
+}
+
+.salary-life-page .identity-signal-panel {
+  grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
+}
+
+.salary-life-page .identity-signal-panel .startup-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.salary-life-page .identity-signal-panel .startup-list article {
+  min-height: 132px;
+}
+
 @media (max-width: 1040px) {
   .salary-life-page .content-grid {
     grid-template-columns: 1fr;
@@ -16300,11 +16390,47 @@ body {
     position: static;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .salary-life-page .identity-test-panel .question-list,
+  .salary-life-page .identity-path-panel .recommend-list,
+  .salary-life-page .identity-signal-panel .startup-list {
+    grid-template-columns: 1fr;
+  }
+
+  .salary-life-page .identity-test-panel,
+  .salary-life-page .identity-signal-panel {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 860px) {
   .salary-life-page {
     width: min(390px, calc(100vw - 20px));
+  }
+
+  .salary-life-page .identity-onboarding-panel {
+    max-height: min(680px, calc(100dvh - 88px));
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .salary-life-page .identity-test-panel .choice-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .salary-life-page .identity-test-panel .choice-card {
+    min-height: 64px;
+    padding: 8px;
+  }
+
+  .salary-life-page .identity-test-panel .choice-card strong {
+    font-size: 12px;
+  }
+
+  .salary-life-page .identity-test-panel .choice-card span {
+    font-size: 10px;
+    line-height: 1.3;
   }
 }
 
