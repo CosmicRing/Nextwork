@@ -16232,3 +16232,166 @@ body {
     border-radius: 14px !important;
   }
 }
+
+/* School dashboard containment: keep the first screen scannable. */
+.salary-school-entry-page > .school-major-panel {
+  overflow: hidden;
+}
+
+.salary-school-entry-page .school-major-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.34fr);
+  grid-template-areas:
+    "report picker"
+    "detail detail";
+  align-items: start;
+}
+
+.salary-school-entry-page .major-browser {
+  grid-area: report;
+  max-height: min(760px, calc(100dvh - 156px));
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 3px;
+  scrollbar-gutter: stable;
+}
+
+.salary-school-entry-page .school-picker-secondary {
+  grid-area: picker;
+  position: sticky;
+  top: 92px;
+  max-height: min(760px, calc(100dvh - 156px));
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 3px;
+  scrollbar-gutter: stable;
+}
+
+.salary-school-entry-page .major-detail-browser {
+  grid-area: detail;
+  max-height: 520px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 3px;
+  scrollbar-gutter: stable;
+}
+
+.salary-school-entry-page .major-browser,
+.salary-school-entry-page .school-picker-secondary,
+.salary-school-entry-page .major-detail-browser {
+  scroll-behavior: smooth;
+}
+
+.salary-school-entry-page .major-browser::-webkit-scrollbar,
+.salary-school-entry-page .school-picker-secondary::-webkit-scrollbar,
+.salary-school-entry-page .major-detail-browser::-webkit-scrollbar,
+.salary-school-entry-page .school-aggregation-report-panel::-webkit-scrollbar,
+.salary-school-entry-page .school-public-access-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.salary-school-entry-page .major-browser::-webkit-scrollbar-thumb,
+.salary-school-entry-page .school-picker-secondary::-webkit-scrollbar-thumb,
+.salary-school-entry-page .major-detail-browser::-webkit-scrollbar-thumb,
+.salary-school-entry-page .school-aggregation-report-panel::-webkit-scrollbar-thumb,
+.salary-school-entry-page .school-public-access-panel::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgb(148 163 184 / 0.45);
+  background-clip: padding-box;
+}
+
+.salary-school-entry-page .school-aggregation-report-panel {
+  border-color: rgb(203 213 225 / 0.72);
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.98), rgb(248 251 255 / 0.92)),
+    rgb(255 255 255 / 0.9);
+}
+
+.salary-school-entry-page .school-aggregation-report-grid section {
+  background:
+    linear-gradient(180deg, rgb(248 251 255 / 0.96), rgb(241 245 249 / 0.86));
+}
+
+@media (max-width: 860px) {
+  .salary-school-entry-page > .school-major-panel {
+    overflow: visible;
+  }
+
+  .salary-school-entry-page .school-major-layout {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "report"
+      "picker"
+      "detail";
+    gap: 12px;
+  }
+
+  .salary-school-entry-page .major-browser,
+  .salary-school-entry-page .school-picker-secondary,
+  .salary-school-entry-page .major-detail-browser {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .salary-school-entry-page .school-aggregation-report-panel,
+  .salary-school-entry-page .school-public-access-panel {
+    max-height: min(620px, calc(100dvh - 146px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .salary-school-entry-page .school-public-access-panel {
+    padding-right: 6px;
+  }
+
+  .salary-school-entry-page .school-aggregation-major-table,
+  .salary-school-entry-page .school-aggregation-recruiting-list,
+  .salary-school-entry-page .school-aggregation-salary-list {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 2px;
+  }
+
+  .salary-school-entry-page .school-picker-secondary {
+    padding: 10px;
+    border: 1px solid rgb(203 213 225 / 0.72);
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.82);
+  }
+}
+
+@media (max-width: 560px) {
+  .salary-school-entry-page .school-aggregation-report-panel {
+    max-height: min(620px, calc(100dvh - 124px));
+  }
+
+  .salary-school-entry-page .school-public-access-panel {
+    max-height: min(560px, calc(100dvh - 156px));
+  }
+
+  .salary-school-entry-page .school-aggregation-report-head h3 {
+    font-size: 20px;
+    line-height: 1.16;
+  }
+
+  .salary-school-entry-page .school-aggregation-report-head span,
+  .salary-school-entry-page .school-aggregation-report-grid p,
+  .salary-school-entry-page .school-aggregation-major-row p,
+  .salary-school-entry-page .school-aggregation-major-row span,
+  .salary-school-entry-page .school-aggregation-recruiting-row p,
+  .salary-school-entry-page .school-aggregation-recruiting-row em,
+  .salary-school-entry-page .school-aggregation-salary-row p {
+    font-size: 11px;
+  }
+
+  .salary-school-entry-page .school-aggregation-report-grid {
+    gap: 8px;
+  }
+
+  .salary-school-entry-page .school-aggregation-report-grid section {
+    min-height: 108px;
+  }
+}
