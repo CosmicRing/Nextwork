@@ -23,6 +23,7 @@ import {
   LineChart,
   Medal,
   MessageSquare,
+  RotateCcw,
   Search,
   Settings,
   ShieldCheck,
@@ -2286,6 +2287,9 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
         : [...current.doneTodos, todoId],
     }));
   };
+  const resetLifeDashboard = () => {
+    setLifeDashboardState(getDefaultLifeDashboardState());
+  };
 
   return (
     <div className="content-grid">
@@ -2340,6 +2344,13 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
                 {profile.strengths.map((item) => (
                   <span key={item}>{item}</span>
                 ))}
+              </div>
+              <div className="life-state-actions">
+                <span>进度已保存到本机</span>
+                <button type="button" onClick={resetLifeDashboard}>
+                  <RotateCcw size={15} />
+                  重新测试
+                </button>
               </div>
             </div>
           </section>
@@ -2398,6 +2409,13 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
           <h3>{profile.name}</h3>
           <p>{profile.caution}</p>
           <ProgressLine value={completion} label="规划完成度" />
+          <div className="life-state-actions compact">
+            <span>本机保存</span>
+            <button type="button" onClick={resetLifeDashboard}>
+              <RotateCcw size={15} />
+              重测
+            </button>
+          </div>
         </section>
 
         <section className="panel" id="life-todos">

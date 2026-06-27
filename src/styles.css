@@ -16361,6 +16361,55 @@ body {
   line-height: 1.38;
 }
 
+.salary-life-page .life-state-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.salary-life-page .life-state-actions span {
+  min-width: 0;
+  color: rgb(71 85 105 / 0.72);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.salary-life-page .life-state-actions button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid rgb(14 165 233 / 0.24);
+  border-radius: 999px;
+  color: #075985;
+  background: rgb(240 249 255 / 0.84);
+  font-size: 12px;
+  font-weight: 950;
+  white-space: nowrap;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.salary-life-page .life-state-actions button:hover {
+  border-color: rgb(14 165 233 / 0.44);
+  background: rgb(224 242 254 / 0.9);
+}
+
+.salary-life-page .life-state-actions button:active {
+  transform: translateY(1px);
+}
+
+.salary-life-page .life-state-actions.compact {
+  padding-top: 4px;
+}
+
 .salary-life-page .identity-path-panel .recommend-list {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
