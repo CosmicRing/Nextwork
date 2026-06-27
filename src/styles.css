@@ -16185,7 +16185,7 @@ body {
     right: max(10px, env(safe-area-inset-right)) !important;
     bottom: max(10px, env(safe-area-inset-bottom)) !important;
     width: auto !important;
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
     gap: 2px;
     padding: 5px;
     border-color: rgb(203 213 225 / 0.86);
@@ -16199,14 +16199,14 @@ body {
 
   .salary-mobile-tabbar button {
     min-height: 48px;
-    padding: 5px 2px;
+    padding: 5px 1px;
     border-radius: 10px;
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .salary-mobile-tabbar button svg {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
   }
 
   .salary-mobile-tabbar button span {
@@ -16230,6 +16230,91 @@ body {
 
   .salary-app .school-major-panel {
     border-radius: 14px !important;
+  }
+}
+
+/* Life planning shell: expose the existing MBTI and todo cockpit as the primary entry. */
+.salary-life-page {
+  width: min(1420px, calc(100vw - 32px));
+  margin: 0 auto;
+}
+
+.salary-life-page .content-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.28fr);
+  gap: 18px;
+}
+
+.salary-life-page .center-stack,
+.salary-life-page .right-stack {
+  gap: 18px;
+}
+
+.salary-life-page .hero-card {
+  min-height: 292px;
+  border-radius: 18px !important;
+  box-shadow: 0 18px 48px rgb(15 23 42 / 0.065);
+}
+
+.salary-life-page .hero-card h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.04;
+}
+
+.salary-life-page .hero-card p {
+  text-wrap: pretty;
+}
+
+.salary-life-page .right-stack {
+  position: sticky;
+  top: 92px;
+  grid-template-columns: 1fr;
+}
+
+.salary-life-page .optional-tools-panel {
+  order: -1;
+}
+
+.salary-life-page .optional-tools-panel > summary {
+  min-height: 62px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.9), rgb(216 227 234 / 0.72)),
+    rgb(241 245 249 / 0.86);
+}
+
+.salary-life-page .optional-tools-panel > summary span {
+  color: #075985;
+}
+
+.salary-life-page .optional-tools-panel > summary strong {
+  color: #0f172a;
+  font-size: 16px;
+}
+
+@media (max-width: 1040px) {
+  .salary-life-page .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .salary-life-page .right-stack {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .salary-life-page {
+    width: min(390px, calc(100vw - 20px));
+  }
+}
+
+@media (max-width: 560px) {
+  .salary-life-page .right-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .salary-life-page .hero-card {
+    min-height: auto;
   }
 }
 

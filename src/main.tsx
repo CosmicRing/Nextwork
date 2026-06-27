@@ -266,7 +266,7 @@ function App() {
   return <SalaryApp />;
 }
 
-type SalaryAppTab = "signals" | "companies" | "industries" | "school" | "radar";
+type SalaryAppTab = "life" | "signals" | "companies" | "industries" | "school" | "radar";
 type SalaryCompanyRegion = "domestic" | "overseas";
 type SalaryIndustryId =
   | "internet-ai"
@@ -307,6 +307,7 @@ type SalaryCompanyProfile = {
 };
 
 const salaryAppTabs: Array<{ id: SalaryAppTab; label: string; icon: React.ElementType }> = [
+  { id: "life", label: "人生规划", icon: Compass },
   { id: "school", label: "学校入口", icon: GraduationCap },
   { id: "radar", label: "岗位雷达", icon: Target },
   { id: "signals", label: "职业信号", icon: Bell },
@@ -406,7 +407,7 @@ const defaultSchoolExplorerProfile = schoolExplorerProfiles[0] ?? schoolOutcomeP
 const featuredSchoolExplorerProfile = schoolOutcomeProfiles.find((school) => school.id === "zzuli") ?? defaultSchoolExplorerProfile;
 
 function SalaryApp() {
-  const [activeTab, setActiveTab] = useState<SalaryAppTab>("school");
+  const [activeTab, setActiveTab] = useState<SalaryAppTab>("life");
   const companyProfiles = useMemo(() => buildSalaryCompanyProfiles(), []);
   const [selectedCompanyId, setSelectedCompanyId] = useState(companyProfiles[0]?.source.id ?? "bytedance");
   const [regionFilter, setRegionFilter] = useState<"all" | SalaryCompanyRegion>("all");
@@ -522,7 +523,7 @@ function SalaryApp() {
   return (
     <div className="salary-app">
       <header className="salary-topbar">
-        <button className="salary-brand" onClick={() => setActiveTab("school")} aria-label="回到学校信息聚合">
+        <button className="salary-brand" onClick={() => setActiveTab("life")} aria-label="回到人生规划仪表盘">
           <span aria-hidden="true">薪</span>
           <strong>看看工资</strong>
         </button>
@@ -535,6 +536,12 @@ function SalaryApp() {
       <nav className="salary-mobile-tabbar" aria-label="主要功能">{renderSalaryTabs()}</nav>
 
       <main className="salary-workspace">
+        {activeTab === "life" && (
+          <section className="salary-page salary-life-page">
+            <LifeDashboard searchIntent={salarySchoolIntent ?? salaryRadarIntent} />
+          </section>
+        )}
+
         {activeTab === "school" && (
           <section className="salary-page salary-embedded-page salary-school-entry-page">
             <SchoolMajorExplorer searchIntent={salarySchoolIntent} onOpenCareerRadar={openCareerRadarFromSchool} />
@@ -2220,8 +2227,8 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
 
         <details className="optional-tools-panel">
           <summary>
-            <span>进阶工具</span>
-            <strong>个人画像、专业路径和赛道信号</strong>
+            <span>先测画像</span>
+            <strong>MBTI 快测、专业路径和赛道信号</strong>
           </summary>
 
           <section className="panel two-column" id="mbti-test">
