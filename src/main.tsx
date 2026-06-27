@@ -261,6 +261,13 @@ const defaultMbti: MbtiAnswers = {
   decision: "left",
   structure: "left",
 };
+const defaultLifeTodoIds = ["todo-identity", "todo-major-map"];
+const lifeDashboardStorageKey = "kankan-salary.life-dashboard.v1";
+
+type LifeDashboardState = {
+  mbtiAnswers: MbtiAnswers;
+  doneTodos: string[];
+};
 
 function App() {
   return <SalaryApp />;
@@ -2179,9 +2186,65 @@ function getSnapshotSalaryRange(matchedJobs: Job[], profile: MajorSalaryProfile)
   return [min, max];
 }
 
+function readLifeDashboardState(): LifeDashboardState {
+  const fallback = getDefaultLifeDashboardState();
+  if (typeof window === "undefined") return fallback;
+
+  try {
+    return sanitizeLifeDashboardState(JSON.parse(window.localStorage.getItem(lifeDashboardStorageKey) ?? "null"));
+  } catch {
+    return fallback;
+  }
+}
+
+function writeLifeDashboardState(state: LifeDashboardState) {
+  if (typeof window === "undefined") return;
+
+  try {
+    window.localStorage.setItem(lifeDashboardStorageKey, JSON.stringify(sanitizeLifeDashboardState(state)));
+  } catch {
+    // localStorage may be disabled or full. The page should still work in memory.
+  }
+}
+
+function getDefaultLifeDashboardState(): LifeDashboardState {
+  return {
+    mbtiAnswers: defaultMbti,
+    doneTodos: defaultLifeTodoIds,
+  };
+}
+
+function sanitizeLifeDashboardState(input: unknown): LifeDashboardState {
+  const record = isPlainRecord(input) ? input : {};
+  return {
+    mbtiAnswers: sanitizeMbtiAnswers(record.mbtiAnswers),
+    doneTodos: sanitizeLifeTodoIds(record.doneTodos),
+  };
+}
+
+function sanitizeMbtiAnswers(input: unknown): MbtiAnswers {
+  const record = isPlainRecord(input) ? input : {};
+  return mbtiQuestions.reduce<MbtiAnswers>((answers, question) => {
+    const value = record[question.id];
+    return {
+      ...answers,
+      [question.id]: value === "left" || value === "right" ? value : defaultMbti[question.id],
+    };
+  }, { ...defaultMbti });
+}
+
+function sanitizeLifeTodoIds(input: unknown) {
+  if (!Array.isArray(input)) return defaultLifeTodoIds;
+  return Array.from(new Set(input.filter((item): item is string => typeof item === "string" && item.startsWith("todo-")))).slice(0, 16);
+}
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
 function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | null }) {
-  const [mbtiAnswers, setMbtiAnswers] = useState<MbtiAnswers>(defaultMbti);
-  const [doneTodos, setDoneTodos] = useState<string[]>(["todo-identity", "todo-major-map"]);
+  const [lifeDashboardState, setLifeDashboardState] = useState<LifeDashboardState>(() => readLifeDashboardState());
+  const { mbtiAnswers, doneTodos } = lifeDashboardState;
 
   const mbtiCode = useMemo(() => getMbtiCode(mbtiAnswers), [mbtiAnswers]);
   const profile = mbtiProfiles[mbtiCode] ?? getFallbackMbtiProfile(mbtiCode);
@@ -2195,10 +2258,33 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
   const topMajor = rankedMajors[0];
   const fourYearPlan = useMemo(() => getFourYearPlan(topMajor), [topMajor]);
   const todos = useMemo(() => getLifeTodos(mbtiCode, topMajor.group, rankedTracks[0].name), [mbtiCode, topMajor, rankedTracks]);
-  const completion = Math.round((doneTodos.length / todos.length) * 100);
+  const activeDoneTodoIds = useMemo(() => {
+    const todoIds = new Set(todos.map((todo) => todo.id));
+    return doneTodos.filter((todoId) => todoIds.has(todoId));
+  }, [doneTodos, todos]);
+  const completion = Math.round((activeDoneTodoIds.length / todos.length) * 100);
+
+  useEffect(() => {
+    writeLifeDashboardState(lifeDashboardState);
+  }, [lifeDashboardState]);
+
+  const setMbtiAnswer = (questionId: MbtiDimension, answer: "left" | "right") => {
+    setLifeDashboardState((current) => ({
+      ...current,
+      mbtiAnswers: {
+        ...current.mbtiAnswers,
+        [questionId]: answer,
+      },
+    }));
+  };
 
   const toggleTodo = (todoId: string) => {
-    setDoneTodos((current) => (current.includes(todoId) ? current.filter((id) => id !== todoId) : [...current, todoId]));
+    setLifeDashboardState((current) => ({
+      ...current,
+      doneTodos: current.doneTodos.includes(todoId)
+        ? current.doneTodos.filter((id) => id !== todoId)
+        : [...current.doneTodos, todoId],
+    }));
   };
 
   return (
@@ -2239,8 +2325,8 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
                   <div key={question.id} className="question-row">
                     <h3>{question.title}</h3>
                     <div className="choice-pair">
-                      <ChoiceButton active={mbtiAnswers[question.id] === "left"} onClick={() => setMbtiAnswers({ ...mbtiAnswers, [question.id]: "left" })} option={question.left} />
-                      <ChoiceButton active={mbtiAnswers[question.id] === "right"} onClick={() => setMbtiAnswers({ ...mbtiAnswers, [question.id]: "right" })} option={question.right} />
+                      <ChoiceButton active={mbtiAnswers[question.id] === "left"} onClick={() => setMbtiAnswer(question.id, "left")} option={question.left} />
+                      <ChoiceButton active={mbtiAnswers[question.id] === "right"} onClick={() => setMbtiAnswer(question.id, "right")} option={question.right} />
                     </div>
                   </div>
                 ))}
@@ -2318,7 +2404,7 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
           <PanelHeader kicker="Life Todo" title="人生规划 Todo" icon={<CalendarCheck size={20} />} />
           <div className="todo-list">
             {todos.map((todo) => {
-              const checked = doneTodos.includes(todo.id);
+              const checked = activeDoneTodoIds.includes(todo.id);
               return (
                 <button key={todo.id} className={checked ? "todo-row done" : "todo-row"} onClick={() => toggleTodo(todo.id)}>
                   {checked ? <CheckCircle2 size={19} /> : <Circle size={19} />}
