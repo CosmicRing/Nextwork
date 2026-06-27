@@ -169,6 +169,11 @@ type SchoolCareerRadarHandoff = {
   jobName: string;
   query: string;
 };
+type LifeNextAction = {
+  id: "school" | "radar" | "signals";
+  query: string;
+  label: string;
+};
 
 const categoryLabels = jobCategoryLabels;
 const activeJobDataSourceCount = jobDataMeta.sources.filter((source) => Number(source.normalizedCount ?? 0) > 0).length;
@@ -517,6 +522,32 @@ function SalaryApp() {
     });
     setActiveTab("radar");
   };
+  const openLifeNextAction = (action: LifeNextAction) => {
+    const query = action.query.trim();
+    if (action.id === "school" && query) {
+      setSalarySchoolIntent({
+        kind: "major",
+        target: "school-major",
+        query,
+        label: action.label,
+        detail: "人生规划下一步：先核验目标学校和专业证据",
+        value: query,
+        timestamp: Date.now(),
+      });
+    }
+    if (action.id === "radar" && query) {
+      setSalaryRadarIntent({
+        kind: "job",
+        target: "career-radar",
+        query,
+        label: action.label,
+        detail: "人生规划下一步：用岗位雷达倒推专业",
+        value: query,
+        timestamp: Date.now(),
+      });
+    }
+    setActiveTab(action.id);
+  };
   const renderSalaryTabs = () =>
     salaryAppTabs.map((tab) => {
       const Icon = tab.icon;
@@ -546,7 +577,7 @@ function SalaryApp() {
       <main className="salary-workspace">
         {activeTab === "life" && (
           <section className="salary-page salary-life-page">
-            <LifeDashboard searchIntent={salarySchoolIntent ?? salaryRadarIntent} onOpenTab={setActiveTab} />
+            <LifeDashboard searchIntent={salarySchoolIntent ?? salaryRadarIntent} onOpenNextAction={openLifeNextAction} />
           </section>
         )}
 
@@ -2245,10 +2276,10 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
 
 function LifeDashboard({
   searchIntent,
-  onOpenTab,
+  onOpenNextAction,
 }: {
   searchIntent: GlobalSearchIntent | null;
-  onOpenTab: (tab: SalaryAppTab) => void;
+  onOpenNextAction: (action: LifeNextAction) => void;
 }) {
   const [lifeDashboardState, setLifeDashboardState] = useState<LifeDashboardState>(() => readLifeDashboardState());
   const { mbtiAnswers, doneTodos } = lifeDashboardState;
@@ -2424,7 +2455,7 @@ function LifeDashboard({
           </div>
         </section>
 
-        <LifeNextActionPanel mbtiCode={mbtiCode} topMajor={topMajor.group} topTrack={rankedTracks[0].name} onOpenTab={onOpenTab} />
+        <LifeNextActionPanel mbtiCode={mbtiCode} topMajor={topMajor.group} topTrack={rankedTracks[0].name} onOpenAction={onOpenNextAction} />
 
         <section className="panel" id="life-todos">
           <PanelHeader kicker="Life Todo" title="人生规划 Todo" icon={<CalendarCheck size={20} />} />
@@ -2480,34 +2511,38 @@ function LifeNextActionPanel({
   mbtiCode,
   topMajor,
   topTrack,
-  onOpenTab,
+  onOpenAction,
 }: {
   mbtiCode: string;
   topMajor: string;
   topTrack: string;
-  onOpenTab: (tab: SalaryAppTab) => void;
+  onOpenAction: (action: LifeNextAction) => void;
 }) {
   const actions: Array<{
-    id: SalaryAppTab;
+    id: LifeNextAction["id"];
     label: string;
+    query: string;
     detail: string;
     icon: React.ElementType;
   }> = [
     {
       id: "school",
       label: "核验目标学校",
+      query: topMajor,
       detail: `${topMajor} 先查学校专业、就业报告和校招企业。`,
       icon: GraduationCap,
     },
     {
       id: "radar",
       label: "岗位反推专业",
+      query: topTrack,
       detail: `${topTrack} 相关岗位，用雷达看强弱关联。`,
       icon: Target,
     },
     {
       id: "signals",
       label: "查看市场信号",
+      query: mbtiCode,
       detail: `${mbtiCode} 画像下，继续看行业热度和基础能力。`,
       icon: Bell,
     },
@@ -2520,7 +2555,7 @@ function LifeNextActionPanel({
         {actions.map((action) => {
           const Icon = action.icon;
           return (
-            <button key={action.id} type="button" className="life-next-action" onClick={() => onOpenTab(action.id)}>
+            <button key={action.id} type="button" className="life-next-action" onClick={() => onOpenAction({ id: action.id, query: action.query, label: action.label })}>
               <span>
                 <Icon size={18} />
               </span>
