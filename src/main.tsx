@@ -546,7 +546,7 @@ function SalaryApp() {
       <main className="salary-workspace">
         {activeTab === "life" && (
           <section className="salary-page salary-life-page">
-            <LifeDashboard searchIntent={salarySchoolIntent ?? salaryRadarIntent} />
+            <LifeDashboard searchIntent={salarySchoolIntent ?? salaryRadarIntent} onOpenTab={setActiveTab} />
           </section>
         )}
 
@@ -2243,7 +2243,13 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | null }) {
+function LifeDashboard({
+  searchIntent,
+  onOpenTab,
+}: {
+  searchIntent: GlobalSearchIntent | null;
+  onOpenTab: (tab: SalaryAppTab) => void;
+}) {
   const [lifeDashboardState, setLifeDashboardState] = useState<LifeDashboardState>(() => readLifeDashboardState());
   const { mbtiAnswers, doneTodos } = lifeDashboardState;
 
@@ -2418,6 +2424,8 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
           </div>
         </section>
 
+        <LifeNextActionPanel mbtiCode={mbtiCode} topMajor={topMajor.group} topTrack={rankedTracks[0].name} onOpenTab={onOpenTab} />
+
         <section className="panel" id="life-todos">
           <PanelHeader kicker="Life Todo" title="人生规划 Todo" icon={<CalendarCheck size={20} />} />
           <div className="todo-list">
@@ -2465,6 +2473,64 @@ function LifeDashboard({ searchIntent }: { searchIntent: GlobalSearchIntent | nu
         </section>
       </aside>
     </div>
+  );
+}
+
+function LifeNextActionPanel({
+  mbtiCode,
+  topMajor,
+  topTrack,
+  onOpenTab,
+}: {
+  mbtiCode: string;
+  topMajor: string;
+  topTrack: string;
+  onOpenTab: (tab: SalaryAppTab) => void;
+}) {
+  const actions: Array<{
+    id: SalaryAppTab;
+    label: string;
+    detail: string;
+    icon: React.ElementType;
+  }> = [
+    {
+      id: "school",
+      label: "核验目标学校",
+      detail: `${topMajor} 先查学校专业、就业报告和校招企业。`,
+      icon: GraduationCap,
+    },
+    {
+      id: "radar",
+      label: "岗位反推专业",
+      detail: `${topTrack} 相关岗位，用雷达看强弱关联。`,
+      icon: Target,
+    },
+    {
+      id: "signals",
+      label: "查看市场信号",
+      detail: `${mbtiCode} 画像下，继续看行业热度和基础能力。`,
+      icon: Bell,
+    },
+  ];
+
+  return (
+    <section className="panel life-next-panel" aria-label="下一步行动">
+      <PanelHeader kicker="Next Step" title="下一步行动" icon={<Compass size={20} />} />
+      <div className="life-next-action-list">
+        {actions.map((action) => {
+          const Icon = action.icon;
+          return (
+            <button key={action.id} type="button" className="life-next-action" onClick={() => onOpenTab(action.id)}>
+              <span>
+                <Icon size={18} />
+              </span>
+              <strong>{action.label}</strong>
+              <em>{action.detail}</em>
+            </button>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
