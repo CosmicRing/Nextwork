@@ -36,7 +36,7 @@
 - 仓库：https://github.com/iChipOwO/shandong-admission-history-query
 - 许可证：MIT
 - 价值：包含山东普通类常规批第 1 次志愿 2023-2025 年投档数据 manifest、75MB 历史投档 JSON、学校元数据、专业方向索引、学科评估和排名来源。
-- 当前处理：登记为下一批山东录取聚合候选源，并展示在页面“Source Radar”；暂不复制 75MB 原始明细。
+- 当前处理：已聚合为 `src/data/shandongAdmissionSignals.ts`，保留 1,165 所学校元数据、1,165 所排名覆盖、426 所学科评估覆盖、26 个专业方向组、24 个方向到学科映射和学校省份/标签分布；暂不复制 75MB 原始明细。
 - 使用边界：历史投档只供查询参考，不承诺录取；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。
 
 ### college-major-selector
@@ -52,7 +52,7 @@
 - 仓库：https://github.com/shengdabai/gaokao-assistant
 - 许可证：MIT
 - 价值：项目描述标注基于 2025 青海省真实招生计划数据；`data/laosheng_tags.json` 含院校标签、985/211/双一流、城市和公民办等字段。
-- 当前处理：登记为省份专项招生计划和院校标签候选源。
+- 当前处理：已聚合为 `src/data/qinghaiPlanSignals.ts`，保留 2,875 条院校标签、公办/民办分布、城市 Top 分布和 985/211/双一流计数；不导入具体计划明细。
 - 使用边界：招生计划会按年份变化；接入前需要按省份、年份、批次拆分，并保留官方计划来源提示。
 
 ### gaokao-mentor-wisdom

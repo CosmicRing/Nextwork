@@ -39,6 +39,8 @@ import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTo
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
+import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
+import { shandongAdmissionSignalSource } from "./data/shandongAdmissionSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
 import { getCareerDirectoryHealth, getCareerDirectoryHealthLabel } from "./data/schoolCareerDirectoryHealth";
@@ -2907,6 +2909,20 @@ function DataFreshnessPanel() {
           <strong>{nationalEducationSignalSource.schoolCount.toLocaleString("zh-CN")}</strong>
           <em>
             {nationalEducationSignalSource.undergraduateMajorCount.toLocaleString("zh-CN")} 个本科专业，{nationalEducationSignalSource.provinceRuleCount} 省志愿规则；MIT 聚合
+          </em>
+        </section>
+        <section>
+          <span>山东投档元数据</span>
+          <strong>{shandongAdmissionSignalSource.schoolMetadataCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {shandongAdmissionSignalSource.years.join("-")} 普通类常规批，{shandongAdmissionSignalSource.majorDirectionGroupCount} 个专业方向组，{shandongAdmissionSignalSource.subjectEvaluationSchoolCount} 所学科评估覆盖
+          </em>
+        </section>
+        <section>
+          <span>青海计划标签</span>
+          <strong>{qinghaiPlanSignalSource.schoolTagRowCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            2025 计划标签库：公办 {qinghaiPlanSignalSource.publicSchoolCount.toLocaleString("zh-CN")} / 民办 {qinghaiPlanSignalSource.privateSchoolCount.toLocaleString("zh-CN")}，211 {qinghaiPlanSignalSource.project211Count}
           </em>
         </section>
         <section>

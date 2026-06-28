@@ -56,9 +56,9 @@ export const externalDataSources: ExternalDataSource[] = [
     name: "shandong-admission-history-query 山东 2023-2025 投档数据",
     repoUrl: "https://github.com/iChipOwO/shandong-admission-history-query",
     license: "MIT",
-    status: "data-reference",
+    status: "connected-sample",
     coverage: "data_manifest.json 标注山东普通类常规批第 1 次志愿 2023-2025 年；含 75MB 历史投档 JSON、学校元数据、专业方向索引、学科评估和排名来源。",
-    currentUse: "登记为下一批山东录取数据聚合候选源；当前不复制 75MB 原始明细，优先解析 manifest、学校数、专业方向和位次趋势摘要。",
+    currentUse: "已聚合为 src/data/shandongAdmissionSignals.ts，保留 1,165 所学校元数据、26 个专业方向组、426 所学科评估覆盖和入口统计；不复制 75MB 原始明细。",
     caution: "历史投档只供查询参考，不承诺录取；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。",
   },
   {
@@ -76,9 +76,9 @@ export const externalDataSources: ExternalDataSource[] = [
     name: "gaokao-assistant 青海 2025 招生计划助手",
     repoUrl: "https://github.com/shengdabai/gaokao-assistant",
     license: "MIT",
-    status: "data-reference",
+    status: "connected-sample",
     coverage: "项目描述标注基于 2025 青海省真实招生计划数据；data/laosheng_tags.json 含院校标签、985/211/双一流、城市和公民办等字段。",
-    currentUse: "登记为省份专项招生计划/院校标签候选源，可用于后续扩展青海样本和学校标签校验。",
+    currentUse: "已聚合为 src/data/qinghaiPlanSignals.ts，保留 2,875 条院校标签、公民办、城市和 985/211/双一流计数；不导入具体计划明细。",
     caution: "招生计划会按年份变化；接入前需要按省份、年份、批次拆分，并保留官方计划来源提示。",
   },
   {
