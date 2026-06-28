@@ -5,7 +5,7 @@ export type ExternalDataSource = {
   id: string;
   name: string;
   repoUrl: string;
-  license: "MIT" | "Apache-2.0" | "AGPL-3.0" | "CC-BY-4.0" | "Unknown";
+  license: "MIT" | "Apache-2.0" | "AGPL-3.0" | "CC-BY-4.0" | "CC0-1.0" | "Unknown";
   status:
     | "connected-sample"
     | "data-reference"
@@ -51,6 +51,16 @@ export const externalDataSources: ExternalDataSource[] = [
     coverage: "北京教育考试院来源本科普通批投档线，2023-2025 年合计 3,950 条记录，覆盖 638 所院校、83 种选科要求。",
     currentUse: "已聚合为 src/data/beijingAdmissionSignals.ts，保留年度记录数、院校数、选科要求分布和分数区间；不复制 CSV 原表。",
     caution: "CC BY 4.0 要求署名和注明变更；该数据只代表北京本科普通批历史投档线，正式填报仍以北京教育考试院当年公告为准。",
+  },
+  {
+    id: "scottli-beijing-gaokao-score-segments",
+    name: "beijing-gaokao-score-segments 北京一分一段",
+    repoUrl: "https://github.com/scottli139/beijing-gaokao-score-segments",
+    license: "CC0-1.0",
+    status: "connected-sample",
+    coverage: "北京教育考试院来源一分一段表，2023-2025 年合计 1,005 行分数分布，三年累计 176,571 名考生。",
+    currentUse: "已聚合为 src/data/beijingScoreSegmentSignals.ts，保留年度分段数、累计考生数和 650/600/500 分典型位次点；不复制 JSON/CSV 原表。",
+    caution: "用于解释北京分数到位次的历史分布，不等同录取概率；正式填报仍需结合当年投档线、招生计划和考试院公告。",
   },
   {
     id: "university-career-webpage-directory",

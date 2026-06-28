@@ -37,6 +37,7 @@ import {
 import { jobDataMeta, jobs } from "./data/jobs";
 import { aiItMarketInsightSource, aiItTalentPreferenceSignals } from "./data/aiItMarketInsightSignals";
 import { beijingAdmissionSignalSource } from "./data/beijingAdmissionSignals";
+import { beijingScoreSegmentSignalSource } from "./data/beijingScoreSegmentSignals";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalCareerAggregateSourceCount, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
@@ -2914,6 +2915,13 @@ function DataFreshnessPanel() {
           <strong>{beijingAdmissionSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
           <em>
             {beijingAdmissionSignalSource.years.join("-")} 本科普通批，{beijingAdmissionSignalSource.uniqueSchoolCount.toLocaleString("zh-CN")} 所院校，{beijingAdmissionSignalSource.selectionRequirementCount} 种选科要求
+          </em>
+        </section>
+        <section>
+          <span>北京一分一段</span>
+          <strong>{beijingScoreSegmentSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {beijingScoreSegmentSignalSource.years.join("-")} 分数分布，累计 {beijingScoreSegmentSignalSource.candidateTotal.toLocaleString("zh-CN")} 名考生；650 分位次点已聚合
           </em>
         </section>
         <section>

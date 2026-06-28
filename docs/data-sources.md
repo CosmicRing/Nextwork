@@ -29,6 +29,14 @@
 - 当前接入：从北京本科普通批投档线 CSV 中聚合 3,950 条 2023-2025 投档记录、638 所院校、3,950 个年度院校专业组、83 种选科要求和年度分数区间，生成 `src/data/beijingAdmissionSignals.ts`。
 - 使用边界：CC BY 4.0 要求署名和注明变更；当前只保留聚合指标，不复制 CSV 原表。该数据仅代表北京本科普通批历史投档线，正式填报以北京教育考试院当年公告为准。
 
+### beijing-gaokao-score-segments
+
+- 仓库：https://github.com/scottli139/beijing-gaokao-score-segments
+- 许可证：CC0-1.0
+- 可用文件：`data/combined.json`、`data/combined.csv`、`data/beijing_gaokao_score_segments_2023.csv`、`data/beijing_gaokao_score_segments_2024.csv`、`data/beijing_gaokao_score_segments_2025.csv`
+- 当前接入：从北京一分一段合并数据中聚合 1,005 行 2023-2025 分数分布、176,571 名三年累计考生、年度最高/最低分段和 650/600/500 分典型位次点，生成 `src/data/beijingScoreSegmentSignals.ts`。
+- 使用边界：只作为北京分数到位次解释信号，不等同录取概率；正式填报必须结合当年投档线、招生计划和北京教育考试院公告。
+
 ## 可借鉴但未直接导入
 
 ### UniversityCareerWebPage
