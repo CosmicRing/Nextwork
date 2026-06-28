@@ -46,6 +46,7 @@ import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { gtdimXuefengAdmissionAggregateSignalSource } from "./data/gtdimXuefengAdmissionAggregateSignals";
 import { linxkonBossShanghaiAggregateSignalSource, linxkonBossShanghaiKeywordBuckets, linxkonBossShanghaiRoleBuckets } from "./data/linxkonBossShanghaiAggregateSignals";
+import { liuxusummerAdmissionDataBuckets, liuxusummerCoveredScoreProvinces, liuxusummerGaokaoAdvisorAggregateSignalSource } from "./data/liuxusummerGaokaoAdvisorAggregateSignals";
 import { majorEmploymentBlueprintSignalSource, majorEmploymentDecisionSignals, majorEmploymentRecommendedDirections, majorEmploymentSignalBuckets } from "./data/majorEmploymentBlueprintSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
@@ -2999,6 +3000,14 @@ function DataFreshnessPanel() {
           <strong>{gaokaoAdvisorAuditSignalSource.universityCount.toLocaleString("zh-CN")}</strong>
           <em>
             {gaokaoAdvisorAuditSignalSource.scoreSegment2025ProvinceCount} 省 2025 分数段，{gaokaoAdvisorAuditSignalSource.enrollmentPlanRowCount.toLocaleString("zh-CN")} 条招生计划审计；只接覆盖指标
+          </em>
+        </section>
+        <section>
+          <span>志愿数据中心</span>
+          <strong>{liuxusummerGaokaoAdvisorAggregateSignalSource.collegeTotal.toLocaleString("zh-CN")}</strong>
+          <em>
+            {liuxusummerGaokaoAdvisorAggregateSignalSource.collegeProvinceCount} 省高校基础库，{liuxusummerGaokaoAdvisorAggregateSignalSource.majorCatalogCount} 个本科专业；
+            {liuxusummerCoveredScoreProvinces.length} 省市投档线 {liuxusummerAdmissionDataBuckets[0].count.toLocaleString("zh-CN")} 条，选科 {liuxusummerGaokaoAdvisorAggregateSignalSource.subjectRecordCount.toLocaleString("zh-CN")} 条
           </em>
         </section>
         <section>

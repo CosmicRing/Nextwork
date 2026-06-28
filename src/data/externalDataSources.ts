@@ -183,6 +183,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "仓库 README 明确完整数据库不随仓库发布，且独立数据资产不等于 MIT 授权；当前仅引用审计报告中的二次聚合指标。",
   },
   {
+    id: "liuxusummer-gaokao-advisor-data-center",
+    name: "gaokao-advisor 数据中心公开 JSON 聚合",
+    repoUrl: "https://github.com/liuxusummer/gaokao-advisor",
+    license: "MIT",
+    status: "connected-sample",
+    coverage: "public/data 下含高校基础库、专业目录、10 省市 2023-2025 投档线、位次表和 2024 选科要求；meta 标注来源包括教育部全国高等学校名单、阳光高考和各省教育考试院。",
+    currentUse: "已聚合为 src/data/liuxusummerGaokaoAdvisorAggregateSignals.ts，只保留 2,919 所高校、875 个本科专业目录、139,843 条投档线、9,478 条位次表和 515,684 条选科记录的覆盖指标；不复制 JSON 原表。",
+    caution: "该源是社区整理的数据中心，含 warnings/failed 质量报告；正式填报仍需回到教育部、阳光高考和省考试院公告复核。",
+  },
+  {
     id: "ziqihe10-xuefeng-agent",
     name: "xuefeng-agent AI 高考志愿顾问",
     repoUrl: "https://github.com/ziqihe10-droid/xuefeng-agent",

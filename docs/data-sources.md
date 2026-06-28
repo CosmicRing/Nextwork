@@ -135,6 +135,14 @@
 - 当前处理：已聚合为 `src/data/gaokaoAdvisorAuditSignals.ts`，只保留覆盖量、年份范围、2025 省份覆盖、SQLite 完整性检查、缺失位次等质量门指标。
 - 使用边界：README 明确完整参考数据库不随仓库发布，独立数据资产不等于 MIT 授权。本项目只引用审计报告中的二次聚合指标，不复制数据库或岗位/录取明细。
 
+### liuxusummer/gaokao-advisor
+
+- 仓库：https://github.com/liuxusummer/gaokao-advisor
+- 许可证：MIT
+- 价值：`public/data` 下公开高校基础库、专业目录、投档线、位次表和选科要求 JSON；meta 标注来源包括教育部全国高等学校名单、阳光高考和各省教育考试院。
+- 当前处理：使用 GitHub raw 临时读取公开 JSON 和 meta，聚合为 `src/data/liuxusummerGaokaoAdvisorAggregateSignals.ts`。只保留 2,919 所高校、2,074 所公办、829 所民办、31 省高校基础库、875 个本科专业目录、1,661 条详细专业目录、10 省市 2023-2025 投档线 139,843 条、14 个位次表文件 9,478 条、10 省市 2024 选科要求 515,684 条，以及 warnings/failed 质量报告计数；不复制原始 JSON 长表。
+- 使用边界：该源是社区整理的数据中心，虽有 MIT 许可和来源 meta，但仍需尊重其 warnings/failed 报告；正式填报必须回到教育部、阳光高考、各省考试院和高校招生章程复核。
+
 ### gaokao-mentor-wisdom
 
 - 仓库：https://github.com/dongsheng123132/gaokao-mentor-wisdom
