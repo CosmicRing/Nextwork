@@ -103,6 +103,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "该源是山东省历史样本，不能外推到其他省份或当年录取概率；正式填报仍需回到山东省教育招生考试院和高校招生章程复核。",
   },
   {
+    id: "evanyao-china-university-admission",
+    name: "china-university-admission 全国高校招生 SQLite 聚合",
+    repoUrl: "https://github.com/EvanYao826/china-university-admission",
+    license: "MIT",
+    status: "connected-sample",
+    coverage: "data/test.db 含 5 张表：1,167 所高校基础信息、6,392 条 2023-2025 本科录取记录、12 条研究生录取记录，覆盖 31 省和 279 城市。",
+    currentUse: "已聚合为 src/data/chinaUniversityAdmissionAggregateSignals.ts，只保留表结构、行数、年份、省份/城市覆盖和 source_url 完整度；不复制 SQLite 原库或录取明细。",
+    caution: "README 标注数据主要来自考试院、高校官网和研招网等公开渠道，但仍是社区整理库；正式填报必须回到官方来源复核。",
+  },
+  {
     id: "shengdabai-college-major-selector",
     name: "college-major-selector 全国院校专业索引",
     repoUrl: "https://github.com/shengdabai/college-major-selector",
@@ -251,6 +261,16 @@ export const externalDataSources: ExternalDataSource[] = [
     coverage: "仓库含 bosszhipin_post_info.csv，README 描述最终约 25 万 BOSS 岗位历史样本，并给出城市需求、薪资分布和数据/机器学习/人工智能关键词分析。",
     currentUse: "只登记为待授权 BOSS 数据候选；当前不导入 CSV、不复制 README 结论到事实库。",
     caution: "仓库未声明许可证，且数据来自第三方招聘平台采集链路；获得授权或改为用户本地导入前不得再发布原始岗位或统计结果。",
+  },
+  {
+    id: "xbuilderlab-cheat-on-skill",
+    name: "cheat-on-skill BOSS human-in-the-loop adapter",
+    repoUrl: "https://github.com/XBuilderLAB/cheat-on-skill",
+    license: "MIT",
+    status: "architecture-reference",
+    coverage: "README 描述能力匹配、可学性闸门、AI 影响分类、反诈规则和 BOSS human-in-the-loop adapter；adapter 只读用户已登录浏览器列表页并保留薪资量级。",
+    currentUse: "登记为后续 BOSS 本地授权导入器和反诈/可学性规则参考；不导入岗位数据、不复用自动批量采集链路。",
+    caution: "该项目强调连接用户已登录的有界面 Chrome，仍应由用户主动发起、只做本地分析；不得在本项目中实现绕过平台限制的批量抓取。",
   },
   {
     id: "yuzhii-boozp-neo",

@@ -40,6 +40,7 @@ import { beijingAdmissionSignalSource } from "./data/beijingAdmissionSignals";
 import { beijingScoreSegmentSignalSource } from "./data/beijingScoreSegmentSignals";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { bossExcelAggregateSignalSource, bossExcelRoleBuckets, bossExcelSkillBuckets } from "./data/bossExcelAggregateSignals";
+import { chinaUniversityAdmissionAggregateSignalSource } from "./data/chinaUniversityAdmissionAggregateSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalCareerAggregateSourceCount, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, schoolDataReferenceSourceCount, type ExternalDataSource } from "./data/externalDataSources";
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
@@ -2953,6 +2954,13 @@ function DataFreshnessPanel() {
           <strong>{shandongAdminAggregateSignalSource.aggregateRowCount.toLocaleString("zh-CN")}</strong>
           <em>
             {shandongAdminAggregateSignalSource.fileCount} 个 Excel/CSV，{shandongAdminAggregateSignalSource.years.join("-")} 年，{shandongAdminCategoryBuckets.length} 类目录；只接聚合行数
+          </em>
+        </section>
+        <section>
+          <span>全国招生 SQLite</span>
+          <strong>{chinaUniversityAdmissionAggregateSignalSource.universityCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {chinaUniversityAdmissionAggregateSignalSource.undergraduateAdmissionRowCount.toLocaleString("zh-CN")} 条本科录取，{chinaUniversityAdmissionAggregateSignalSource.provinceCount} 省，source_url {chinaUniversityAdmissionAggregateSignalSource.sourceUrlFilledCount.toLocaleString("zh-CN")} 条；不复制 SQLite 原库
           </em>
         </section>
         <section>

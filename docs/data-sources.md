@@ -71,6 +71,14 @@
 - 当前处理：使用本机临时目录读取 41 个 Excel sheet 和 4 个 CSV，聚合为 `src/data/shandongAdminAggregateSignals.ts`。只保留 45 个文件、2020-2024 年覆盖、7 类目录、480,548 行 Excel 数据、28,897 行 CSV 数据和重点表规模；不提交 Excel/CSV 原表。
 - 使用边界：该源只代表山东历史样本，不能外推为全国规律或当年录取概率；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。
 
+### china-university-admission
+
+- 仓库：https://github.com/EvanYao826/china-university-admission
+- 许可证：MIT
+- 价值：README 标注为高考/考研数据查询平台，`data/test.db` 为 SQLite 本地数据库，含高校基础信息、本科录取数据和研究生录取数据；CSV 模板要求保留 `source_url`。
+- 当前处理：使用本机临时目录读取 SQLite 结构，聚合为 `src/data/chinaUniversityAdmissionAggregateSignals.ts`。只保留 5 张表、1,167 所高校、6,392 条 2023-2025 本科录取、12 条研究生录取、31 省、279 城市、89 个 source_url 和 6,209 条 source_url 填充记录；不提交 SQLite 原库或录取明细。
+- 使用边界：该库是社区整理的公开来源数据，README 提醒仅供学习研究参考；正式填报必须回到各省考试院、高校官网和研招网复核。
+
 ### college-major-selector
 
 - 仓库：https://github.com/shengdabai/college-major-selector
@@ -165,6 +173,14 @@
 - 价值：包含 BOSS 直聘分析系统结构、`boss.sql` 和城市/职位/薪资/技能图谱等模块设计。
 - 当前处理：只作为 BOSS 聚合分析模型和本地导入器字段设计参考，不导入原始 BOSS 岗位明细。
 - 原因：项目 README 明确包含分布式爬虫链路，本项目不复用绕过平台限制的抓取逻辑。
+
+### cheat-on-skill
+
+- 仓库：https://github.com/XBuilderLAB/cheat-on-skill
+- 许可证：MIT
+- 价值：README 描述“能力匹配 + 可学性闸门 + BOSS 直聘真实招聘数据 + 反诈”，`adapters/boss/README.md` 强调通过用户已登录的有界面 Chrome 做 human-in-the-loop 只读搜索结果列表。
+- 当前处理：登记为 BOSS 本地授权导入器、反诈规则、AI 影响分类和可学性闸门参考；不导入岗位数据、不复用批量采集逻辑。
+- 原因：这个源的价值在安全交互机制，不在可再发布数据；后续如果做 BOSS 明细，只能由用户本地发起并保留在本地或输出去标识化聚合。
 
 ### boozp-neo
 
