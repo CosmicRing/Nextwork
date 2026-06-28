@@ -5,7 +5,7 @@ export type ExternalDataSource = {
   id: string;
   name: string;
   repoUrl: string;
-  license: "MIT" | "Apache-2.0" | "AGPL-3.0" | "Unknown";
+  license: "MIT" | "Apache-2.0" | "AGPL-3.0" | "CC-BY-4.0" | "Unknown";
   status:
     | "connected-sample"
     | "data-reference"
@@ -40,6 +40,16 @@ export const externalDataSources: ExternalDataSource[] = [
     coverage: "table2_hubei.csv 可解析 18,430 条湖北 2024 本科批院校-专业记录，覆盖 1,032 所院校和 663 个专业名称；一分一段 JSON 覆盖物理/历史 1,067 个分数段。",
     currentUse: "已聚合为 src/data/gaokaoAdmissionSignals.ts，只保留记录量、学校数、专业数、科类分布、类别分布、分数/位次范围和高选择性院校摘要。",
     caution: "只代表湖北 2024 本科批历史样本，不等同全国录取概率；志愿填报仍需回到考试院、学校招生章程和当年招生计划复核。",
+  },
+  {
+    id: "scottli-beijing-gaokao-scores",
+    name: "beijing-gaokao-scores 北京本科普通批投档线",
+    repoUrl: "https://github.com/scottli139/beijing-gaokao-scores",
+    license: "CC-BY-4.0",
+    status: "connected-sample",
+    coverage: "北京教育考试院来源本科普通批投档线，2023-2025 年合计 3,950 条记录，覆盖 638 所院校、83 种选科要求。",
+    currentUse: "已聚合为 src/data/beijingAdmissionSignals.ts，保留年度记录数、院校数、选科要求分布和分数区间；不复制 CSV 原表。",
+    caution: "CC BY 4.0 要求署名和注明变更；该数据只代表北京本科普通批历史投档线，正式填报仍以北京教育考试院当年公告为准。",
   },
   {
     id: "university-career-webpage-directory",
@@ -110,6 +120,26 @@ export const externalDataSources: ExternalDataSource[] = [
     coverage: "reports/data_audit_20260514_222320.json 汇总本地 SQLite 参考库审计：2,360 所高校、488,152 行分数段、377,962 行院校录取线、3,298,297 行专业线和 4,951,513 行招生计划。",
     currentUse: "已聚合为 src/data/gaokaoAdvisorAuditSignals.ts，只保留覆盖量、年份范围、2025 省份覆盖和质量门指标，不导入参考数据库。",
     caution: "仓库 README 明确完整数据库不随仓库发布，且独立数据资产不等于 MIT 授权；当前仅引用审计报告中的二次聚合指标。",
+  },
+  {
+    id: "ziqihe10-xuefeng-agent",
+    name: "xuefeng-agent AI 高考志愿顾问",
+    repoUrl: "https://github.com/ziqihe10-droid/xuefeng-agent",
+    license: "AGPL-3.0",
+    status: "blocked-license",
+    coverage: "README 标注内置 24 省、2024-2025 年官方投档线、约 42 万条；仓库含 admission_clean.db.gz。",
+    currentUse: "只登记为大规模本地数据库候选和产品方法参考；不复制数据库、不复用代码、不并入 MIT 前端事实库。",
+    caution: "项目 LICENSE 为 AGPLv3 且 README 强调网络服务也需同协议开源；未做协议兼容评估或单独授权前不得导入。",
+  },
+  {
+    id: "bbhzyq-hngaokazhiyuan",
+    name: "hngaokazhiyuan 河南志愿填报指导系统",
+    repoUrl: "https://github.com/bbhzyq-dotcom/hngaokazhiyuan",
+    license: "Unknown",
+    status: "blocked-license",
+    coverage: "data/ 下含 colleges、majors、college_majors_full、scores、rankings 等 JSON；README 标注 1,300+ 所高校、830 个专业、35,000+ 高校-专业关联和 20,000+ 录取分数。",
+    currentUse: "只登记为待授权确认的数据候选源和字段结构参考；不复制 JSON 数据文件。",
+    caution: "仓库未声明许可证；除非获得授权或改用官方公开来源复核，否则不能把数据复制进开源前端事实库。",
   },
   {
     id: "dongsheng-gaokao-mentor-wisdom",

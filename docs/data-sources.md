@@ -21,6 +21,14 @@
 - 当前接入：从湖北 2024 本科批数据中聚合 18,430 条院校-专业记录、1,032 所院校、663 个专业名称、物理/历史科类分布、专业类别分布、分数/位次范围和一分一段覆盖，生成 `src/data/gaokaoAdmissionSignals.ts`。
 - 使用边界：只作为湖北 2024 历史录取样本，不等同全国录取概率；志愿填报必须回到湖北省教育考试院、学校招生章程和当年招生计划复核。
 
+### beijing-gaokao-scores
+
+- 仓库：https://github.com/scottli139/beijing-gaokao-scores
+- 许可证：CC-BY-4.0
+- 可用文件：`data/beijing-admission-scores.csv`、`data/2023.csv`、`data/2024.csv`、`data/2025.csv`
+- 当前接入：从北京本科普通批投档线 CSV 中聚合 3,950 条 2023-2025 投档记录、638 所院校、3,950 个年度院校专业组、83 种选科要求和年度分数区间，生成 `src/data/beijingAdmissionSignals.ts`。
+- 使用边界：CC BY 4.0 要求署名和注明变更；当前只保留聚合指标，不复制 CSV 原表。该数据仅代表北京本科普通批历史投档线，正式填报以北京教育考试院当年公告为准。
+
 ## 可借鉴但未直接导入
 
 ### UniversityCareerWebPage
@@ -151,6 +159,22 @@
 - 原因：README 明确展示 BOSS 直聘页面自动化采集过程；后续如使用，只能做用户本地有权文件的临时聚合或完全去标识化统计。
 
 ## 暂不导入
+
+### xuefeng-agent
+
+- 仓库：https://github.com/ziqihe10-droid/xuefeng-agent
+- 许可证：AGPL-3.0
+- 价值：README 标注内置 24 省、2024-2025 年官方投档线、约 42 万条，仓库含 `admission_clean.db.gz` 和本地志愿顾问交互。
+- 当前处理：只登记为大规模本地数据库候选和产品方法参考，不复制数据库、不复用代码、不并入 MIT 前端事实库。
+- 原因：AGPLv3 与当前 MIT 开源策略存在协议兼容风险；README 明确强调网络服务也需同协议开源，未做协议评估或取得单独授权前不能导入。
+
+### hngaokazhiyuan
+
+- 仓库：https://github.com/bbhzyq-dotcom/hngaokazhiyuan
+- 许可证：未声明
+- 价值：`data/` 下含 `colleges.json`、`majors_845.json`、`college_majors_full.json`、`scores.json`、`rankings.json` 等；README 标注 1,300+ 所高校、830 个专业、35,000+ 高校-专业关联和 20,000+ 录取分数。
+- 当前处理：只登记为待授权确认的数据候选源和字段结构参考，不复制 JSON 数据文件。
+- 原因：仓库未声明许可证；除非获得授权或改用官方公开来源复核，否则不能把数据复制进开源前端事实库。
 
 ### college-major4hs
 

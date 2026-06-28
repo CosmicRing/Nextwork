@@ -35,6 +35,7 @@ import {
   Zap,
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
+import { beijingAdmissionSignalSource } from "./data/beijingAdmissionSignals";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
@@ -2906,6 +2907,13 @@ function DataFreshnessPanel() {
           <span>志愿录取样本</span>
           <strong>{hubeiAdmissionSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
           <em>湖北 2024 本科批，{hubeiAdmissionSignalSource.uniqueSchoolCount.toLocaleString("zh-CN")} 所院校，{hubeiAdmissionOneScoreBandCount.toLocaleString("zh-CN")} 个一分一段分数段</em>
+        </section>
+        <section>
+          <span>北京投档线</span>
+          <strong>{beijingAdmissionSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {beijingAdmissionSignalSource.years.join("-")} 本科普通批，{beijingAdmissionSignalSource.uniqueSchoolCount.toLocaleString("zh-CN")} 所院校，{beijingAdmissionSignalSource.selectionRequirementCount} 种选科要求
+          </em>
         </section>
         <section>
           <span>全国院校专业索引</span>
