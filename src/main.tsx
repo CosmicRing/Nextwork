@@ -35,6 +35,7 @@ import {
   Zap,
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
+import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
@@ -2893,6 +2894,11 @@ function DataFreshnessPanel() {
           <span>高校外部池</span>
           <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
           <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
+        </section>
+        <section>
+          <span>BOSS 历史能力词</span>
+          <strong>{bossAggregatedSampleCount.toLocaleString("zh-CN")}</strong>
+          <em>{bossAggregatedSkillSignals.length} 类技术方向，{bossAggregatedTopSkillCount} 个聚合能力词；MIT 历史样本，不导入岗位明细</em>
         </section>
       </div>
     </section>

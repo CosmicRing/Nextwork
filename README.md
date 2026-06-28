@@ -81,7 +81,7 @@ npm run verify:career-signals
 
 学校数据策略是先展示官方证据层，再展示专业级字段。当前清华大学、郑州轻工业大学、浙江大学、电子科技大学、西安电子科技大学已有官方或半官方证据样本；同时接入了 `laofeijio2020ojbk2022/gaokaoweb` 的 Apache-2.0 开源历史就业去向数据，已补充 20 所学校的总体去向、升学、出国和主要去向单位。本轮新增哈尔滨工业大学、北京航空航天大学、北京邮电大学、同济大学、南方科技大学等 14 所学校样本；MIT 的 `PotoYang/UniversityCareerWebPage` 已解析为 286 个高校就业网入口，并在学校详情页作为“就业网入口候选”展示，其中 13 个重点学校入口已记录一次访问健康状态。没有专业级就业率或平均工资来源时，继续显示待接入。
 
-BOSS 直聘方向已经检索到 MIT/Apache 项目和历史分析数据，包括 `radishT/Job_Analysis` 和 `DavidHLP/BossAnalyze`，但不把原始 BOSS 岗位明细直接并入前端事实库。后续只做两类合规接入：用户本地导入自己有权使用的导出文件，或把历史岗位样本转成能力词、城市和薪资区间等聚合信号。无许可证的投档线/学校信息仓库先列为待授权候选，不直接复制数据。数据源筛选记录见 [docs/data-sources.md](docs/data-sources.md)。
+BOSS 直聘方向已经检索到 MIT/Apache 项目和历史分析数据，包括 `radishT/Job_Analysis` 和 `DavidHLP/BossAnalyze`，但不把原始 BOSS 岗位明细直接并入前端事实库。本轮已把 `radishT/Job_Analysis` 中 60,033 条历史能力词映射聚合成 7 类技术方向和能力词 Top 列表，作为“岗位能力偏好”的历史信号展示；后续明细数据只做用户本地导入自己有权使用的导出文件。无许可证的投档线/学校信息仓库先列为待授权候选，不直接复制数据。数据源筛选记录见 [docs/data-sources.md](docs/data-sources.md)。
 
 `analyze:jobs` 输出 `data/analysis.json`，后续可替换为 ClaudeCode 或 Claude API 生成的标签与分析结果。
 
