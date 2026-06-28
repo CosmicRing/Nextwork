@@ -45,6 +45,7 @@ import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connec
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { gtdimXuefengAdmissionAggregateSignalSource } from "./data/gtdimXuefengAdmissionAggregateSignals";
+import { linxkonBossShanghaiAggregateSignalSource, linxkonBossShanghaiKeywordBuckets, linxkonBossShanghaiRoleBuckets } from "./data/linxkonBossShanghaiAggregateSignals";
 import { majorEmploymentBlueprintSignalSource, majorEmploymentDecisionSignals, majorEmploymentRecommendedDirections, majorEmploymentSignalBuckets } from "./data/majorEmploymentBlueprintSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
@@ -3009,6 +3010,14 @@ function DataFreshnessPanel() {
           <span>BOSS Excel 聚合</span>
           <strong>{bossExcelAggregateSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
           <em>{bossExcelRoleBuckets.length} 个岗位族，{bossExcelAggregateSignalSource.regionCount} 城市，薪资中位 {bossExcelAggregateSignalSource.salaryMedianK}K；{bossExcelSkillBuckets.length} 个能力词 Top，不导入公司/岗位明细</em>
+        </section>
+        <section>
+          <span>BOSS 上海聚合</span>
+          <strong>{linxkonBossShanghaiAggregateSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {linxkonBossShanghaiAggregateSignalSource.city} {linxkonBossShanghaiAggregateSignalSource.crawledAt}，{linxkonBossShanghaiAggregateSignalSource.regionCount} 区，
+            薪资中位 {linxkonBossShanghaiAggregateSignalSource.salaryMedianK}K；{linxkonBossShanghaiRoleBuckets[0].label} {linxkonBossShanghaiRoleBuckets[0].count.toLocaleString("zh-CN")} 条，{linxkonBossShanghaiKeywordBuckets.length} 个关键词桶
+          </em>
         </section>
         <section>
           <span>AI/IT 市场洞察</span>

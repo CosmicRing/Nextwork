@@ -323,6 +323,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "平台岗位明细存在再发布合规风险；当前只展示完全去标识化统计，不导入公司名、岗位明细或 pyppeteer 采集逻辑。",
   },
   {
+    id: "linxkon-bosszhipin-shanghai-20240502",
+    name: "BossZhiPin_Spyder 上海 BOSS CSV 样本",
+    repoUrl: "https://github.com/linxkon/BossZhiPin_Spyder",
+    license: "Apache-2.0",
+    status: "career-aggregate",
+    coverage: "仓库 data/上海boss直聘20240502.csv 含 BOSS 上海岗位样本字段：名称、地点、薪资、招聘需求、详情网址和区域；README 明确为 Selenium 爬虫示例数据。",
+    currentUse: "已聚合为 src/data/linxkonBossShanghaiAggregateSignals.ts，只保留 4,197 行样本的区县覆盖、学历/经验桶、薪资桶、岗位族和关键词统计；不提交 CSV 原表、详情网址或岗位明细。",
+    caution: "该数据来自第三方招聘平台采集链路，不代表实时招聘市场；本项目只展示完全去标识化聚合统计，不复用爬虫、验证码或登录流程。",
+  },
+  {
     id: "college-major4hs-admission-data",
     name: "college-major4hs 投档线 / 学校信息 / 学科评估",
     repoUrl: "https://github.com/wonderslife/college-major4hs",
