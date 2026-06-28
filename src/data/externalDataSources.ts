@@ -123,6 +123,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "该库适合位次法和历史录取查询参考，不能作为当前年录取承诺；正式填报仍需回到省考试院和高校招生网复核。",
   },
   {
+    id: "maliangone-zhangxuefeng-employment-bluebook",
+    name: "zhangxuefeng-skill 2025 就业/分数线参考",
+    repoUrl: "https://github.com/maliangone/zhangxuefeng-skill-ultimate-version",
+    license: "MIT",
+    status: "career-aggregate",
+    coverage: "references/data 下含 2025 就业数据参考和 2025 全国 31 省高考分数线参考；仓库描述标注含就业蓝皮书数据、全国分数线和高考志愿 AI 顾问。",
+    currentUse: "已聚合为 src/data/majorEmploymentBlueprintSignals.ts，只保留 6,199 元本科毕业半年后平均月收入、6 个绿牌专业、5 个红牌专业、31 省分数线覆盖和 2025 新高考注意事项。",
+    caution: "该源是对麦可思、媒体汇总和考试院分数线的二次整理，适合做专业就业蓝图和位次法提醒；正式填报仍必须回到省考试院、高校招生网和就业质量报告复核。",
+  },
+  {
     id: "shengdabai-college-major-selector",
     name: "college-major-selector 全国院校专业索引",
     repoUrl: "https://github.com/shengdabai/college-major-selector",

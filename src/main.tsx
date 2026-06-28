@@ -45,6 +45,7 @@ import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connec
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { gtdimXuefengAdmissionAggregateSignalSource } from "./data/gtdimXuefengAdmissionAggregateSignals";
+import { majorEmploymentBlueprintSignalSource, majorEmploymentDecisionSignals, majorEmploymentRecommendedDirections, majorEmploymentSignalBuckets } from "./data/majorEmploymentBlueprintSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
 import { ruoyiCersSignalSource } from "./data/ruoyiCersSignals";
@@ -3013,6 +3014,14 @@ function DataFreshnessPanel() {
           <span>AI/IT 市场洞察</span>
           <strong>{aiItMarketInsightSource.insightCount}</strong>
           <em>{aiItMarketInsightSource.globalPeriod} 薪资与 {aiItMarketInsightSource.domesticPeriod} 国内岗位画像；{aiItTalentPreferenceSignals.length} 个能力偏好信号</em>
+        </section>
+        <section>
+          <span>专业就业蓝皮书</span>
+          <strong>{majorEmploymentBlueprintSignalSource.averageMonthlySalary2024.toLocaleString("zh-CN")}</strong>
+          <em>
+            2024 届本科半年后月收入参考；{majorEmploymentSignalBuckets[0].value} 绿牌/{majorEmploymentSignalBuckets[1].value} 红牌，
+            {majorEmploymentBlueprintSignalSource.gaokaoProvinceCount} 省分数线；{majorEmploymentRecommendedDirections.length} 个推荐方向，{majorEmploymentDecisionSignals.length} 条位次提醒
+          </em>
         </section>
       </div>
 

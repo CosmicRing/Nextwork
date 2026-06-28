@@ -87,6 +87,14 @@
 - 当前处理：使用本机临时目录下载并解压 SQLite，聚合为 `src/data/gtdimXuefengAdmissionAggregateSignals.ts`。只保留 248,766 行记录数、14 省、2024-2025 年、18,802 个学校名、27,051 个专业名、8 类科类、11 类批次、71,995 个位次值和 613 个分数值；不提交 gzip/SQLite 原库或录取明细。
 - 使用边界：历史录取数据只能做位次法参考，不构成当前年录取承诺；正式填报仍需回到省考试院和高校招生网复核。
 
+### zhangxuefeng-skill-ultimate-version
+
+- 仓库：https://github.com/maliangone/zhangxuefeng-skill-ultimate-version
+- 许可证：MIT
+- 价值：`references/data/2025-employment-data.md` 汇总 2025 就业蓝皮书相关指标，`references/data/2025-gaokao-lines.md` 汇总 2025 年全国 31 省高考分数线和新高考口径提醒。
+- 当前处理：已聚合为 `src/data/majorEmploymentBlueprintSignals.ts`，只保留 2024 届本科毕业半年后平均月收入 6,199 元、6 个绿牌专业、5 个红牌专业、31 省分数线覆盖、10 个 2025 首年新高考省份和就业落实率等摘要指标；不复制长表、媒体原文或原始岗位明细。
+- 使用边界：该源是二次整理参考，适合补充“专业就业蓝图”和“位次优先”提醒；正式填报仍必须回到省考试院、高校招生网、招生章程和学校就业质量报告复核。
+
 ### college-major-selector
 
 - 仓库：https://github.com/shengdabai/college-major-selector
