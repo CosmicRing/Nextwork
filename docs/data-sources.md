@@ -95,6 +95,14 @@
 - 当前处理：已聚合为 `src/data/majorEmploymentBlueprintSignals.ts`，只保留 2024 届本科毕业半年后平均月收入 6,199 元、6 个绿牌专业、5 个红牌专业、31 省分数线覆盖、10 个 2025 首年新高考省份和就业落实率等摘要指标；不复制长表、媒体原文或原始岗位明细。
 - 使用边界：该源是二次整理参考，适合补充“专业就业蓝图”和“位次优先”提醒；正式填报仍必须回到省考试院、高校招生网、招生章程和学校就业质量报告复核。
 
+### Zylcyl/gaokao-advisor
+
+- 仓库：https://github.com/Zylcyl/gaokao-advisor
+- 许可证：MIT
+- 价值：`skills/adi-assessment` 提供 ADI 专业路径可走通性评估，包含 paths、reach、correct、recover 四个维度、8 道素质问卷、31 个选项、3 个资源层级、4 个专业标杆和 4 个风险分档。
+- 当前处理：已聚合为 `src/data/zylcylAdiAssessmentSignals.ts`，只保留题量、选项数、维度数、标杆数、分档数和 1-625 分区间；不复制问卷原文、benchmark JSON 或技能说明长文。
+- 使用边界：该源是“先知道自己是谁”的模型参考，不是高校事实库或录取数据；正式推荐仍需叠加考生真实情况、官方投档线、招生章程和就业证据。
+
 ### college-major-selector
 
 - 仓库：https://github.com/shengdabai/college-major-selector

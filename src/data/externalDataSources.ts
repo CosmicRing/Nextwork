@@ -133,6 +133,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "该源是对麦可思、媒体汇总和考试院分数线的二次整理，适合做专业就业蓝图和位次法提醒；正式填报仍必须回到省考试院、高校招生网和就业质量报告复核。",
   },
   {
+    id: "zylcyl-gaokao-advisor-adi-assessment",
+    name: "gaokao-advisor ADI 专业路径评估",
+    repoUrl: "https://github.com/Zylcyl/gaokao-advisor",
+    license: "MIT",
+    status: "model-reference",
+    coverage: "skills/adi-assessment 下含 ADI 四维乘法模型、8 题素质问卷、31 个选项、3 个资源层级、4 个专业标杆和 4 个风险分档。",
+    currentUse: "已聚合为 src/data/zylcylAdiAssessmentSignals.ts，只保留题量、选项数、维度、标杆、分档和分数区间；不复制问卷原文或 benchmark JSON。",
+    caution: "该源补的是“先知道自己是谁”的专业路径可走通性模型，不是高校或录取事实库；正式推荐仍需叠加考生真实情况、官方投档线和学校证据。",
+  },
+  {
     id: "shengdabai-college-major-selector",
     name: "college-major-selector 全国院校专业索引",
     repoUrl: "https://github.com/shengdabai/college-major-selector",

@@ -55,6 +55,7 @@ import { shandongAdminAggregateSignalSource, shandongAdminCategoryBuckets } from
 import { shandongAdmissionSignalSource } from "./data/shandongAdmissionSignals";
 import { spiderCollegeAggregateSignalSource } from "./data/spiderCollegeAggregateSignals";
 import { yunnanScoreSegmentSignalSource } from "./data/yunnanScoreSegmentSignals";
+import { zylcylAdiAssessmentSignalSource, zylcylAdiBenchmarkBuckets, zylcylAdiQuestionDimensions } from "./data/zylcylAdiAssessmentSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
 import { getCareerDirectoryHealth, getCareerDirectoryHealthLabel } from "./data/schoolCareerDirectoryHealth";
@@ -3039,6 +3040,14 @@ function DataFreshnessPanel() {
           <em>
             2024 届本科半年后月收入参考；{majorEmploymentSignalBuckets[0].value} 绿牌/{majorEmploymentSignalBuckets[1].value} 红牌，
             {majorEmploymentBlueprintSignalSource.gaokaoProvinceCount} 省分数线；{majorEmploymentRecommendedDirections.length} 个推荐方向，{majorEmploymentDecisionSignals.length} 条位次提醒
+          </em>
+        </section>
+        <section>
+          <span>ADI 自我评估</span>
+          <strong>{zylcylAdiAssessmentSignalSource.questionCount}</strong>
+          <em>
+            {zylcylAdiAssessmentSignalSource.dimensionCount} 维乘法模型，{zylcylAdiAssessmentSignalSource.optionCount} 个选项；
+            {zylcylAdiBenchmarkBuckets.length} 个专业标杆，最高 {zylcylAdiAssessmentSignalSource.scoreMax} 分，{zylcylAdiQuestionDimensions.length} 个自我认知题
           </em>
         </section>
       </div>
