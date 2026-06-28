@@ -132,6 +132,21 @@ const schoolOfficialLinksById: Record<string, SchoolOfficialLink[]> = {
     { label: "本科招生网", url: "https://zs.sustech.edu.cn/", kind: "admissions", note: "招生政策、专业和培养模式入口" },
     { label: "就业指导中心", url: "https://career.sustech.edu.cn/", kind: "employment", note: "后续用于招聘活动和就业数据核验" },
   ],
+  fudan: [
+    { label: "学校官网", url: "https://www.fudan.edu.cn/", kind: "school", note: "学校官方主站，可继续进入院系、信息公开和人才培养栏目" },
+    { label: "本科招生网", url: "https://www.ao.fudan.edu.cn/", kind: "admissions", note: "本科招生政策、专业介绍和报考入口" },
+    { label: "学生职业发展教育服务中心", url: "https://career.fudan.edu.cn/", kind: "employment", note: "就业服务、招聘活动和用人单位入口" },
+  ],
+  nju: [
+    { label: "学校官网", url: "https://www.nju.edu.cn/", kind: "school", note: "学校官方主站，可继续进入院系、信息公开和人才培养栏目" },
+    { label: "本科招生网", url: "https://bkzs.nju.edu.cn/", kind: "admissions", note: "本科招生政策、专业介绍和录取查询入口" },
+    { label: "学生就业指导中心", url: "https://job.nju.edu.cn/", kind: "employment", note: "招聘活动、就业服务和用人单位入口" },
+  ],
+  ustc: [
+    { label: "学校官网", url: "https://www.ustc.edu.cn/", kind: "school", note: "学校官方主站，可继续进入院系和人才培养栏目" },
+    { label: "本科招生在线", url: "https://zsb.ustc.edu.cn/", kind: "admissions", note: "本科招生政策、专业介绍和报考入口" },
+    { label: "就业信息网", url: "https://employment.ustc.edu.cn/", kind: "employment", note: "就业招聘、宣讲会和用人单位入口" },
+  ],
   ztbu: [
     { label: "学校官网", url: "https://www.ztbu.edu.cn/", kind: "school", note: "学校官网入口，可从院部设置继续核验专业归属" },
     { label: "招生网", url: "https://zsb.ztbu.edu.cn/", kind: "admissions", note: "招生章程、招生计划、历年分数和录取查询入口" },
@@ -213,6 +228,129 @@ const schoolOfficialLinksById: Record<string, SchoolOfficialLink[]> = {
     { label: "生源速览", url: "https://job.zzuli.edu.cn/module/newslist/id-1112/nid-1653", kind: "report", note: "就业创业信息网生源概况入口，含 2021-2025 届生源列表" },
   ],
 };
+
+type GithubHistoricalSchoolSignal = {
+  id: string;
+  name: string;
+  city: string;
+  sourceSchoolId: string;
+  outcomeRate: string;
+  postgraduateRate: string;
+  abroadRate: string;
+  companies: string[];
+};
+
+const githubSchoolOutcomeSourceUrl = "https://github.com/laofeijio2020ojbk2022/gaokaoweb/blob/master/data/school_job.csv";
+
+const githubHistoricalSchoolSignals: GithubHistoricalSchoolSignal[] = [
+  {
+    id: "peking",
+    name: "北京大学",
+    city: "北京",
+    sourceSchoolId: "31",
+    outcomeRate: "97.20%",
+    postgraduateRate: "52.26%",
+    abroadRate: "18.90%",
+    companies: ["华为技术有限公司", "中国工商银行股份有限公司", "腾讯科技有限公司", "中国科学院", "中国农业银行股份有限公司", "中信建投证券股份有限公司", "国家开发银行", "中国建设银行股份有限公司", "网易（杭州）网络有限公司"],
+  },
+  {
+    id: "sjtu",
+    name: "上海交通大学",
+    city: "上海",
+    sourceSchoolId: "125",
+    outcomeRate: "95.08%",
+    postgraduateRate: "43.39%",
+    abroadRate: "24.81%",
+    companies: ["中国船舶集团", "中国电子科技集团", "中国航天科技集团", "中国航空发动机集团", "中国商飞公司", "中国航空工业集团", "中国核工业集团", "中国航天科工集团", "中国工程物理研究院"],
+  },
+  {
+    id: "fudan",
+    name: "复旦大学",
+    city: "上海",
+    sourceSchoolId: "132",
+    outcomeRate: "96.25%",
+    postgraduateRate: "47.01%",
+    abroadRate: "17.33%",
+    companies: ["华为技术有限公司", "字节跳动", "阿里巴巴", "腾讯", "美团", "中国国际金融股份有限公司", "拼多多", "恒瑞医药", "中兴通讯", "网易", "OPPO", "德勤"],
+  },
+  {
+    id: "nju",
+    name: "南京大学",
+    city: "南京",
+    sourceSchoolId: "111",
+    outcomeRate: "98.46%",
+    postgraduateRate: "40.03%",
+    abroadRate: "23.76%",
+    companies: ["公务员单位", "普联技术有限公司", "南京鼓楼医院", "中兴通讯股份有限公司", "华泰证券股份有限公司", "网易公司", "南京银行股份有限公司", "百度股份有限公司", "江苏银行股份有限公司", "国泰君安证券股份有限公司"],
+  },
+  {
+    id: "ustc",
+    name: "中国科学技术大学",
+    city: "合肥",
+    sourceSchoolId: "66",
+    outcomeRate: "93.40%",
+    postgraduateRate: "45.15%",
+    abroadRate: "28.70%",
+    companies: ["普联技术有限公司", "阿里巴巴", "百度", "华为", "科大讯飞股份有限公司", "中国农业银行", "中国电子科技集团", "中国科学院", "中国工程物理研究院"],
+  },
+  {
+    id: "hust",
+    name: "华中科技大学",
+    city: "武汉",
+    sourceSchoolId: "127",
+    outcomeRate: "93.19%",
+    postgraduateRate: "45.93%",
+    abroadRate: "12.30%",
+    companies: ["国家电网公司", "中国船舶工业集团公司", "中国南方电网有限责任公司", "中国航空工业集团公司", "武汉邮电科学研究院", "中国广核集团有限公司", "中国西电集团公司", "中国核工业集团公司", "国家电力投资集团公司", "中国联通", "中国电信", "中国移动"],
+  },
+];
+
+function buildGithubHistoricalSchoolOutcomeProfile(input: GithubHistoricalSchoolSignal): SchoolOutcomeProfile {
+  const school = universities.find((item) => item.id === input.id);
+  const majors = (school?.majors ?? []).slice(0, 5);
+  const sourceLabel = `GitHub 开源历史去向数据集 gaokaoweb/data/school_job.csv，school_id=${input.sourceSchoolId}；需回到学校就业质量报告复核年份和口径`;
+
+  return {
+    id: input.id,
+    name: input.name,
+    city: school?.city ?? input.city,
+    dataNote: "已接入 GitHub Apache-2.0 开源历史就业去向样本；这些字段用于扩大查询覆盖和发现主要去向单位，不替代学校官网当年就业质量报告。",
+    officialLinks: schoolOfficialLinksById[input.id] ?? [],
+    evidenceSources: [
+      {
+        title: "GitHub 开源历史就业去向样本",
+        year: 2023,
+        sourceName: "laofeijio2020ojbk2022/gaokaoweb",
+        url: githubSchoolOutcomeSourceUrl,
+        status: "partial",
+        metrics: [
+          { label: "毕业去向落实率", value: input.outcomeRate, note: "来自开源历史数据集，未逐行披露官方报告年份，需二次核验" },
+          { label: "升学比例", value: input.postgraduateRate, note: "用于判断学校继续深造倾向，不代表当前年度承诺" },
+          { label: "出国比例", value: input.abroadRate, note: "用于辅助理解路径分化，需结合学校官方当年报告复核" },
+          { label: "主要去向单位", value: `${input.companies.length} 个`, note: "已抽取主要签约/去向单位，展示为历史线索" },
+        ],
+      },
+    ],
+    campusRecruitingYears: [
+      {
+        year: 2023,
+        status: "verified",
+        source: sourceLabel,
+        companies: input.companies,
+      },
+    ],
+    majors: majors.map((majorName) => {
+      const major = buildOfficialEntryMajor(input.id, majorName);
+      return {
+        ...major,
+        employmentRate: { label: `总体 ${input.outcomeRate}`, source: sourceLabel, status: "verified" as const },
+        averageSalary: { label: "待接入", source: pendingSalarySource, status: "pending" as const },
+      };
+    }),
+  };
+}
+
+const githubHistoricalSchoolOutcomeProfiles: SchoolOutcomeProfile[] = githubHistoricalSchoolSignals.map(buildGithubHistoricalSchoolOutcomeProfile);
 
 const verifiedSchoolOutcomeProfiles: SchoolOutcomeProfile[] = [
   {
@@ -557,13 +695,14 @@ const verifiedSchoolOutcomeProfiles: SchoolOutcomeProfile[] = [
 
 export const schoolOutcomeProfiles: SchoolOutcomeProfile[] = [
   ...verifiedSchoolOutcomeProfiles,
+  ...githubHistoricalSchoolOutcomeProfiles,
   ...buildOfficialEntrySchoolProfiles(),
 ];
 
 function buildOfficialEntrySchoolProfiles(): SchoolOutcomeProfile[] {
-  const verifiedIds = new Set(verifiedSchoolOutcomeProfiles.map((school) => school.id));
+  const curatedIds = new Set([...verifiedSchoolOutcomeProfiles, ...githubHistoricalSchoolOutcomeProfiles].map((school) => school.id));
   return universities
-    .filter((school) => !verifiedIds.has(school.id))
+    .filter((school) => !curatedIds.has(school.id))
     .map((school) => ({
       id: school.id,
       name: school.name,

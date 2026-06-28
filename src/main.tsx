@@ -35,6 +35,7 @@ import {
   Zap,
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
+import { availableExternalSchoolRows, connectedExternalSchoolSourceCount, importedExternalSchoolRows } from "./data/externalDataSources";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { buildOfficialSearchCards, officialCompanySources, type OfficialCompanySource } from "./data/officialSources";
 import { companyDemandProfiles, formatMonthlyRange, majorSalaryProfiles, type MajorSalaryProfile } from "./data/majorMarket";
@@ -2294,8 +2295,9 @@ function LifeDashboard({
   const badges = useMemo(() => getBadges(jobs, initialProfile), []);
   const directMatches = useMemo(() => buildUniversityMajorMatches(universities, majorPaths, jobs), []);
   const topMajor = rankedMajors[0];
+  const topTrack = rankedTracks[0];
   const fourYearPlan = useMemo(() => getFourYearPlan(topMajor), [topMajor]);
-  const todos = useMemo(() => getLifeTodos(mbtiCode, topMajor.group, rankedTracks[0].name), [mbtiCode, topMajor, rankedTracks]);
+  const todos = useMemo(() => getLifeTodos(mbtiCode, topMajor.group, topTrack.name), [mbtiCode, topMajor, topTrack]);
   const activeDoneTodoIds = useMemo(() => {
     const todoIds = new Set(todos.map((todo) => todo.id));
     return doneTodos.filter((todoId) => todoIds.has(todoId));
@@ -2331,7 +2333,16 @@ function LifeDashboard({
   return (
     <div className="content-grid">
       <section className="center-stack">
-        <HeroPanel mbtiCode={mbtiCode} profileName={profile.name} topMajor={topMajor.group} topTrack={rankedTracks[0].name} />
+        <HeroPanel
+          mbtiCode={mbtiCode}
+          profileName={profile.name}
+          profileSummary={profile.summary}
+          topMajor={topMajor.group}
+          topMajorScore={topMajor.score}
+          topTrack={topTrack.name}
+          topTrackScore={topTrack.score}
+          completion={completion}
+        />
         <DecisionFlowPanel />
         <DecisionMetricGrid />
         <DataFreshnessPanel />
@@ -2455,7 +2466,7 @@ function LifeDashboard({
           </div>
         </section>
 
-        <LifeNextActionPanel mbtiCode={mbtiCode} topMajor={topMajor.group} topTrack={rankedTracks[0].name} onOpenAction={onOpenNextAction} />
+        <LifeNextActionPanel mbtiCode={mbtiCode} topMajor={topMajor.group} topTrack={topTrack.name} onOpenAction={onOpenNextAction} />
 
         <section className="panel" id="life-todos">
           <PanelHeader kicker="Life Todo" title="人生规划 Todo" icon={<CalendarCheck size={20} />} />
@@ -2877,9 +2888,9 @@ function DataFreshnessPanel() {
           <em>{latestOfficialSalary ? `${latestOfficialSalary.companyName} 有官网薪资样本` : "大多数企业未公开薪资"}</em>
         </section>
         <section>
-          <span>每日更新</span>
-          <strong>06:10</strong>
-          <em>GitHub Actions + npm run update:salaries</em>
+          <span>高校外部池</span>
+          <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
+          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本</em>
         </section>
       </div>
     </section>
@@ -8592,7 +8603,7 @@ function SchoolAggregationReportPanel({ aggregation }: { aggregation: SchoolAggr
         <section>
           <span>来源入口</span>
           <strong>{aggregation.sourceRows.length} 个</strong>
-          <p>{aggregation.sourceRows.slice(0, 3).map((row) => row.label).join(" / ")}</p>
+          <p>{aggregation.sourceRows.slice(0, 4).map((row) => `${row.source}: ${row.label}`).join(" / ")}</p>
         </section>
       </div>
 
@@ -9211,22 +9222,51 @@ function formatDataDate(value: string) {
   return date.toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai" });
 }
 
-function HeroPanel({ mbtiCode, profileName, topMajor, topTrack }: { mbtiCode: string; profileName: string; topMajor: string; topTrack: string }) {
+function HeroPanel({
+  mbtiCode,
+  profileName,
+  profileSummary,
+  topMajor,
+  topMajorScore,
+  topTrack,
+  topTrackScore,
+  completion,
+}: {
+  mbtiCode: string;
+  profileName: string;
+  profileSummary: string;
+  topMajor: string;
+  topMajorScore: number;
+  topTrack: string;
+  topTrackScore: number;
+  completion: number;
+}) {
+  const dashboardMetrics = [
+    { label: "身份画像", value: `${mbtiCode} · ${profileName}`, hint: "先知道自己是谁" },
+    { label: "专业方向", value: `${topMajorScore}%`, hint: topMajor },
+    { label: "就业赛道", value: `${topTrackScore}%`, hint: topTrack },
+    { label: "行动进度", value: `${completion}%`, hint: "Todo 已同步本机" },
+  ];
+
   return (
     <section className="hero-card panel">
-      <div>
-        <p className="eyebrow">看看工资</p>
-        <h2>报志愿前，先把专业薪资和大厂需求看清楚</h2>
-        <p>用专业薪资区间、企业岗位族群、学校专业去向和职业雷达，快速判断一个专业是否值得投入四年。</p>
+      <div className="hero-copy">
+        <p className="eyebrow">Life Dashboard</p>
+        <h2>认识自己，匹配社会需求</h2>
+        <p>{profileSummary} 当前推荐从 <strong>{topMajor}</strong> 切入，用 <strong>{topTrack}</strong> 的岗位需求反推课程、项目和面试准备。</p>
         <div className="hero-actions">
-          <a href="#major-salary">看专业薪资</a>
-          <a href="#company-demand">看大厂需求</a>
+          <a href="#mbti-test">调整画像</a>
+          <a href="#life-todos">查看行动</a>
         </div>
       </div>
-      <div className="hero-metric">
-        <span>{mbtiCode} · {profileName}</span>
-        <strong>{topMajor}</strong>
-        <em>{topTrack}</em>
+      <div className="hero-metric-grid" aria-label="人生规划状态">
+        {dashboardMetrics.map((metric) => (
+          <article key={metric.label} className="hero-metric">
+            <span>{metric.label}</span>
+            <strong>{metric.value}</strong>
+            <em>{metric.hint}</em>
+          </article>
+        ))}
       </div>
     </section>
   );

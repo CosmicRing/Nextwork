@@ -79,7 +79,9 @@ npm run verify:career-signals
 
 长期方向不是把所有搜索结果永久存进仓库，而是在服务端用官方企业招聘站 adapter 做即时搜索/短期缓存，再把返回结果聚合给前端。`search:official` 会返回官方入口、入口关注方向、搜索提示和当前 live adapter 样本。前端的官方源列表已包含 ByteDance、Tencent、Alibaba、Meituan、Baidu、JD、Huawei、Xiaomi、Kuaishou、PDD、Ant、NetEase Games、Bilibili、Midea、BYD、HoYoverse；其中 ByteDance、Tencent、Alibaba、Baidu、Meituan、JD、Huawei、Kuaishou、Bilibili、Xiaomi、PDD 和 Midea 已接 live adapter，其余先作为官方入口等待 adapter 接入。Alibaba adapter 使用阿里巴巴校园招聘官网的批次与岗位搜索接口，Huawei adapter 使用华为招聘官网公开岗位接口，Xiaomi adapter 使用小米中文招聘官网跳转的官方职位域 `xiaomi.jobs.f.mioffice.cn`，PDD adapter 使用拼多多校园招聘官网的应届与实习岗位接口。
 
-学校数据策略是先展示官方证据层，再展示专业级字段。当前清华大学接入 2024 届校级就业数据和签约人数靠前单位；浙江大学接入信息公开栏目与 2024 届夏季空中双选会活动数据；电子科技大学接入 2024 届就业质量报告入口。没有专业级就业率或平均工资来源时，继续显示待接入。
+学校数据策略是先展示官方证据层，再展示专业级字段。当前清华大学、郑州轻工业大学、浙江大学、电子科技大学、西安电子科技大学已有官方或半官方证据样本；同时接入了 `laofeijio2020ojbk2022/gaokaoweb` 的 Apache-2.0 开源历史就业去向数据，先补充北京大学、上海交通大学、复旦大学、南京大学、中国科学技术大学、华中科技大学 6 所学校的总体去向、升学、出国和主要去向单位。没有专业级就业率或平均工资来源时，继续显示待接入。
+
+BOSS 直聘方向已经检索到 MIT/Apache 项目和历史分析数据，但不把原始 BOSS 岗位明细直接并入前端事实库。后续只做两类合规接入：用户本地导入自己有权使用的导出文件，或把历史岗位样本转成能力词、城市和薪资区间等聚合信号。数据源筛选记录见 [docs/data-sources.md](docs/data-sources.md)。
 
 `analyze:jobs` 输出 `data/analysis.json`，后续可替换为 ClaudeCode 或 Claude API 生成的标签与分析结果。
 
@@ -89,6 +91,7 @@ npm run verify:career-signals
 
 - [docs/PRD.md](docs/PRD.md)
 - [docs/DEVELOPMENT_ARCHITECTURE.md](docs/DEVELOPMENT_ARCHITECTURE.md)
+- [docs/data-sources.md](docs/data-sources.md)
 - [docs/signal-system.md](docs/signal-system.md)
 - [docs/ITERATION_PLAN.md](docs/ITERATION_PLAN.md)
 
