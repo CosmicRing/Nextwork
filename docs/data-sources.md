@@ -79,6 +79,14 @@
 - 当前处理：使用本机临时目录读取 SQLite 结构，聚合为 `src/data/chinaUniversityAdmissionAggregateSignals.ts`。只保留 5 张表、1,167 所高校、6,392 条 2023-2025 本科录取、12 条研究生录取、31 省、279 城市、89 个 source_url 和 6,209 条 source_url 填充记录；不提交 SQLite 原库或录取明细。
 - 使用边界：该库是社区整理的公开来源数据，README 提醒仅供学习研究参考；正式填报必须回到各省考试院、高校官网和研招网复核。
 
+### xuefeng-skill
+
+- 仓库：https://github.com/GTdim7/xuefeng-skill
+- 许可证：MIT
+- 价值：仓库内置 `assets/admission_clean.db.gz`，README/schema 标注为本地历史录取 SQLite 数据库，覆盖 2024-2025 年、14 省、约 248,766 条记录，并强调位次优先于分数。
+- 当前处理：使用本机临时目录下载并解压 SQLite，聚合为 `src/data/gtdimXuefengAdmissionAggregateSignals.ts`。只保留 248,766 行记录数、14 省、2024-2025 年、18,802 个学校名、27,051 个专业名、8 类科类、11 类批次、71,995 个位次值和 613 个分数值；不提交 gzip/SQLite 原库或录取明细。
+- 使用边界：历史录取数据只能做位次法参考，不构成当前年录取承诺；正式填报仍需回到省考试院和高校招生网复核。
+
 ### college-major-selector
 
 - 仓库：https://github.com/shengdabai/college-major-selector

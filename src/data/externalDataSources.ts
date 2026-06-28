@@ -113,6 +113,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "README 标注数据主要来自考试院、高校官网和研招网等公开渠道，但仍是社区整理库；正式填报必须回到官方来源复核。",
   },
   {
+    id: "gtdim-xuefeng-skill-admission-db",
+    name: "xuefeng-skill 历史录取 SQLite 聚合",
+    repoUrl: "https://github.com/GTdim7/xuefeng-skill",
+    license: "MIT",
+    status: "connected-sample",
+    coverage: "assets/admission_clean.db.gz 为 gzip SQLite；README/schema 标注约 248,766 条历史录取数据，覆盖 2024-2025 年、14 省、rank/score/学校/专业字段。",
+    currentUse: "已聚合为 src/data/gtdimXuefengAdmissionAggregateSignals.ts，只保留表结构、行数、省份、年份、学校名/专业名去重数和位次/分数字段覆盖；不复制数据库原表。",
+    caution: "该库适合位次法和历史录取查询参考，不能作为当前年录取承诺；正式填报仍需回到省考试院和高校招生网复核。",
+  },
+  {
     id: "shengdabai-college-major-selector",
     name: "college-major-selector 全国院校专业索引",
     repoUrl: "https://github.com/shengdabai/college-major-selector",
