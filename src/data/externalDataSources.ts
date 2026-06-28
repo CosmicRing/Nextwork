@@ -24,6 +24,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "开源数据集字段可用，但不是学校官网实时数据；页面必须提示用户继续回到学校就业质量报告复核年份和口径。",
   },
   {
+    id: "jsoneft-hubei-admission-2024",
+    name: "gaokao-zhiyuan 湖北 2024 本科批录取样本",
+    repoUrl: "https://github.com/Jsoneft/gaokao-zhiyuan",
+    license: "MIT",
+    status: "connected-sample",
+    coverage: "table2_hubei.csv 可解析 18,430 条湖北 2024 本科批院校-专业记录，覆盖 1,032 所院校和 663 个专业名称；一分一段 JSON 覆盖物理/历史 1,067 个分数段。",
+    currentUse: "已聚合为 src/data/gaokaoAdmissionSignals.ts，只保留记录量、学校数、专业数、科类分布、类别分布、分数/位次范围和高选择性院校摘要。",
+    caution: "只代表湖北 2024 本科批历史样本，不等同全国录取概率；志愿填报仍需回到考试院、学校招生章程和当年招生计划复核。",
+  },
+  {
     id: "university-career-webpage-directory",
     name: "UniversityCareerWebPage 全国高校就业信息网汇总",
     repoUrl: "https://github.com/PotoYang/UniversityCareerWebPage",

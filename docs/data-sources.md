@@ -10,8 +10,16 @@
 - 许可证：Apache-2.0
 - 可用文件：`data/school_id.csv`、`data/school_info.csv`、`data/school_job.csv`
 - 当前接入：从 `school_job.csv` 接入 20 所学校的历史就业去向、升学、出国和主要去向单位。
-- 本轮新增：哈尔滨工业大学、北京航空航天大学、北京邮电大学、同济大学、南方科技大学、广州南方学院、重庆移通学院、文华学院、郑州工商学院、武昌首义学院、武汉工商学院、三江学院、郑州升达经贸管理学院、浙江树人学院。
+- 当前新增样本：哈尔滨工业大学、北京航空航天大学、北京邮电大学、同济大学、南方科技大学、广州南方学院、重庆移通学院、文华学院、郑州工商学院、武昌首义学院、武汉工商学院、三江学院、郑州升达经贸管理学院、浙江树人学院。
 - 使用边界：标为 `partial` 学校证据。它能扩大查询覆盖和发现主要去向单位，但不能替代学校官网当年就业质量报告。
+
+### gaokao-zhiyuan
+
+- 仓库：https://github.com/Jsoneft/gaokao-zhiyuan
+- 许可证：MIT
+- 可用文件：`hubei_data/table2_hubei.csv`、`hubei_data/ranking_score_hubei_physics.json`、`hubei_data/ranking_score_hubei_history.json`
+- 当前接入：从湖北 2024 本科批数据中聚合 18,430 条院校-专业记录、1,032 所院校、663 个专业名称、物理/历史科类分布、专业类别分布、分数/位次范围和一分一段覆盖，生成 `src/data/gaokaoAdmissionSignals.ts`。
+- 使用边界：只作为湖北 2024 历史录取样本，不等同全国录取概率；志愿填报必须回到湖北省教育考试院、学校招生章程和当年招生计划复核。
 
 ## 可借鉴但未直接导入
 

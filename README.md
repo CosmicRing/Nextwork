@@ -79,7 +79,7 @@ npm run verify:career-signals
 
 长期方向不是把所有搜索结果永久存进仓库，而是在服务端用官方企业招聘站 adapter 做即时搜索/短期缓存，再把返回结果聚合给前端。`search:official` 会返回官方入口、入口关注方向、搜索提示和当前 live adapter 样本。前端的官方源列表已包含 ByteDance、Tencent、Alibaba、Meituan、Baidu、JD、Huawei、Xiaomi、Kuaishou、PDD、Ant、NetEase Games、Bilibili、Midea、BYD、HoYoverse；其中 ByteDance、Tencent、Alibaba、Baidu、Meituan、JD、Huawei、Kuaishou、Bilibili、Xiaomi、PDD 和 Midea 已接 live adapter，其余先作为官方入口等待 adapter 接入。Alibaba adapter 使用阿里巴巴校园招聘官网的批次与岗位搜索接口，Huawei adapter 使用华为招聘官网公开岗位接口，Xiaomi adapter 使用小米中文招聘官网跳转的官方职位域 `xiaomi.jobs.f.mioffice.cn`，PDD adapter 使用拼多多校园招聘官网的应届与实习岗位接口。
 
-学校数据策略是先展示官方证据层，再展示专业级字段。当前清华大学、郑州轻工业大学、浙江大学、电子科技大学、西安电子科技大学已有官方或半官方证据样本；同时接入了 `laofeijio2020ojbk2022/gaokaoweb` 的 Apache-2.0 开源历史就业去向数据，已补充 20 所学校的总体去向、升学、出国和主要去向单位。本轮新增哈尔滨工业大学、北京航空航天大学、北京邮电大学、同济大学、南方科技大学等 14 所学校样本；MIT 的 `PotoYang/UniversityCareerWebPage` 已解析为 286 个高校就业网入口，并在学校详情页作为“就业网入口候选”展示，其中 13 个重点学校入口已记录一次访问健康状态。没有专业级就业率或平均工资来源时，继续显示待接入。
+学校数据策略是先展示官方证据层，再展示专业级字段。当前清华大学、郑州轻工业大学、浙江大学、电子科技大学、西安电子科技大学已有官方或半官方证据样本；同时接入了 `laofeijio2020ojbk2022/gaokaoweb` 的 Apache-2.0 开源历史就业去向数据，已补充 20 所学校的总体去向、升学、出国和主要去向单位。MIT 的 `PotoYang/UniversityCareerWebPage` 已解析为 286 个高校就业网入口，并在学校详情页作为“就业网入口候选”展示，其中 13 个重点学校入口已记录一次访问健康状态。本轮继续接入 MIT 的 `Jsoneft/gaokao-zhiyuan` 湖北 2024 本科批聚合信号：18,430 条院校-专业记录、1,032 所院校、663 个专业名称和 1,067 个物理/历史一分一段分数段。没有专业级就业率或平均工资来源时，继续显示待接入。
 
 BOSS 直聘方向已经检索到 MIT/Apache 项目和历史分析数据，包括 `radishT/Job_Analysis` 和 `DavidHLP/BossAnalyze`，但不把原始 BOSS 岗位明细直接并入前端事实库。本轮已把 `radishT/Job_Analysis` 中 60,033 条历史能力词映射聚合成 7 类技术方向和能力词 Top 列表，作为“岗位能力偏好”的历史信号展示；后续明细数据只做用户本地导入自己有权使用的导出文件。无许可证的投档线/学校信息仓库先列为待授权候选，不直接复制数据。数据源筛选记录见 [docs/data-sources.md](docs/data-sources.md)。
 

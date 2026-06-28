@@ -37,6 +37,7 @@ import {
 import { jobDataMeta, jobs } from "./data/jobs";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
+import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
 import { getCareerDirectoryHealth, getCareerDirectoryHealthLabel } from "./data/schoolCareerDirectoryHealth";
@@ -2893,7 +2894,12 @@ function DataFreshnessPanel() {
         <section>
           <span>高校外部池</span>
           <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
-          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
+          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源高校/志愿数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
+        </section>
+        <section>
+          <span>志愿录取样本</span>
+          <strong>{hubeiAdmissionSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
+          <em>湖北 2024 本科批，{hubeiAdmissionSignalSource.uniqueSchoolCount.toLocaleString("zh-CN")} 所院校，{hubeiAdmissionOneScoreBandCount.toLocaleString("zh-CN")} 个一分一段分数段</em>
         </section>
         <section>
           <span>BOSS 历史能力词</span>
