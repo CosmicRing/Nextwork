@@ -35,7 +35,7 @@ import {
   Zap,
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
-import { availableExternalSchoolRows, connectedExternalSchoolSourceCount, importedExternalSchoolRows } from "./data/externalDataSources";
+import { availableExternalSchoolRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { buildOfficialSearchCards, officialCompanySources, type OfficialCompanySource } from "./data/officialSources";
 import { companyDemandProfiles, formatMonthlyRange, majorSalaryProfiles, type MajorSalaryProfile } from "./data/majorMarket";
@@ -2890,7 +2890,7 @@ function DataFreshnessPanel() {
         <section>
           <span>高校外部池</span>
           <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
-          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本</em>
+          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选</em>
         </section>
       </div>
     </section>
