@@ -63,6 +63,14 @@
 - 当前处理：已聚合为 `src/data/shandongAdmissionSignals.ts`，保留 1,165 所学校元数据、1,165 所排名覆盖、426 所学科评估覆盖、26 个专业方向组、24 个方向到学科映射和学校省份/标签分布；暂不复制 75MB 原始明细。
 - 使用边界：历史投档只供查询参考，不承诺录取；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。
 
+### ShandongGaokao-admin-data
+
+- 仓库：https://github.com/ZhixinZhang-12/ShandongGaokao-admin-data
+- 许可证：Apache-2.0
+- 价值：仓库包含山东 2020-2024 年一分一段、各批次志愿录取、年份合并录取数据、招生计划、本专科招生变化、报考要求和可视化图表等 45 个 Excel/CSV 文件。
+- 当前处理：使用本机临时目录读取 41 个 Excel sheet 和 4 个 CSV，聚合为 `src/data/shandongAdminAggregateSignals.ts`。只保留 45 个文件、2020-2024 年覆盖、7 类目录、480,548 行 Excel 数据、28,897 行 CSV 数据和重点表规模；不提交 Excel/CSV 原表。
+- 使用边界：该源只代表山东历史样本，不能外推为全国规律或当年录取概率；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。
+
 ### college-major-selector
 
 - 仓库：https://github.com/shengdabai/college-major-selector
@@ -183,6 +191,14 @@
 - 原因：README 明确展示 BOSS 直聘页面自动化采集过程；平台岗位明细存在再发布合规风险。当前只展示完全去标识化聚合统计，后续如需明细应走用户本地有权文件导入或授权数据源。
 
 ## 暂不导入
+
+### lxm909055383/bosszhipin
+
+- 仓库：https://github.com/lxm909055383/bosszhipin
+- 许可证：未声明
+- 价值：README 描述最终约 25 万 BOSS 历史岗位样本，仓库含 `bosszhipin_post_info.csv`，并给出城市需求、薪资分布和数据分析/机器学习/人工智能关键词分析方向。
+- 当前处理：只登记为待授权 BOSS 数据候选，不导入 CSV、不复制 README 结论到事实库。
+- 原因：仓库未声明许可证，且数据来自第三方招聘平台采集链路；获得授权或改为用户本地有权文件导入前不得再发布原始岗位或统计结果。
 
 ### xuefeng-agent
 

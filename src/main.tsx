@@ -46,6 +46,7 @@ import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./d
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
 import { ruoyiCersSignalSource } from "./data/ruoyiCersSignals";
+import { shandongAdminAggregateSignalSource, shandongAdminCategoryBuckets } from "./data/shandongAdminAggregateSignals";
 import { shandongAdmissionSignalSource } from "./data/shandongAdmissionSignals";
 import { spiderCollegeAggregateSignalSource } from "./data/spiderCollegeAggregateSignals";
 import { yunnanScoreSegmentSignalSource } from "./data/yunnanScoreSegmentSignals";
@@ -2945,6 +2946,13 @@ function DataFreshnessPanel() {
           <strong>{shandongAdmissionSignalSource.schoolMetadataCount.toLocaleString("zh-CN")}</strong>
           <em>
             {shandongAdmissionSignalSource.years.join("-")} 普通类常规批，{shandongAdmissionSignalSource.majorDirectionGroupCount} 个专业方向组，{shandongAdmissionSignalSource.subjectEvaluationSchoolCount} 所学科评估覆盖
+          </em>
+        </section>
+        <section>
+          <span>山东管理数据</span>
+          <strong>{shandongAdminAggregateSignalSource.aggregateRowCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {shandongAdminAggregateSignalSource.fileCount} 个 Excel/CSV，{shandongAdminAggregateSignalSource.years.join("-")} 年，{shandongAdminCategoryBuckets.length} 类目录；只接聚合行数
           </em>
         </section>
         <section>

@@ -93,6 +93,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "历史投档只供查询参考，不承诺录取；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。",
   },
   {
+    id: "zhixinzhang-shandong-admin-data",
+    name: "ShandongGaokao-admin-data 山东 2020-2024 管理数据",
+    repoUrl: "https://github.com/ZhixinZhang-12/ShandongGaokao-admin-data",
+    license: "Apache-2.0",
+    status: "connected-sample",
+    coverage: "仓库含 45 个山东高考 Excel/CSV 文件，覆盖 2020-2024 年一分一段、各批次志愿录取、招生计划、本专科招生变化和报考要求信息；临时读取统计约 50.9 万行数据。",
+    currentUse: "已聚合为 src/data/shandongAdminAggregateSignals.ts，只保留文件数、年份、目录类别、行数和重点表规模；不复制 Excel/CSV 原表。",
+    caution: "该源是山东省历史样本，不能外推到其他省份或当年录取概率；正式填报仍需回到山东省教育招生考试院和高校招生章程复核。",
+  },
+  {
     id: "shengdabai-college-major-selector",
     name: "college-major-selector 全国院校专业索引",
     repoUrl: "https://github.com/shengdabai/college-major-selector",
@@ -231,6 +241,16 @@ export const externalDataSources: ExternalDataSource[] = [
     coverage: "包含 boss.sql、岗位分析系统结构、城市/职位/薪资/技能图谱等分析模块设计。",
     currentUse: "只作为 BOSS 聚合分析模型和本地导入器字段设计参考，不导入原始 BOSS 岗位明细。",
     caution: "项目 README 明确包含分布式爬虫链路；本项目不复用绕过平台限制的抓取逻辑。",
+  },
+  {
+    id: "lxm-bosszhipin-analysis-csv",
+    name: "bosszhipin BOSS 历史 CSV 分析候选",
+    repoUrl: "https://github.com/lxm909055383/bosszhipin",
+    license: "Unknown",
+    status: "blocked-license",
+    coverage: "仓库含 bosszhipin_post_info.csv，README 描述最终约 25 万 BOSS 岗位历史样本，并给出城市需求、薪资分布和数据/机器学习/人工智能关键词分析。",
+    currentUse: "只登记为待授权 BOSS 数据候选；当前不导入 CSV、不复制 README 结论到事实库。",
+    caution: "仓库未声明许可证，且数据来自第三方招聘平台采集链路；获得授权或改为用户本地导入前不得再发布原始岗位或统计结果。",
   },
   {
     id: "yuzhii-boozp-neo",
