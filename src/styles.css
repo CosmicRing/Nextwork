@@ -12128,6 +12128,122 @@ body {
   line-height: 1.12;
 }
 
+.data-source-radar {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(14, 165, 233, 0.16);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.data-source-radar-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.data-source-radar-head h3 {
+  margin: 0;
+  color: #0F172A;
+  font-size: 18px;
+  line-height: 1.22;
+}
+
+.data-source-radar-head > strong {
+  flex: 0 0 auto;
+  padding: 7px 9px;
+  border: 1px solid rgba(14, 165, 233, 0.24);
+  border-radius: 999px;
+  color: #075985;
+  background: rgba(224, 242, 254, 0.72);
+  font-size: 12px;
+  line-height: 1.15;
+}
+
+.data-source-radar-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.data-source-card {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  min-height: 164px;
+  align-content: start;
+  padding: 11px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 10px;
+  color: #0F172A;
+  background: rgba(248, 250, 252, 0.9);
+  text-decoration: none;
+}
+
+.data-source-card:hover {
+  border-color: rgba(14, 165, 233, 0.36);
+  background: rgba(240, 249, 255, 0.95);
+}
+
+.data-source-card span {
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #075985;
+  background: rgba(14, 165, 233, 0.12);
+  font-size: 11px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.data-source-card strong {
+  color: #0F172A;
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.data-source-card em,
+.data-source-card p {
+  margin: 0;
+  color: rgba(15, 23, 42, 0.58);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+
+.data-source-card.source-status-connected-sample span {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.14);
+}
+
+.data-source-card.source-status-data-reference span,
+.data-source-card.source-status-directory-reference span {
+  color: #0369A1;
+  background: rgba(14, 165, 233, 0.15);
+}
+
+.data-source-card.source-status-decision-reference span,
+.data-source-card.source-status-model-reference span,
+.data-source-card.source-status-architecture-reference span {
+  color: #475569;
+  background: rgba(216, 227, 234, 0.72);
+}
+
+.data-source-card.source-status-blocked-license span,
+.data-source-card.source-status-blocked-raw-import span {
+  color: #92400E;
+  background: rgba(245, 158, 11, 0.16);
+}
+
 .core-use-cases-panel {
   display: grid;
   gap: 16px;

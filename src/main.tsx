@@ -36,7 +36,7 @@ import {
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
-import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
+import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
@@ -2907,8 +2907,49 @@ function DataFreshnessPanel() {
           <em>{bossAggregatedSkillSignals.length} 类技术方向，{bossAggregatedTopSkillCount} 个聚合能力词；MIT 历史样本，不导入岗位明细</em>
         </section>
       </div>
+
+      <div className="data-source-radar" aria-label="开源数据源接入雷达">
+        <div className="data-source-radar-head">
+          <div>
+            <p className="eyebrow">Source Radar</p>
+            <h3>新发现的数据源如何进入系统</h3>
+          </div>
+          <strong>{externalDataSources.length} 个源</strong>
+        </div>
+        <div className="data-source-radar-list">
+          {externalDataSources.map((source) => (
+            <a key={source.id} className={`data-source-card source-status-${source.status}`} href={source.repoUrl} target="_blank" rel="noreferrer">
+              <span>{getExternalDataSourceStatusLabel(source.status)}</span>
+              <strong>{source.name}</strong>
+              <em>{source.license} · {source.coverage}</em>
+              <p>{source.currentUse}</p>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   );
+}
+
+function getExternalDataSourceStatusLabel(status: ExternalDataSource["status"]) {
+  switch (status) {
+    case "connected-sample":
+      return "已接样本";
+    case "data-reference":
+      return "数据候选";
+    case "directory-reference":
+      return "入口目录";
+    case "model-reference":
+      return "模型参考";
+    case "decision-reference":
+      return "决策参考";
+    case "architecture-reference":
+      return "架构参考";
+    case "blocked-license":
+      return "许可证待确认";
+    case "blocked-raw-import":
+      return "仅聚合";
+  }
 }
 
 function getJobDataFreshness(value: string) {

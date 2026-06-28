@@ -31,6 +31,54 @@
 - 当前处理：已解析为 `src/data/schoolCareerDirectory.ts` 的 286 条入口候选，并在学校详情页按学校名展示命中的就业网入口。当前项目重点学校中有 13 个入口已记录一次健康探测状态，见 `src/data/schoolCareerDirectoryHealth.ts`。
 - 使用边界：目录链接需要逐校验证是否仍可访问；只作为入口索引，不代表入口内容已被官方确认。
 
+### shandong-admission-history-query
+
+- 仓库：https://github.com/iChipOwO/shandong-admission-history-query
+- 许可证：MIT
+- 价值：包含山东普通类常规批第 1 次志愿 2023-2025 年投档数据 manifest、75MB 历史投档 JSON、学校元数据、专业方向索引、学科评估和排名来源。
+- 当前处理：登记为下一批山东录取聚合候选源，并展示在页面“Source Radar”；暂不复制 75MB 原始明细。
+- 使用边界：历史投档只供查询参考，不承诺录取；正式填报仍以山东省教育招生考试院、高校招生章程和当年计划为准。
+
+### college-major-selector
+
+- 仓库：https://github.com/shengdabai/college-major-selector
+- 许可证：MIT
+- 价值：README 标注基于教育部公开数据，覆盖 2,756 所院校、860 个本科专业和全国 31 省志愿规则。
+- 当前处理：登记为全国院校/专业/省份规则索引候选源，适合后续补齐学校基础信息、专业代码和省份志愿模式。
+- 使用边界：该项目核心是用户本地上传录取数据；本项目接入时只复用公开院校、专业和规则索引，不代替当年录取计划。
+
+### gaokao-assistant
+
+- 仓库：https://github.com/shengdabai/gaokao-assistant
+- 许可证：MIT
+- 价值：项目描述标注基于 2025 青海省真实招生计划数据；`data/laosheng_tags.json` 含院校标签、985/211/双一流、城市和公民办等字段。
+- 当前处理：登记为省份专项招生计划和院校标签候选源。
+- 使用边界：招生计划会按年份变化；接入前需要按省份、年份、批次拆分，并保留官方计划来源提示。
+
+### gaokao-mentor-wisdom
+
+- 仓库：https://github.com/dongsheng123132/gaokao-mentor-wisdom
+- 许可证：MIT
+- 价值：结构化 JSON 覆盖 105 条高考志愿、专业选择、就业前景、院校推荐、学习建议和人生哲理语录。
+- 当前处理：只作为职业规划话术、风险提示和专业避坑标签参考，不作为学校或录取事实数据。
+- 使用边界：观点类内容必须与官方数据、岗位需求和学校证据分层展示，不能替代可核验事实。
+
+### shandong-gaokao-volunteer
+
+- 仓库：https://github.com/zap520/shandong-gaokao-volunteer
+- 许可证：MIT
+- 价值：包含山东一分一段使用指南、特殊班型、专业参考和 rank demo，适合补充志愿解释逻辑。
+- 当前处理：登记为山东志愿规则、冲稳保阈值和用户解释文案参考，不导入为录取事实库。
+- 使用边界：示例位次和阈值只做方法演示；正式推荐需结合官方投档数据和当年政策。
+
+### Cabbage-xy/gaokao
+
+- 仓库：https://github.com/Cabbage-xy/gaokao
+- 许可证：MIT
+- 价值：高考志愿推荐系统交互与查询架构参考。
+- 当前处理：只登记为架构参考；仓库文件树未发现可直接复用的公开数据文件。
+- 使用边界：项目描述中的数据来自掌上高考，未获得授权前不复制或再发布平台数据。
+
 ### gaokao-vault
 
 - 仓库：https://github.com/lifefloating/gaokao-vault
