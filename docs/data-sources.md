@@ -71,6 +71,14 @@
 - 当前处理：已聚合为 `src/data/yunnanScoreSegmentSignals.ts`，保留 488 行分数段统计、64 条专业分数线、25 个专业名、文理累计位次范围和专业分数区间。
 - 使用边界：该数据是方法样本，不代表当前年份或全国情况；正式填报必须替换成考生所在省份、当年批次和官方考试院数据。
 
+### gaokao-advisor
+
+- 仓库：https://github.com/sgblizzard/gaokao-advisor
+- 许可证：MIT
+- 价值：仓库包含 `reports/data_audit_20260514_222320.json`，记录本地 SQLite 参考库的质量审计：2,360 所高校、488,152 行分数段、377,962 行院校录取线、3,298,297 行专业分数线和 4,951,513 行招生计划；2025 分数段覆盖 31 省、57 个科类组。
+- 当前处理：已聚合为 `src/data/gaokaoAdvisorAuditSignals.ts`，只保留覆盖量、年份范围、2025 省份覆盖、SQLite 完整性检查、缺失位次等质量门指标。
+- 使用边界：README 明确完整参考数据库不随仓库发布，独立数据资产不等于 MIT 授权。本项目只引用审计报告中的二次聚合指标，不复制数据库或岗位/录取明细。
+
 ### gaokao-mentor-wisdom
 
 - 仓库：https://github.com/dongsheng123132/gaokao-mentor-wisdom
@@ -125,6 +133,22 @@
 - 价值：包含 BOSS 岗位采集、清洗、图表仪表盘和热力图的工程结构，可参考字段、清洗步骤和可视化组织方式。
 - 当前处理：登记为 BOSS 聚合分析和仪表盘参考源；不导入原始岗位明细，也不复用采集链路。
 - 原因：开源许可证覆盖仓库代码，不等于 BOSS 平台岗位数据具备再发布授权；本项目只吸收聚合分析机制。
+
+### python-recruitment-analysis
+
+- 仓库：https://github.com/xiewangzhenyan/python-recruitment-analysis
+- 许可证：MIT
+- 价值：招聘分析平台样例，README 描述 Boss 直聘等招聘网站采集、清洗、MySQL 存储、薪资预测、岗位匹配、地区薪资地图和技能匹配；`sql/spiderdatabase.zip` 约 37MB。
+- 当前处理：只登记为本地导入器字段、薪资预测维度、岗位匹配权重和可视化结构参考；暂不解压或发布原始岗位库。
+- 原因：数据来自第三方招聘平台采集链路，开源许可证不自动授予平台岗位明细再发布权。
+
+### bosszhipin_spider
+
+- 仓库：https://github.com/poboll/bosszhipin_spider
+- 许可证：MIT
+- 价值：仓库含 `merged_java.xlsx` 等 Excel 明细、pandas 分析和 FineBI 可视化示例，可作为“历史岗位聚合字段”候选。
+- 当前处理：仅登记为受限候选和可视化参考，不提交 Excel 原表、不导入公司或岗位明细、不复用 pyppeteer 采集脚本。
+- 原因：README 明确展示 BOSS 直聘页面自动化采集过程；后续如使用，只能做用户本地有权文件的临时聚合或完全去标识化统计。
 
 ## 暂不导入
 

@@ -37,6 +37,7 @@ import {
 import { jobDataMeta, jobs } from "./data/jobs";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
+import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
@@ -2939,6 +2940,13 @@ function DataFreshnessPanel() {
           <strong>{yunnanScoreSegmentSignalSource.scoreSegmentRowCount.toLocaleString("zh-CN")}</strong>
           <em>
             2014-2017 文理分段，{yunnanScoreSegmentSignalSource.majorScoreRowCount} 条专业分数线，{yunnanScoreSegmentSignalSource.uniqueMajorCount} 个专业名
+          </em>
+        </section>
+        <section>
+          <span>全国审计覆盖</span>
+          <strong>{gaokaoAdvisorAuditSignalSource.universityCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {gaokaoAdvisorAuditSignalSource.scoreSegment2025ProvinceCount} 省 2025 分数段，{gaokaoAdvisorAuditSignalSource.enrollmentPlanRowCount.toLocaleString("zh-CN")} 条招生计划审计；只接覆盖指标
           </em>
         </section>
         <section>
