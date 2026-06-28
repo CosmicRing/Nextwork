@@ -37,6 +37,7 @@ import {
 import { jobDataMeta, jobs } from "./data/jobs";
 import { availableExternalSchoolRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
 import { majorPaths, startupTracks } from "./data/gaokao";
+import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
 import { buildOfficialSearchCards, officialCompanySources, type OfficialCompanySource } from "./data/officialSources";
 import { companyDemandProfiles, formatMonthlyRange, majorSalaryProfiles, type MajorSalaryProfile } from "./data/majorMarket";
 import { initialProfile, selectableSkills } from "./data/profile";
@@ -4156,6 +4157,7 @@ function SchoolMajorExplorer({
   const verifiedEvidenceCount = selectedSchool.evidenceSources.filter((source) => source.status === "verified").length;
   const schoolMajorSnapshots = useMemo(() => buildSchoolMajorSnapshots(selectedSchool), [selectedSchool]);
   const schoolAggregationReport = useMemo(() => buildSchoolAggregationReport(selectedSchool), [selectedSchool]);
+  const careerDirectoryMatches = useMemo(() => getCareerDirectoryMatchesForSchool(selectedSchool.name).slice(0, 4), [selectedSchool.name]);
   useEffect(() => {
     if (!hasVisibleSchools || !selectedMajor) return;
     setPublicMajorQuery(selectedMajor.name);
@@ -4242,6 +4244,7 @@ function SchoolMajorExplorer({
               />
 
               <OfficialSchoolLinksPanel links={selectedSchool.officialLinks} />
+              <CareerDirectoryLinksPanel entries={careerDirectoryMatches} />
 
               <div className="major-tabs">
                 {selectedSchool.majors.map((major) => (
@@ -7285,7 +7288,7 @@ function SchoolKnownDetailFoldout({
   children: React.ReactNode;
 }) {
   return (
-    <details className="school-public-foldout school-known-detail-foldout">
+    <details open className="school-public-foldout school-known-detail-foldout">
       <summary>
         <div>
           <span>已收录</span>
@@ -8553,6 +8556,31 @@ function OfficialSchoolLinksPanel({ links }: { links: SchoolOfficialLink[] }) {
             <span>{getSchoolOfficialLinkKindLabel(link.kind)}</span>
             <strong>{link.label}</strong>
             <em>{link.note}</em>
+          </a>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function CareerDirectoryLinksPanel({ entries }: { entries: SchoolCareerDirectoryEntry[] }) {
+  if (entries.length === 0) return null;
+
+  return (
+    <article className="official-school-links-panel career-directory-links-panel">
+      <div className="official-school-links-head">
+        <div>
+          <p className="eyebrow">MIT 目录候选</p>
+          <h3>就业网入口候选，打开后再做逐校核验</h3>
+        </div>
+        <strong>{entries.length} 个</strong>
+      </div>
+      <div className="official-school-links-grid">
+        {entries.map((entry) => (
+          <a key={entry.id} href={entry.url} target="_blank" rel="noreferrer" className="school-link-employment">
+            <span>{entry.province} · {entry.portalName}</span>
+            <strong>{entry.schoolName}</strong>
+            <em>{schoolCareerDirectorySource.repoUrl}</em>
           </a>
         ))}
       </div>

@@ -1,3 +1,5 @@
+import { schoolCareerDirectoryCount } from "./schoolCareerDirectory";
+
 export type ExternalDataSource = {
   id: string;
   name: string;
@@ -27,7 +29,7 @@ export const externalDataSources: ExternalDataSource[] = [
     license: "MIT",
     status: "directory-reference",
     coverage: "README 可解析 286 个本科高校就业网、就业指导中心或招聘信息入口。",
-    currentUse: "作为学校就业网入口补全候选源，用于后续为学校档案补 campus/employment 官方入口。",
+    currentUse: "已解析为 src/data/schoolCareerDirectory.ts，并在学校详情页按学校名展示命中的就业网入口候选。",
     caution: "目录链接需要逐校 HEAD/页面验证；只作为入口索引，不代表入口仍然可访问或数据已被官方确认。",
   },
   {
@@ -73,6 +75,6 @@ export const externalDataSources: ExternalDataSource[] = [
 ];
 
 export const connectedExternalSchoolSourceCount = externalDataSources.filter((source) => source.status === "connected-sample").length;
-export const externalCareerDirectoryRows = 286;
+export const externalCareerDirectoryRows = schoolCareerDirectoryCount;
 export const importedExternalSchoolRows = 20;
 export const availableExternalSchoolRows = 2837;
