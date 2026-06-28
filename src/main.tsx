@@ -39,13 +39,15 @@ import { aiItMarketInsightSource, aiItTalentPreferenceSignals } from "./data/aiI
 import { beijingAdmissionSignalSource } from "./data/beijingAdmissionSignals";
 import { beijingScoreSegmentSignalSource } from "./data/beijingScoreSegmentSignals";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
-import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalCareerAggregateSourceCount, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
+import { bossExcelAggregateSignalSource, bossExcelRoleBuckets, bossExcelSkillBuckets } from "./data/bossExcelAggregateSignals";
+import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalCareerAggregateSourceCount, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, schoolDataReferenceSourceCount, type ExternalDataSource } from "./data/externalDataSources";
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
 import { ruoyiCersSignalSource } from "./data/ruoyiCersSignals";
 import { shandongAdmissionSignalSource } from "./data/shandongAdmissionSignals";
+import { spiderCollegeAggregateSignalSource } from "./data/spiderCollegeAggregateSignals";
 import { yunnanScoreSegmentSignalSource } from "./data/yunnanScoreSegmentSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
@@ -2903,7 +2905,7 @@ function DataFreshnessPanel() {
         <section>
           <span>高校外部池</span>
           <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
-          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源高校/志愿数据源已接样本；{connectedExternalCareerAggregateSourceCount} 个职业聚合源已接，{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
+          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源高校/志愿数据源已接样本；{schoolDataReferenceSourceCount} 个高校覆盖参考源；{connectedExternalCareerAggregateSourceCount} 个职业聚合源已接，{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
         </section>
         <section>
           <span>志愿录取样本</span>
@@ -2929,6 +2931,13 @@ function DataFreshnessPanel() {
           <strong>{nationalEducationSignalSource.schoolCount.toLocaleString("zh-CN")}</strong>
           <em>
             {nationalEducationSignalSource.undergraduateMajorCount.toLocaleString("zh-CN")} 个本科专业，{nationalEducationSignalSource.provinceRuleCount} 省志愿规则；MIT 聚合
+          </em>
+        </section>
+        <section>
+          <span>高校覆盖参考</span>
+          <strong>{spiderCollegeAggregateSignalSource.basicSchoolInfoCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {spiderCollegeAggregateSignalSource.cityCount} 个城市，{spiderCollegeAggregateSignalSource.scoreLineRowCount} 条历年分数线；README 覆盖量参考，不导入爬虫日志
           </em>
         </section>
         <section>
@@ -2970,6 +2979,11 @@ function DataFreshnessPanel() {
           <span>BOSS 历史能力词</span>
           <strong>{bossAggregatedSampleCount.toLocaleString("zh-CN")}</strong>
           <em>{bossAggregatedSkillSignals.length} 类技术方向，{bossAggregatedTopSkillCount} 个聚合能力词；MIT 历史样本，不导入岗位明细</em>
+        </section>
+        <section>
+          <span>BOSS Excel 聚合</span>
+          <strong>{bossExcelAggregateSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
+          <em>{bossExcelRoleBuckets.length} 个岗位族，{bossExcelAggregateSignalSource.regionCount} 城市，薪资中位 {bossExcelAggregateSignalSource.salaryMedianK}K；{bossExcelSkillBuckets.length} 个能力词 Top，不导入公司/岗位明细</em>
         </section>
         <section>
           <span>AI/IT 市场洞察</span>

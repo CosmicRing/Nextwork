@@ -47,6 +47,14 @@
 - 当前处理：已解析为 `src/data/schoolCareerDirectory.ts` 的 286 条入口候选，并在学校详情页按学校名展示命中的就业网入口。当前项目重点学校中有 13 个入口已记录一次健康探测状态，见 `src/data/schoolCareerDirectoryHealth.ts`。
 - 使用边界：目录链接需要逐校验证是否仍可访问；只作为入口索引，不代表入口内容已被官方确认。
 
+### spider-college
+
+- 仓库：https://github.com/Rafael-Luo/spider-college
+- 许可证：MIT
+- 价值：README 标注已爬取 2,651 条高校基本信息、31 个城市和 199 条历年高考分数线，可作为后续高校基础库补全的覆盖参考。
+- 当前处理：已聚合为 `src/data/spiderCollegeAggregateSignals.ts`，只保留 README 级覆盖量：高校基本信息数、城市数和历年分数线数。
+- 使用边界：仓库主要发布采集代码、日志和数据库操作说明，没有可直接复用的公开数据表；当前不复制爬虫日志或采集结果，不把覆盖量当作已导入学校事实。
+
 ### shandong-admission-history-query
 
 - 仓库：https://github.com/iChipOwO/shandong-admission-history-query
@@ -171,8 +179,8 @@
 - 仓库：https://github.com/poboll/bosszhipin_spider
 - 许可证：MIT
 - 价值：仓库含 `merged_java.xlsx` 等 Excel 明细、pandas 分析和 FineBI 可视化示例，可作为“历史岗位聚合字段”候选。
-- 当前处理：仅登记为受限候选和可视化参考，不提交 Excel 原表、不导入公司或岗位明细、不复用 pyppeteer 采集脚本。
-- 原因：README 明确展示 BOSS 直聘页面自动化采集过程；后续如使用，只能做用户本地有权文件的临时聚合或完全去标识化统计。
+- 当前处理：使用本机临时目录读取合并工作簿 `芭比公组_分析数据.xlsx`，聚合为 `src/data/bossExcelAggregateSignals.ts`。只保留 15,897 行历史样本的岗位族、城市、区县、学历、经验、公司类型、规模、薪资区间和能力词 Top 统计；不提交 Excel 原表、不导入公司或岗位明细、不复用 pyppeteer 采集脚本。
+- 原因：README 明确展示 BOSS 直聘页面自动化采集过程；平台岗位明细存在再发布合规风险。当前只展示完全去标识化聚合统计，后续如需明细应走用户本地有权文件导入或授权数据源。
 
 ## 暂不导入
 

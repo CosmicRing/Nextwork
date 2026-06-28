@@ -73,6 +73,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "目录链接需要逐校 HEAD/页面验证；只作为入口索引，不代表入口仍然可访问或数据已被官方确认。",
   },
   {
+    id: "rafael-luo-spider-college",
+    name: "spider-college 高校覆盖参考",
+    repoUrl: "https://github.com/Rafael-Luo/spider-college",
+    license: "MIT",
+    status: "data-reference",
+    coverage: "README 标注已爬取 2,651 条高校基本信息、31 个城市和 199 条历年高考分数线；仓库主要发布采集代码和日志，不含可直接复用数据表。",
+    currentUse: "已聚合为 src/data/spiderCollegeAggregateSignals.ts，只保留 README 覆盖量，用于评估后续高校数据接入优先级。",
+    caution: "只接覆盖参考信号，不复制爬虫日志或平台采集结果；正式学校事实仍需官方来源或许可证清晰的数据表。",
+  },
+  {
     id: "ichipowo-shandong-admission-history",
     name: "shandong-admission-history-query 山东 2023-2025 投档数据",
     repoUrl: "https://github.com/iChipOwO/shandong-admission-history-query",
@@ -247,10 +257,10 @@ export const externalDataSources: ExternalDataSource[] = [
     name: "bosszhipin_spider BOSS Excel 历史样本",
     repoUrl: "https://github.com/poboll/bosszhipin_spider",
     license: "MIT",
-    status: "blocked-raw-import",
+    status: "career-aggregate",
     coverage: "仓库含 merged_java.xlsx 等 Excel 明细和 pandas / FineBI 可视化示例，README 明确使用 pyppeteer 采集 BOSS 岗位。",
-    currentUse: "只登记为历史 Excel 聚合候选和可视化字段参考；不提交 Excel 原表、不导入公司或岗位明细、不复用采集脚本。",
-    caution: "平台岗位明细存在再发布合规风险；如后续使用，只能做用户本地有权文件的临时聚合或完全去标识化统计。",
+    currentUse: "已聚合为 src/data/bossExcelAggregateSignals.ts，只保留 15,897 行历史样本的岗位族、城市、学历、经验、薪资和技能统计；不提交 Excel 原表。",
+    caution: "平台岗位明细存在再发布合规风险；当前只展示完全去标识化统计，不导入公司名、岗位明细或 pyppeteer 采集逻辑。",
   },
   {
     id: "college-major4hs-admission-data",
@@ -266,6 +276,7 @@ export const externalDataSources: ExternalDataSource[] = [
 
 export const connectedExternalSchoolSourceCount = externalDataSources.filter((source) => source.status === "connected-sample").length;
 export const connectedExternalCareerAggregateSourceCount = externalDataSources.filter((source) => source.status === "career-aggregate").length;
+export const schoolDataReferenceSourceCount = externalDataSources.filter((source) => source.status === "data-reference").length;
 export const externalCareerDirectoryRows = schoolCareerDirectoryCount;
 export const checkedExternalCareerDirectoryRows = checkedSchoolCareerDirectoryCount;
 export const importedExternalSchoolRows = 20;
