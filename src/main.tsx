@@ -38,6 +38,7 @@ import { jobDataMeta, jobs } from "./data/jobs";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
+import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
 import { getCareerDirectoryHealth, getCareerDirectoryHealthLabel } from "./data/schoolCareerDirectoryHealth";
@@ -2900,6 +2901,13 @@ function DataFreshnessPanel() {
           <span>志愿录取样本</span>
           <strong>{hubeiAdmissionSignalSource.rowCount.toLocaleString("zh-CN")}</strong>
           <em>湖北 2024 本科批，{hubeiAdmissionSignalSource.uniqueSchoolCount.toLocaleString("zh-CN")} 所院校，{hubeiAdmissionOneScoreBandCount.toLocaleString("zh-CN")} 个一分一段分数段</em>
+        </section>
+        <section>
+          <span>全国院校专业索引</span>
+          <strong>{nationalEducationSignalSource.schoolCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {nationalEducationSignalSource.undergraduateMajorCount.toLocaleString("zh-CN")} 个本科专业，{nationalEducationSignalSource.provinceRuleCount} 省志愿规则；MIT 聚合
+          </em>
         </section>
         <section>
           <span>BOSS 历史能力词</span>

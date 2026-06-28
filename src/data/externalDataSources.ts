@@ -66,9 +66,9 @@ export const externalDataSources: ExternalDataSource[] = [
     name: "college-major-selector 全国院校专业索引",
     repoUrl: "https://github.com/shengdabai/college-major-selector",
     license: "MIT",
-    status: "data-reference",
+    status: "connected-sample",
     coverage: "README 标注教育部公开数据：2,756 所院校、860 个本科专业、31 省志愿规则；data/ 下含 universities、major_index、province_rules。",
-    currentUse: "登记为全国院校/专业/省份规则索引候选源，适合后续补齐学校基础信息、专业代码和省份志愿模式。",
+    currentUse: "已聚合为 src/data/nationalEducationSignals.ts，仅保留学校数、专业数、省份规则数和分布桶，不复制原始行。",
     caution: "该项目设计为用户本地上传录取数据；本项目接入时应只复用公开院校/专业/规则索引，不代替当年录取计划。",
   },
   {
@@ -140,6 +140,16 @@ export const externalDataSources: ExternalDataSource[] = [
     coverage: "包含 boss.sql、岗位分析系统结构、城市/职位/薪资/技能图谱等分析模块设计。",
     currentUse: "只作为 BOSS 聚合分析模型和本地导入器字段设计参考，不导入原始 BOSS 岗位明细。",
     caution: "项目 README 明确包含分布式爬虫链路；本项目不复用绕过平台限制的抓取逻辑。",
+  },
+  {
+    id: "yuzhii-boozp-neo",
+    name: "boozp-neo BOSS 岗位分析可视化",
+    repoUrl: "https://github.com/Yuzhii0718/boozp-neo",
+    license: "MIT",
+    status: "architecture-reference",
+    coverage: "README 标注 python+selenium 采集、清洗、图表仪表盘和热力图；含 config、clean、spider、tools、web 等工程目录。",
+    currentUse: "登记为 BOSS 岗位字段、清洗流程和可视化仪表盘参考；不导入平台岗位明细，也不复用采集链路。",
+    caution: "BOSS 直聘属于第三方招聘平台；开源许可证覆盖仓库代码，不自动授予岗位平台数据再发布权。",
   },
   {
     id: "college-major4hs-admission-data",
