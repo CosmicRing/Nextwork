@@ -214,6 +214,14 @@
 - 当前处理：登记为 BOSS 本地授权导入器、反诈规则、AI 影响分类和可学性闸门参考；不导入岗位数据、不复用批量采集逻辑。
 - 原因：这个源的价值在安全交互机制，不在可再发布数据；后续如果做 BOSS 明细，只能由用户本地发起并保留在本地或输出去标识化聚合。
 
+### boss-career-ops
+
+- 仓库：https://github.com/maimaigptlink9/boss-career-ops
+- 许可证：MIT
+- 价值：README 描述 BOSS 求职全流程 CLI，包含 5 维评分、阈值动作、简历定制、聊天管理、Pipeline 和 Web 仪表盘。
+- 当前处理：登记为本地 BOSS 授权导入后的 5 维评分、Pipeline 看板和候选岗位评估架构参考；同时聚合到 `src/data/bossCandidateSignals.ts` 的候选雷达计数。
+- 原因：该源不发布可再发布岗位数据；本项目只吸收评估和仪表盘思路，不复用自动投递或打招呼逻辑。
+
 ### boozp-neo
 
 - 仓库：https://github.com/Yuzhii0718/boozp-neo
@@ -229,6 +237,14 @@
 - 价值：招聘分析平台样例，README 描述 Boss 直聘等招聘网站采集、清洗、MySQL 存储、薪资预测、岗位匹配、地区薪资地图和技能匹配；`sql/spiderdatabase.zip` 约 37MB。
 - 当前处理：只登记为本地导入器字段、薪资预测维度、岗位匹配权重和可视化结构参考；暂不解压或发布原始岗位库。
 - 原因：数据来自第三方招聘平台采集链路，开源许可证不自动授予平台岗位明细再发布权。
+
+### boss-crawler
+
+- 仓库：https://github.com/My0sot1s/boss-crawler
+- 许可证：MIT
+- 价值：README 描述 Node.js + Selenium 采集所有记录城市的指定岗位，可输出 JSON/CSV，字段机制适合本地导入器参考。
+- 当前处理：只登记为 BOSS 本地授权导入器的风险边界和输出字段参考，聚合到 `src/data/bossCandidateSignals.ts`；不复用采集代码、登录流程、验证码识别或批量抓取链路。
+- 原因：README 明确依赖用户登录和第三方验证码识别，并提醒可能触发账号风控；本项目不能实现或鼓励绕过登录、验证码、反爬或批量抓取。
 
 ### bosszhipin_spider
 
@@ -255,6 +271,14 @@
 - 价值：README 描述最终约 25 万 BOSS 历史岗位样本，仓库含 `bosszhipin_post_info.csv`，并给出城市需求、薪资分布和数据分析/机器学习/人工智能关键词分析方向。
 - 当前处理：只登记为待授权 BOSS 数据候选，不导入 CSV、不复制 README 结论到事实库。
 - 原因：仓库未声明许可证，且数据来自第三方招聘平台采集链路；获得授权或改为用户本地有权文件导入前不得再发布原始岗位或统计结果。
+
+### jhcoco/bosszp
+
+- 仓库：https://github.com/jhcoco/bosszp
+- 许可证：未声明
+- 价值：仓库含 `全国-热门城市岗位数据.csv`，README 描述覆盖大数据、数据分析、数据挖掘、机器学习和人工智能相关岗位，CSV 字段约 10 个，文件约 38KB。
+- 当前处理：只登记为真实 BOSS CSV 候选和字段参考，聚合到 `src/data/bossCandidateSignals.ts` 的候选计数；不导入 CSV、不复制公司名、岗位名或 README 统计结论。
+- 原因：仓库未声明许可证，README 同时展示 Scrapy、Cookie 和反爬绕过配置；不能作为 MIT 开源前端事实库的数据输入。
 
 ### xuefeng-agent
 

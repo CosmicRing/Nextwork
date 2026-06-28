@@ -39,6 +39,7 @@ import { aiItMarketInsightSource, aiItTalentPreferenceSignals } from "./data/aiI
 import { beijingAdmissionSignalSource } from "./data/beijingAdmissionSignals";
 import { beijingScoreSegmentSignalSource } from "./data/beijingScoreSegmentSignals";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
+import { bossCandidateDecisionSignals, bossCandidateSignalSource } from "./data/bossCandidateSignals";
 import { bossExcelAggregateSignalSource, bossExcelRoleBuckets, bossExcelSkillBuckets } from "./data/bossExcelAggregateSignals";
 import { chinaUniversityAdmissionAggregateSignalSource } from "./data/chinaUniversityAdmissionAggregateSignals";
 import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalCareerAggregateSourceCount, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, schoolDataReferenceSourceCount, type ExternalDataSource } from "./data/externalDataSources";
@@ -3027,6 +3028,14 @@ function DataFreshnessPanel() {
           <em>
             {linxkonBossShanghaiAggregateSignalSource.city} {linxkonBossShanghaiAggregateSignalSource.crawledAt}，{linxkonBossShanghaiAggregateSignalSource.regionCount} 区，
             薪资中位 {linxkonBossShanghaiAggregateSignalSource.salaryMedianK}K；{linxkonBossShanghaiRoleBuckets[0].label} {linxkonBossShanghaiRoleBuckets[0].count.toLocaleString("zh-CN")} 条，{linxkonBossShanghaiKeywordBuckets.length} 个关键词桶
+          </em>
+        </section>
+        <section>
+          <span>BOSS 候选雷达</span>
+          <strong>{bossCandidateSignalSource.candidateSourceCount}</strong>
+          <em>
+            {bossCandidateSignalSource.rawCsvCandidateCount} 个真实 CSV 候选，{bossCandidateSignalSource.mitToolchainCount} 个 MIT 工具链；
+            {bossCandidateSignalSource.blockedLicenseCount + bossCandidateSignalSource.blockedRawImportCount} 个阻断边界，{bossCandidateDecisionSignals.length} 条合规判断
           </em>
         </section>
         <section>
