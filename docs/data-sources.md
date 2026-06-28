@@ -63,6 +63,14 @@
 - 当前处理：已聚合为 `src/data/ruoyiCersSignals.ts`，保留 377 所高校、64 条专业投档线、29 个省份分布行、院校类型分布和 2024 专业分数区间；不导入用户、收藏、反馈等行为表。
 - 使用边界：该仓库更适合作为推荐系统样例与字段参考，正式志愿判断仍需回到考试院、高校招生章程和当年计划复核。
 
+### firmianay/gaokao
+
+- 仓库：https://github.com/firmianay/gaokao
+- 许可证：MIT
+- 价值：README 示例省份为云南、科目为理科；`data/` 包含 2014-2017 分数段统计表和 2014-2016 某校分专业分数线，可用于位次换算和历史录取概率方法参考。
+- 当前处理：已聚合为 `src/data/yunnanScoreSegmentSignals.ts`，保留 488 行分数段统计、64 条专业分数线、25 个专业名、文理累计位次范围和专业分数区间。
+- 使用边界：该数据是方法样本，不代表当前年份或全国情况；正式填报必须替换成考生所在省份、当年批次和官方考试院数据。
+
 ### gaokao-mentor-wisdom
 
 - 仓库：https://github.com/dongsheng123132/gaokao-mentor-wisdom

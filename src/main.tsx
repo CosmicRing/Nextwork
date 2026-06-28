@@ -42,6 +42,7 @@ import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
 import { ruoyiCersSignalSource } from "./data/ruoyiCersSignals";
 import { shandongAdmissionSignalSource } from "./data/shandongAdmissionSignals";
+import { yunnanScoreSegmentSignalSource } from "./data/yunnanScoreSegmentSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
 import { getCareerDirectoryHealth, getCareerDirectoryHealthLabel } from "./data/schoolCareerDirectoryHealth";
@@ -2931,6 +2932,13 @@ function DataFreshnessPanel() {
           <strong>{ruoyiCersSignalSource.universityCount.toLocaleString("zh-CN")}</strong>
           <em>
             {ruoyiCersSignalSource.provinceRowCount} 省分布行，{ruoyiCersSignalSource.majorScoreCount} 条专业投档线，2024 分数 {ruoyiCersSignalSource.minMajorScore2024}-{ruoyiCersSignalSource.maxMajorScore2024}
+          </em>
+        </section>
+        <section>
+          <span>云南分段样本</span>
+          <strong>{yunnanScoreSegmentSignalSource.scoreSegmentRowCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            2014-2017 文理分段，{yunnanScoreSegmentSignalSource.majorScoreRowCount} 条专业分数线，{yunnanScoreSegmentSignalSource.uniqueMajorCount} 个专业名
           </em>
         </section>
         <section>

@@ -92,6 +92,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "该仓库是教学/系统样例，字段口径需与官方招生数据复核；用户、收藏、反馈等行为样本不得并入前端事实库。",
   },
   {
+    id: "firmianay-gaokao-yunnan-score-segments",
+    name: "firmianay/gaokao 云南历史分段与专业分数样本",
+    repoUrl: "https://github.com/firmianay/gaokao",
+    license: "MIT",
+    status: "connected-sample",
+    coverage: "data/ 下含 2014-2017 分数段统计表和 2014-2016 某校分专业分数线；README 示例省份为云南、科目为理科。",
+    currentUse: "已聚合为 src/data/yunnanScoreSegmentSignals.ts，保留 488 行分数段统计、64 条专业分数线、25 个专业名和位次覆盖范围。",
+    caution: "该数据适合作为位次换算和录取概率算法样本；正式填报仍需替换为考生所在省份、当年批次和官方考试院数据。",
+  },
+  {
     id: "dongsheng-gaokao-mentor-wisdom",
     name: "gaokao-mentor-wisdom 专业选择与就业观点库",
     repoUrl: "https://github.com/dongsheng123132/gaokao-mentor-wisdom",
