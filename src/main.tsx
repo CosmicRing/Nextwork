@@ -35,9 +35,10 @@ import {
   Zap,
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
+import { aiItMarketInsightSource, aiItTalentPreferenceSignals } from "./data/aiItMarketInsightSignals";
 import { beijingAdmissionSignalSource } from "./data/beijingAdmissionSignals";
 import { bossAggregatedSampleCount, bossAggregatedSkillSignals, bossAggregatedTopSkillCount } from "./data/bossAggregatedSignals";
-import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
+import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalCareerAggregateSourceCount, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, externalDataSources, importedExternalSchoolRows, type ExternalDataSource } from "./data/externalDataSources";
 import { gaokaoAdvisorAuditSignalSource } from "./data/gaokaoAdvisorAuditSignals";
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
@@ -2901,7 +2902,7 @@ function DataFreshnessPanel() {
         <section>
           <span>高校外部池</span>
           <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
-          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源高校/志愿数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
+          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源高校/志愿数据源已接样本；{connectedExternalCareerAggregateSourceCount} 个职业聚合源已接，{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
         </section>
         <section>
           <span>志愿录取样本</span>
@@ -2962,6 +2963,11 @@ function DataFreshnessPanel() {
           <strong>{bossAggregatedSampleCount.toLocaleString("zh-CN")}</strong>
           <em>{bossAggregatedSkillSignals.length} 类技术方向，{bossAggregatedTopSkillCount} 个聚合能力词；MIT 历史样本，不导入岗位明细</em>
         </section>
+        <section>
+          <span>AI/IT 市场洞察</span>
+          <strong>{aiItMarketInsightSource.insightCount}</strong>
+          <em>{aiItMarketInsightSource.globalPeriod} 薪资与 {aiItMarketInsightSource.domesticPeriod} 国内岗位画像；{aiItTalentPreferenceSignals.length} 个能力偏好信号</em>
+        </section>
       </div>
 
       <div className="data-source-radar" aria-label="开源数据源接入雷达">
@@ -2995,6 +3001,8 @@ function getExternalDataSourceStatusLabel(status: ExternalDataSource["status"]) 
       return "数据候选";
     case "directory-reference":
       return "入口目录";
+    case "career-aggregate":
+      return "职业聚合";
     case "model-reference":
       return "模型参考";
     case "decision-reference":

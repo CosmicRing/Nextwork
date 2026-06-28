@@ -126,6 +126,14 @@
 - 当前处理：已从 `key_map.sql` 解析 60,033 条历史能力词映射，聚合成 `src/data/bossAggregatedSignals.ts` 的 7 类技术方向和能力词 Top 列表；不导入原始 BOSS 岗位明细。
 - 原因：BOSS 直聘属于第三方招聘平台，直接抓取和再发布岗位明细存在合规风险。前端只展示历史聚合能力词频，后续如需明细应做用户本地导入器，让用户导入自己有权使用的导出文件。
 
+### Python-DataScience-Final-AI_IT_Analysis
+
+- 仓库：https://github.com/AnHuanAo/Python-DataScience-Final-AI_IT_Analysis
+- 许可证：MIT
+- 价值：README 汇总 Kaggle、和鲸社区和 Boss 直聘样本的 AI/IT 岗位待遇分析，给出 2025-2026 全球 AI 薪资、岗位类别薪资、学历经验画像和 2024-2026 国内 IT / AI 岗位趋势。
+- 当前处理：已聚合为 `src/data/aiItMarketInsightSignals.ts`，只保留 README 中的年薪量级、角色方向和人才偏好结论；不复制 Notebook 数据表、图像附件或 BOSS 岗位明细。
+- 原因：该源适合作为“职业市场偏好”的去标识化聚合洞察；含第三方招聘平台样本，不能当作实时招聘事实或平台明细再发布。
+
 ### BossAnalyze
 
 - 仓库：https://github.com/DavidHLP/BossAnalyze

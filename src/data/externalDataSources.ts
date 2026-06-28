@@ -10,6 +10,7 @@ export type ExternalDataSource = {
     | "connected-sample"
     | "data-reference"
     | "directory-reference"
+    | "career-aggregate"
     | "model-reference"
     | "decision-reference"
     | "architecture-reference"
@@ -192,6 +193,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "BOSS 直聘岗位属于第三方平台数据，抓取和再发布有合规风险；后续应走授权导出、用户本地导入或只保存聚合能力词。",
   },
   {
+    id: "anhuanao-ai-it-analysis",
+    name: "AI/IT 岗位待遇分析聚合洞察",
+    repoUrl: "https://github.com/AnHuanAo/Python-DataScience-Final-AI_IT_Analysis",
+    license: "MIT",
+    status: "career-aggregate",
+    coverage: "README 基于 Kaggle、和鲸社区和 Boss 直聘手爬数据给出 2024-2026 AI/IT 岗位待遇聚合洞察，含全球薪资、岗位类别、学历经验和国内岗位画像。",
+    currentUse: "已聚合为 src/data/aiItMarketInsightSignals.ts，只保留 README 中的薪资区间、角色方向和人才偏好结论，不复制 Notebook 数据表或岗位明细。",
+    caution: "含第三方招聘平台样本，不能作为实时招聘事实；页面只展示去标识化聚合洞察，用于专业/能力规划参考。",
+  },
+  {
     id: "davidhlp-boss-analyze",
     name: "BossAnalyze BOSS 直聘分析系统",
     repoUrl: "https://github.com/DavidHLP/BossAnalyze",
@@ -244,6 +255,7 @@ export const externalDataSources: ExternalDataSource[] = [
 ];
 
 export const connectedExternalSchoolSourceCount = externalDataSources.filter((source) => source.status === "connected-sample").length;
+export const connectedExternalCareerAggregateSourceCount = externalDataSources.filter((source) => source.status === "career-aggregate").length;
 export const externalCareerDirectoryRows = schoolCareerDirectoryCount;
 export const checkedExternalCareerDirectoryRows = checkedSchoolCareerDirectoryCount;
 export const importedExternalSchoolRows = 20;
