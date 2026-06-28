@@ -40,6 +40,7 @@ import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connec
 import { hubeiAdmissionOneScoreBandCount, hubeiAdmissionSignalSource } from "./data/gaokaoAdmissionSignals";
 import { nationalEducationSignalSource } from "./data/nationalEducationSignals";
 import { qinghaiPlanSignalSource } from "./data/qinghaiPlanSignals";
+import { ruoyiCersSignalSource } from "./data/ruoyiCersSignals";
 import { shandongAdmissionSignalSource } from "./data/shandongAdmissionSignals";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
@@ -2923,6 +2924,13 @@ function DataFreshnessPanel() {
           <strong>{qinghaiPlanSignalSource.schoolTagRowCount.toLocaleString("zh-CN")}</strong>
           <em>
             2025 计划标签库：公办 {qinghaiPlanSignalSource.publicSchoolCount.toLocaleString("zh-CN")} / 民办 {qinghaiPlanSignalSource.privateSchoolCount.toLocaleString("zh-CN")}，211 {qinghaiPlanSignalSource.project211Count}
+          </em>
+        </section>
+        <section>
+          <span>推荐系统 SQL 样本</span>
+          <strong>{ruoyiCersSignalSource.universityCount.toLocaleString("zh-CN")}</strong>
+          <em>
+            {ruoyiCersSignalSource.provinceRowCount} 省分布行，{ruoyiCersSignalSource.majorScoreCount} 条专业投档线，2024 分数 {ruoyiCersSignalSource.minMajorScore2024}-{ruoyiCersSignalSource.maxMajorScore2024}
           </em>
         </section>
         <section>

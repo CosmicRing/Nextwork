@@ -82,6 +82,16 @@ export const externalDataSources: ExternalDataSource[] = [
     caution: "招生计划会按年份变化；接入前需要按省份、年份、批次拆分，并保留官方计划来源提示。",
   },
   {
+    id: "fjx-ruoyi-cers",
+    name: "ruoyi-CERS 高考志愿推荐系统 SQL 样本",
+    repoUrl: "https://github.com/fjx13038033078/ruoyi-CERS",
+    license: "MIT",
+    status: "connected-sample",
+    coverage: "SQL dump 包含 cers_university、cers_major、cers_province 等样本表，覆盖高校、专业投档线、省份 985/211 分布和推荐系统字段。",
+    currentUse: "已聚合为 src/data/ruoyiCersSignals.ts，保留 377 所高校、64 条专业投档线、29 个省份分布和分数区间；不复制用户行为表。",
+    caution: "该仓库是教学/系统样例，字段口径需与官方招生数据复核；用户、收藏、反馈等行为样本不得并入前端事实库。",
+  },
+  {
     id: "dongsheng-gaokao-mentor-wisdom",
     name: "gaokao-mentor-wisdom 专业选择与就业观点库",
     repoUrl: "https://github.com/dongsheng123132/gaokao-mentor-wisdom",

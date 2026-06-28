@@ -55,6 +55,14 @@
 - 当前处理：已聚合为 `src/data/qinghaiPlanSignals.ts`，保留 2,875 条院校标签、公办/民办分布、城市 Top 分布和 985/211/双一流计数；不导入具体计划明细。
 - 使用边界：招生计划会按年份变化；接入前需要按省份、年份、批次拆分，并保留官方计划来源提示。
 
+### ruoyi-CERS
+
+- 仓库：https://github.com/fjx13038033078/ruoyi-CERS
+- 许可证：MIT
+- 价值：SQL dump 带 `cers_university`、`cers_major`、`cers_province` 等样本表，覆盖高校、专业投档线、省份高校数量、985/211 分布和推荐系统字段。
+- 当前处理：已聚合为 `src/data/ruoyiCersSignals.ts`，保留 377 所高校、64 条专业投档线、29 个省份分布行、院校类型分布和 2024 专业分数区间；不导入用户、收藏、反馈等行为表。
+- 使用边界：该仓库更适合作为推荐系统样例与字段参考，正式志愿判断仍需回到考试院、高校招生章程和当年计划复核。
+
 ### gaokao-mentor-wisdom
 
 - 仓库：https://github.com/dongsheng123132/gaokao-mentor-wisdom
