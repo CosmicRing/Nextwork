@@ -35,9 +35,10 @@ import {
   Zap,
 } from "lucide-react";
 import { jobDataMeta, jobs } from "./data/jobs";
-import { availableExternalSchoolRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
+import { availableExternalSchoolRows, checkedExternalCareerDirectoryRows, connectedExternalSchoolSourceCount, externalCareerDirectoryRows, importedExternalSchoolRows } from "./data/externalDataSources";
 import { majorPaths, startupTracks } from "./data/gaokao";
 import { getCareerDirectoryMatchesForSchool, schoolCareerDirectorySource, type SchoolCareerDirectoryEntry } from "./data/schoolCareerDirectory";
+import { getCareerDirectoryHealth, getCareerDirectoryHealthLabel } from "./data/schoolCareerDirectoryHealth";
 import { buildOfficialSearchCards, officialCompanySources, type OfficialCompanySource } from "./data/officialSources";
 import { companyDemandProfiles, formatMonthlyRange, majorSalaryProfiles, type MajorSalaryProfile } from "./data/majorMarket";
 import { initialProfile, selectableSkills } from "./data/profile";
@@ -2891,7 +2892,7 @@ function DataFreshnessPanel() {
         <section>
           <span>高校外部池</span>
           <strong>{importedExternalSchoolRows}/{availableExternalSchoolRows}</strong>
-          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选</em>
+          <em>{connectedExternalSchoolSourceCount} 个 GitHub 开源学校数据源已接样本；{externalCareerDirectoryRows} 个就业网入口入候选，{checkedExternalCareerDirectoryRows} 个重点入口已探测</em>
         </section>
       </div>
     </section>
@@ -8576,13 +8577,17 @@ function CareerDirectoryLinksPanel({ entries }: { entries: SchoolCareerDirectory
         <strong>{entries.length} 个</strong>
       </div>
       <div className="official-school-links-grid">
-        {entries.map((entry) => (
-          <a key={entry.id} href={entry.url} target="_blank" rel="noreferrer" className="school-link-employment">
-            <span>{entry.province} · {entry.portalName}</span>
-            <strong>{entry.schoolName}</strong>
-            <em>{schoolCareerDirectorySource.repoUrl}</em>
-          </a>
-        ))}
+        {entries.map((entry) => {
+          const health = getCareerDirectoryHealth(entry.url);
+          return (
+            <a key={entry.id} href={health?.finalUrl ?? entry.url} target="_blank" rel="noreferrer" className={`school-link-employment directory-health-${health?.status ?? "unknown"}`}>
+              <span>{entry.province} · {entry.portalName}</span>
+              <strong>{entry.schoolName}</strong>
+              <em>{health ? `${getCareerDirectoryHealthLabel(health.status)} · HTTP ${health.statusCode} · ${health.checkedAt}` : "目录候选 · 待探测"}</em>
+              <b>{health?.note ?? schoolCareerDirectorySource.repoUrl}</b>
+            </a>
+          );
+        })}
       </div>
     </article>
   );

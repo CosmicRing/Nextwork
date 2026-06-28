@@ -8125,9 +8125,28 @@ body {
   line-height: 1.45;
 }
 
+.official-school-links-grid b {
+  color: #536274;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
 .official-school-links-grid .school-link-employment span {
   color: #0f766e;
   background: #ecfdf6;
+}
+
+.official-school-links-grid .directory-health-redirected span {
+  color: #0f5fb8;
+  background: #eef6ff;
+}
+
+.official-school-links-grid .directory-health-http-error span,
+.official-school-links-grid .directory-health-protected span {
+  color: #9a3412;
+  background: #fff7ed;
 }
 
 .official-school-links-grid .school-link-major-catalog span {

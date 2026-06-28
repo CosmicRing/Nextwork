@@ -1,4 +1,5 @@
 import { schoolCareerDirectoryCount } from "./schoolCareerDirectory";
+import { checkedSchoolCareerDirectoryCount } from "./schoolCareerDirectoryHealth";
 
 export type ExternalDataSource = {
   id: string;
@@ -76,5 +77,6 @@ export const externalDataSources: ExternalDataSource[] = [
 
 export const connectedExternalSchoolSourceCount = externalDataSources.filter((source) => source.status === "connected-sample").length;
 export const externalCareerDirectoryRows = schoolCareerDirectoryCount;
+export const checkedExternalCareerDirectoryRows = checkedSchoolCareerDirectoryCount;
 export const importedExternalSchoolRows = 20;
 export const availableExternalSchoolRows = 2837;

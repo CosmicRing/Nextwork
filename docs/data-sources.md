@@ -20,7 +20,7 @@
 - 仓库：https://github.com/PotoYang/UniversityCareerWebPage
 - 许可证：MIT
 - 价值：README 可解析 286 个本科高校就业网、就业指导中心或招聘信息入口。
-- 当前处理：已解析为 `src/data/schoolCareerDirectory.ts` 的 286 条入口候选，并在学校详情页按学校名展示命中的就业网入口。
+- 当前处理：已解析为 `src/data/schoolCareerDirectory.ts` 的 286 条入口候选，并在学校详情页按学校名展示命中的就业网入口。当前项目重点学校中有 13 个入口已记录一次健康探测状态，见 `src/data/schoolCareerDirectoryHealth.ts`。
 - 使用边界：目录链接需要逐校验证是否仍可访问；只作为入口索引，不代表入口内容已被官方确认。
 
 ### gaokao-vault
