@@ -283,6 +283,23 @@ export const majorSalaryProfiles: MajorSalaryProfile[] = [
     risk: "传统土建不能只看专业名，要看城市平台、行业周期、学校资源和是否能转向规划/ESG/项目管理。",
     evidence: "market-estimate",
   },
+  {
+    id: "landscape-horticulture",
+    group: "园林 / 风景园林 / 生态景观",
+    majors: ["园林", "风景园林", "园艺", "林学", "环境设计"],
+    starterMonthlyK: [6, 14],
+    matureMonthlyK: [14, 35],
+    demandScore: 62,
+    riskLevel: "中等竞争",
+    roles: ["景观设计师", "园林工程项目助理", "生态修复工程师", "城市绿化运营", "乡村文旅策划"],
+    companies: ["设计院", "园林工程公司", "AECOM", "Arup", "地方城投", "文旅集团"],
+    coreSkills: ["植物识别", "景观设计", "CAD/SU", "工程预算", "生态修复", "现场沟通"],
+    fitFor: ["喜欢自然和空间设计", "能接受现场踏勘和项目制", "愿意把审美、植物和工程落地结合"],
+    firstYearChecks: ["做一份校园或社区景观改造方案", "学习 CAD/SU 与植物基础", "调研本地园林工程或城市更新项目"],
+    portfolioSignals: ["景观作品集", "植物调研", "CAD/SU 图纸", "社区空间改造记录"],
+    risk: "园林不是只画效果图，岗位分成设计院、工程施工、生态修复和文旅运营；要看学校是否有真实项目、作品集训练和城市资源。",
+    evidence: "market-estimate",
+  },
 ];
 
 export const companyDemandProfiles: CompanyDemandProfile[] = [

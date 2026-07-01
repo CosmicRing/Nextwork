@@ -1220,10 +1220,10 @@ function FinalMajorReviewPanel() {
             id="final-major-input"
             value={majorInput}
             onChange={(event) => setMajorInput(event.target.value)}
-            placeholder="每行一个专业，例如：人工智能、护理学、会计学、数字媒体技术"
+            placeholder="每行一个专业，也可以用空格或逗号分隔，例如：园林 土木 人工智能"
           />
           <div className="final-review-input-hints">
-            {["人工智能", "护理学", "会计学", "数字媒体技术", "电气工程及其自动化"].map((major) => (
+            {["园林", "土木工程", "人工智能", "护理学", "会计学", "数字媒体技术"].map((major) => (
               <button
                 key={major}
                 type="button"
@@ -1378,7 +1378,7 @@ function parseFinalMajorInput(value: string) {
   return Array.from(
     new Set(
       value
-        .split(/[\n,，、;；/]+/g)
+        .split(/[\s,，、;；/|｜]+/g)
         .map((item) => item.trim())
         .filter(Boolean),
     ),
@@ -1480,6 +1480,8 @@ function scoreJobForFinalMajorReview(job: Job, inputMajor: string, profile: Majo
     ].join(" "),
   );
   const sourceText = normalizeSalarySearchText(job.companyName);
+  if (isCommercialGoToMarketJob(haystack) && !allowsCommercialFinalReviewEvidence(profile.id)) return 0;
+  if (!categorySupportsMajorProfile(job.category, profile.id)) return 0;
   const inputCore = stripMajorSuffix(normalizeSalarySearchText(inputMajor));
   let score = 0;
 
@@ -1489,7 +1491,7 @@ function scoreJobForFinalMajorReview(job: Job, inputMajor: string, profile: Majo
     const normalized = normalizeSalarySearchText(major);
     const core = stripMajorSuffix(normalized);
     if (normalized && haystack.includes(normalized)) score += 46;
-    if (core.length >= 2 && haystack.includes(core)) score += 30;
+    if (isStrongFinalReviewToken(core) && haystack.includes(core)) score += 30;
     if ((job.majorSignals ?? []).some((signal) => areMarketTermsRelated(signal, major))) score += 42;
   });
 
@@ -1497,7 +1499,7 @@ function scoreJobForFinalMajorReview(job: Job, inputMajor: string, profile: Majo
     const normalized = normalizeSalarySearchText(role);
     const core = normalized.replace(/(工程师|经理|分析师|顾问|管培生|助理)$/g, "");
     if (normalized && haystack.includes(normalized)) score += 30;
-    if (core.length >= 2 && haystack.includes(core)) score += 18;
+    if (isStrongFinalReviewToken(core) && haystack.includes(core)) score += 18;
   });
 
   profile.coreSkills.forEach((skill) => {
@@ -1506,8 +1508,24 @@ function scoreJobForFinalMajorReview(job: Job, inputMajor: string, profile: Majo
   });
 
   if (profile.companies.some((company) => areMarketTermsRelated(company, job.companyName) || sourceText.includes(normalizeSalarySearchText(company)))) score += 12;
+  if (score <= 0) return 0;
   if (job.salary.source === "official") score += 16;
   return score;
+}
+
+function isCommercialGoToMarketJob(normalizedJobText: string) {
+  return ["marketing", "brand", "retail", "sales", "业务拓展", "商务拓展", "品牌", "营销", "销售", "渠道运营", "消费者洞察", "客户成功"].some((term) =>
+    normalizedJobText.includes(normalizeSalarySearchText(term)),
+  );
+}
+
+function allowsCommercialFinalReviewEvidence(profileId: string) {
+  return ["design-content", "consulting-business", "consumer-retail-brand", "hospitality-tourism-aviation", "education-law-public"].includes(profileId);
+}
+
+function isStrongFinalReviewToken(token: string) {
+  if (token.length < 2) return false;
+  return !["工程", "管理", "设计", "项目", "产品", "数据", "业务", "科学", "技术", "运营", "服务"].includes(token);
 }
 
 function scoreFinalMajorReview(profile: MajorSalaryProfile | null, evidenceCount: number, officialSalaryCount: number, salaryRange: [number, number]) {
@@ -2626,7 +2644,8 @@ function categorySupportsMajorProfile(category: JobCategory, profileId: string) 
     "hospitality-tourism-aviation": ["Service", "Operations", "Business", "Product"],
     "healthcare-care": ["Service", "Data", "Product", "AI Engineering"],
     "education-law-public": ["Service", "Business", "Product", "Design", "Data"],
-    "civil-environment-urban": ["Infrastructure", "Operations", "Product", "Data"],
+    "civil-environment-urban": ["Infrastructure", "Operations"],
+    "landscape-horticulture": ["Design", "Operations", "Infrastructure", "Service"],
   };
 
   return profileCategories[profileId]?.includes(category) ?? false;

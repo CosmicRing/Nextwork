@@ -273,6 +273,19 @@ export const majorPaths: MajorPath[] = [
     firstYearPlan: ["学习 CAD/BIM 基础", "参观一个工程或规划项目", "做社区空间/环境调研", "了解行业周期和城市平台"],
     watchOut: "传统土建行业周期感强，要看具体城市、学校资源和能否迁移到规划、ESG、项目管理。",
   },
+  {
+    id: "landscape-horticulture",
+    group: "园林 / 风景园林 / 生态景观",
+    majors: ["园林", "风景园林", "园艺", "林学", "环境设计"],
+    score: 0,
+    why: "连接景观设计、园林工程、城市绿化、生态修复和乡村文旅，适合把自然、审美和工程落地结合的学生。",
+    careerTargets: ["景观设计师", "园林工程项目助理", "生态修复工程师", "城市绿化运营", "文旅空间策划"],
+    startupRoutes: ["社区花园", "庭院景观", "生态修复服务", "乡村文旅空间"],
+    coreAbilities: ["植物识别", "景观设计", "CAD/SU", "工程预算", "生态修复", "现场沟通"],
+    fitTraits: ["design", "biology", "communication", "stable", "business"],
+    firstYearPlan: ["做一份校园或社区景观改造方案", "学习 CAD/SU 与植物基础", "调研本地园林工程或城市更新项目", "积累作品集"],
+    watchOut: "园林方向岗位差异很大，要区分设计院、工程施工、生态修复和文旅运营，不能只凭专业名判断。",
+  },
 ];
 
 export const gaokaoSourceNotes: SourceNote[] = [
