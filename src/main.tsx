@@ -467,9 +467,10 @@ const defaultSchoolExplorerProfile = schoolExplorerProfiles[0] ?? schoolOutcomeP
 const featuredSchoolExplorerProfile = schoolOutcomeProfiles.find((school) => school.id === "zzuli") ?? defaultSchoolExplorerProfile;
 
 function SalaryApp() {
-  const [activeTab, setActiveTab] = useState<SalaryAppTab>("life");
-  const companyProfiles = useMemo(() => buildSalaryCompanyProfiles(), []);
-  const [selectedCompanyId, setSelectedCompanyId] = useState(companyProfiles[0]?.source.id ?? "bytedance");
+  const [activeTab, setActiveTab] = useState<SalaryAppTab>("final");
+  const needsCompanyProfiles = activeTab === "companies" || activeTab === "industries";
+  const companyProfiles = useMemo(() => (needsCompanyProfiles ? buildSalaryCompanyProfiles() : []), [needsCompanyProfiles]);
+  const [selectedCompanyId, setSelectedCompanyId] = useState("bytedance");
   const [regionFilter, setRegionFilter] = useState<"all" | SalaryCompanyRegion>("all");
   const [industryFilter, setIndustryFilter] = useState<"all" | SalaryIndustryId>("all");
   const [companyQuery, setCompanyQuery] = useState("");
@@ -477,23 +478,25 @@ function SalaryApp() {
   const [quickSchoolQuery, setQuickSchoolQuery] = useState("");
   const [salarySchoolIntent, setSalarySchoolIntent] = useState<GlobalSearchIntent | null>(null);
   const [salaryRadarIntent, setSalaryRadarIntent] = useState<GlobalSearchIntent | null>(null);
-  const [compareIds, setCompareIds] = useState<string[]>(() => companyProfiles.slice(0, 4).map((company) => company.source.id));
-  const directMatches = useMemo(() => buildUniversityMajorMatches(universities, majorPaths, jobs), []);
+  const [compareIds, setCompareIds] = useState<string[]>(["bytedance", "tencent", "alibaba", "meituan"]);
+  const directMatches = useMemo(() => (activeTab === "school" ? buildUniversityMajorMatches(universities, majorPaths, jobs) : []), [activeTab]);
   const liveAdapterCount = officialCompanySources.filter((source) => source.adapterStatus === "live-adapter").length;
-  const officialSalaryCount = jobs.filter((job) => job.salary.source === "official").length;
-  const domesticCount = companyProfiles.filter((company) => company.region === "domestic").length;
-  const overseasCount = companyProfiles.length - domesticCount;
-  const selectedCompany = companyProfiles.find((company) => company.source.id === selectedCompanyId) ?? companyProfiles[0];
-  const latestSalaryDate = getLatestSalaryDate(jobs);
+  const officialSalaryCount = useMemo(() => jobs.filter((job) => job.salary.source === "official").length, []);
+  const domesticCount = officialCompanySources.filter((source) => domesticCompanyIds.has(source.id)).length;
+  const overseasCount = officialCompanySources.length - domesticCount;
+  const selectedCompany = companyProfiles.find((company) => company.source.id === selectedCompanyId) ?? companyProfiles[0] ?? null;
+  const latestSalaryDate = useMemo(() => getLatestSalaryDate(jobs), []);
   const careerSignals = useMemo(
     () =>
-      buildCareerSignals({
-        jobs,
-        majorSalaryProfiles,
-        officialCompanySources,
-        schoolOutcomeProfiles,
-      }),
-    [],
+      activeTab === "signals"
+        ? buildCareerSignals({
+            jobs,
+            majorSalaryProfiles,
+            officialCompanySources,
+            schoolOutcomeProfiles,
+          })
+        : [],
+    [activeTab],
   );
   const careerSignalSummary = useMemo(() => summarizeCareerSignals(careerSignals), [careerSignals]);
 
@@ -728,7 +731,7 @@ function SalaryApp() {
                     <SalaryCompanyCard
                       key={company.source.id}
                       company={company}
-                      active={company.source.id === selectedCompany.source.id}
+                      active={selectedCompany ? company.source.id === selectedCompany.source.id : false}
                       inCompare={compareIds.includes(company.source.id)}
                       onOpen={() => setSelectedCompanyId(company.source.id)}
                       onToggleCompare={() => toggleCompare(company.source.id)}
