@@ -303,7 +303,7 @@ function App() {
   return <SalaryApp />;
 }
 
-type SalaryAppTab = "life" | "signals" | "companies" | "industries" | "school" | "radar";
+type SalaryAppTab = "life" | "final" | "signals" | "companies" | "industries" | "school" | "radar";
 type SalaryCompanyRegion = "domestic" | "overseas";
 type SalaryIndustryId =
   | "internet-ai"
@@ -343,8 +343,30 @@ type SalaryCompanyProfile = {
   score: number;
 };
 
+type FinalMajorDecision = "优先保留" | "谨慎保留" | "需要补证据" | "不建议只因名字好听就填";
+
+type FinalMajorReview = {
+  id: string;
+  inputMajor: string;
+  profile: MajorSalaryProfile | null;
+  decision: FinalMajorDecision;
+  score: number;
+  evidenceCount: number;
+  officialSalaryCount: number;
+  salaryRange: [number, number];
+  matureRange: [number, number];
+  roles: string[];
+  companies: string[];
+  skills: string[];
+  jobs: Job[];
+  reason: string;
+  nextAction: string;
+  risk: string;
+};
+
 const salaryAppTabs: Array<{ id: SalaryAppTab; label: string; icon: React.ElementType }> = [
   { id: "life", label: "人生规划", icon: Compass },
+  { id: "final", label: "临门复核", icon: CheckCircle2 },
   { id: "school", label: "学校入口", icon: GraduationCap },
   { id: "radar", label: "岗位雷达", icon: Target },
   { id: "signals", label: "职业信号", icon: Bell },
@@ -438,6 +460,7 @@ const salaryIndustryDefinitions: SalaryIndustryDefinition[] = [
 
 const salaryPageSize = 8;
 const detailJobPageSize = 5;
+const finalReviewDefaultMajors = "人工智能\n护理学\n会计学\n数字媒体技术";
 const ordinarySchoolFirstIds = ["ztbu", "nfu", "wtbu", "cdjcc", "hustwenhua", "wsyu", "peihua", "zjsru", "hhstu", "sju", "cqytu", "shengda"];
 const schoolExplorerProfiles = orderSchoolOutcomeProfilesForExplorer(schoolOutcomeProfiles);
 const defaultSchoolExplorerProfile = schoolExplorerProfiles[0] ?? schoolOutcomeProfiles[0];
@@ -584,7 +607,7 @@ function SalaryApp() {
     });
 
   return (
-    <div className="salary-app">
+    <div className="salary-app scandi-shell">
       <header className="salary-topbar">
         <button className="salary-brand" onClick={() => setActiveTab("life")} aria-label="回到人生规划仪表盘">
           <span aria-hidden="true">薪</span>
@@ -602,6 +625,12 @@ function SalaryApp() {
         {activeTab === "life" && (
           <section className="salary-page salary-life-page">
             <LifeDashboard searchIntent={salarySchoolIntent ?? salaryRadarIntent} onOpenNextAction={openLifeNextAction} />
+          </section>
+        )}
+
+        {activeTab === "final" && (
+          <section className="salary-page final-review-page" aria-label="临门专业复核">
+            <FinalMajorReviewPanel />
           </section>
         )}
 
@@ -1157,6 +1186,377 @@ function SalaryIndustryCompare({
       </div>
     </section>
   );
+}
+
+function FinalMajorReviewPanel() {
+  const [majorInput, setMajorInput] = useState(finalReviewDefaultMajors);
+  const selectedMajors = useMemo(() => parseFinalMajorInput(majorInput), [majorInput]);
+  const reviews = useMemo(() => selectedMajors.map(buildFinalMajorReview).sort((left, right) => right.score - left.score), [selectedMajors]);
+  const topReview = reviews[0];
+  const priorityCount = reviews.filter((review) => review.decision === "优先保留").length;
+  const evidenceGapCount = reviews.filter((review) => review.decision === "需要补证据" || review.decision === "不建议只因名字好听就填").length;
+  const averageStarter = getAverageStarterSalary(reviews);
+
+  return (
+    <>
+      <section className="final-review-hero">
+        <div className="final-review-hero-copy">
+          <span className="final-review-kicker">Sista kollen</span>
+          <h1>把已经选好的专业放进来，最后看一眼未来岗位和薪资底盘。</h1>
+          <p>
+            这一步不再替你海选专业，而是站在填报最后关头复核：它能通向哪些岗位，起薪大概在哪里，证据够不够，风险有没有被看见。
+          </p>
+          <div className="final-review-actions">
+            <button type="button" onClick={() => setMajorInput(finalReviewDefaultMajors)}>填入样例</button>
+            <button type="button" onClick={() => setMajorInput("")}>清空重填</button>
+          </div>
+        </div>
+        <div className="final-review-input-card">
+          <label htmlFor="final-major-input">已选专业清单</label>
+          <textarea
+            id="final-major-input"
+            value={majorInput}
+            onChange={(event) => setMajorInput(event.target.value)}
+            placeholder="每行一个专业，例如：人工智能、护理学、会计学、数字媒体技术"
+          />
+          <div className="final-review-input-hints">
+            {["人工智能", "护理学", "会计学", "数字媒体技术", "电气工程及其自动化"].map((major) => (
+              <button
+                key={major}
+                type="button"
+                onClick={() => setMajorInput((current) => appendFinalMajorInput(current, major))}
+              >
+                {major}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="final-review-summary" aria-label="临门复核摘要">
+        <article>
+          <span>已复核专业</span>
+          <strong>{reviews.length}</strong>
+          <em>最多建议一次放入 8 个候选</em>
+        </article>
+        <article>
+          <span>优先保留</span>
+          <strong>{priorityCount}</strong>
+          <em>岗位、薪资和能力路径相对清晰</em>
+        </article>
+        <article>
+          <span>平均起薪底盘</span>
+          <strong>{averageStarter}</strong>
+          <em>来自专业市场画像和岗位样本</em>
+        </article>
+        <article>
+          <span>证据缺口</span>
+          <strong>{evidenceGapCount}</strong>
+          <em>需要回学校官网、就业报告或招聘源补证据</em>
+        </article>
+      </section>
+
+      {reviews.length > 0 ? (
+        <>
+          <section className="final-review-verdict">
+            <div>
+              <span>最后建议</span>
+              <h2>{topReview ? `先保留 ${topReview.inputMajor}` : "先填入专业"}</h2>
+              <p>
+                {topReview
+                  ? `${topReview.inputMajor} 当前匹配到 ${topReview.evidenceCount} 条岗位证据，起薪底盘 ${formatMonthlyRange(topReview.salaryRange)}，建议放在候选表里继续和录取位次、城市、学校层次一起比较。`
+                  : "先把候选专业填进来，再看岗位和薪资基础。"}
+              </p>
+            </div>
+            <div className="final-review-rank-list">
+              {reviews.map((review, index) => (
+                <button key={review.id} type="button">
+                  <b>{String(index + 1).padStart(2, "0")}</b>
+                  <span>{review.inputMajor}</span>
+                  <strong>{review.score}</strong>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="final-review-grid" aria-label="专业复核卡片">
+            {reviews.map((review) => (
+              <FinalMajorReviewCard key={review.id} review={review} />
+            ))}
+          </section>
+        </>
+      ) : (
+        <section className="final-review-empty">
+          <h2>先填一个专业。</h2>
+          <p>这里会把专业翻译成岗位、薪资、公司和第一年验证动作，帮助你在最后关头做取舍。</p>
+        </section>
+      )}
+    </>
+  );
+}
+
+function FinalMajorReviewCard({ review }: { review: FinalMajorReview }) {
+  return (
+    <article className={`final-review-card ${getFinalReviewDecisionClass(review.decision)}`}>
+      <div className="final-review-card-head">
+        <div>
+          <span>{review.decision}</span>
+          <h3>{review.inputMajor}</h3>
+          <p>{review.reason}</p>
+        </div>
+        <strong>{review.score}</strong>
+      </div>
+
+      <div className="final-review-card-metrics">
+        <section>
+          <span>起薪底盘</span>
+          <strong>{formatMonthlyRange(review.salaryRange)}</strong>
+        </section>
+        <section>
+          <span>成熟期</span>
+          <strong>{formatMonthlyRange(review.matureRange)}</strong>
+        </section>
+        <section>
+          <span>岗位证据</span>
+          <strong>{review.evidenceCount}</strong>
+        </section>
+      </div>
+
+      <div className="final-review-section">
+        <span>可能岗位</span>
+        <div className="final-review-tags">
+          {review.roles.map((role) => (
+            <em key={`${review.id}-${role}`}>{role}</em>
+          ))}
+        </div>
+      </div>
+
+      <div className="final-review-section">
+        <span>核心能力</span>
+        <div className="final-review-tags muted">
+          {review.skills.map((skill) => (
+            <em key={`${review.id}-${skill}`}>{skill}</em>
+          ))}
+        </div>
+      </div>
+
+      <div className="final-review-evidence">
+        <div>
+          <span>代表公司</span>
+          <strong>{review.companies.slice(0, 4).join(" / ") || "待补公司证据"}</strong>
+        </div>
+        <div>
+          <span>官网薪资</span>
+          <strong>{review.officialSalaryCount} 条</strong>
+        </div>
+      </div>
+
+      <div className="final-review-jobs">
+        <span>样本岗位</span>
+        {review.jobs.slice(0, 3).map((job) => (
+          <a key={job.id} href={job.sourceUrl} target="_blank" rel="noreferrer">
+            <strong>{job.title}</strong>
+            <em>{job.companyName} · {formatMonthlyRange([job.salary.monthlyMinK, job.salary.monthlyMaxK])}</em>
+          </a>
+        ))}
+        {review.jobs.length === 0 && <p>暂未匹配到足够岗位样本，先补官方招聘和就业报告证据。</p>}
+      </div>
+
+      <div className="final-review-next">
+        <span>下一步</span>
+        <p>{review.nextAction}</p>
+      </div>
+      <p className="final-review-risk">{review.risk}</p>
+    </article>
+  );
+}
+
+function parseFinalMajorInput(value: string) {
+  return Array.from(
+    new Set(
+      value
+        .split(/[\n,，、;；/]+/g)
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  ).slice(0, 8);
+}
+
+function appendFinalMajorInput(current: string, major: string) {
+  const values = parseFinalMajorInput(current);
+  if (values.some((item) => areMarketTermsRelated(item, major))) return current;
+  return [...values, major].join("\n");
+}
+
+function buildFinalMajorReview(inputMajor: string): FinalMajorReview {
+  const profile = findBestMajorSalaryProfile(inputMajor);
+  const matchedJobs = profile ? findJobsForFinalMajorReview(inputMajor, profile) : [];
+  const evidenceCount = matchedJobs.length;
+  const officialSalaryCount = matchedJobs.filter((job) => job.salary.source === "official").length;
+  const salaryRange = profile?.starterMonthlyK ?? getSalaryRangeFromJobs(matchedJobs) ?? [6, 16];
+  const matureRange = profile?.matureMonthlyK ?? [salaryRange[0] * 2, salaryRange[1] * 2];
+  const roles = profile?.roles.slice(0, 5) ?? getTopJobEntries(matchedJobs.map((job) => categoryLabels[job.category]), 5).map(([role]) => role);
+  const companies = Array.from(new Set([...(profile?.companies ?? []), ...matchedJobs.map((job) => job.companyName)])).slice(0, 6);
+  const skills = profile?.coreSkills.slice(0, 6) ?? getTopJobEntries(matchedJobs.flatMap((job) => job.abilitySignals ?? job.tags), 6).map(([skill]) => skill);
+  const score = scoreFinalMajorReview(profile, evidenceCount, officialSalaryCount, salaryRange);
+  const decision = getFinalMajorDecision(profile, score, evidenceCount);
+
+  return {
+    id: `${normalizeSalarySearchText(inputMajor)}-${profile?.id ?? "unknown"}`,
+    inputMajor,
+    profile,
+    decision,
+    score,
+    evidenceCount,
+    officialSalaryCount,
+    salaryRange,
+    matureRange,
+    roles: roles.length ? roles : ["目标岗位待补"],
+    companies,
+    skills: skills.length ? skills : ["先补岗位要求", "再拆能力差距"],
+    jobs: matchedJobs.slice(0, 8),
+    reason: buildFinalMajorReason(inputMajor, profile, evidenceCount),
+    nextAction: buildFinalMajorNextAction(inputMajor, profile, decision),
+    risk: profile?.risk ?? "当前专业没有足够市场画像，不能只凭专业名或学校宣传判断，需要先补就业报告、招聘岗位和城市样本。",
+  };
+}
+
+function findBestMajorSalaryProfile(inputMajor: string) {
+  const ranked = majorSalaryProfiles
+    .map((profile) => ({ profile, score: scoreMajorSalaryProfile(inputMajor, profile) }))
+    .sort((left, right) => right.score - left.score);
+  return ranked[0]?.score >= 36 ? ranked[0].profile : null;
+}
+
+function scoreMajorSalaryProfile(inputMajor: string, profile: MajorSalaryProfile) {
+  const normalizedInput = normalizeSalarySearchText(inputMajor);
+  const inputCore = stripMajorSuffix(normalizedInput);
+  let score = 0;
+
+  profile.majors.forEach((major) => {
+    const normalizedMajor = normalizeSalarySearchText(major);
+    const majorCore = stripMajorSuffix(normalizedMajor);
+    if (normalizedMajor === normalizedInput) score += 180;
+    if (majorCore && majorCore === inputCore) score += 140;
+    if (normalizedInput.includes(normalizedMajor) || normalizedMajor.includes(normalizedInput)) score += 90;
+    if (inputCore.length >= 2 && (normalizedMajor.includes(inputCore) || majorCore.includes(inputCore))) score += 58;
+    if (areMarketTermsRelated(inputMajor, major)) score += 42;
+  });
+
+  [profile.group, ...profile.roles, ...profile.coreSkills, ...profile.fitFor].forEach((term) => {
+    const normalizedTerm = normalizeSalarySearchText(term);
+    if (!normalizedTerm) return;
+    if (normalizedTerm.includes(normalizedInput) || normalizedInput.includes(normalizedTerm)) score += 24;
+    if (inputCore.length >= 2 && normalizedTerm.includes(inputCore)) score += 16;
+  });
+
+  return score;
+}
+
+function findJobsForFinalMajorReview(inputMajor: string, profile: MajorSalaryProfile) {
+  return jobs
+    .map((job) => ({ job, score: scoreJobForFinalMajorReview(job, inputMajor, profile) }))
+    .filter((item) => item.score > 0)
+    .sort((left, right) => right.score - left.score || right.job.salary.monthlyMaxK - left.job.salary.monthlyMaxK)
+    .map((item) => item.job)
+    .slice(0, 36);
+}
+
+function scoreJobForFinalMajorReview(job: Job, inputMajor: string, profile: MajorSalaryProfile) {
+  const haystack = normalizeSalarySearchText(
+    [
+      job.title,
+      job.department,
+      job.category,
+      job.direction,
+      job.description,
+      ...job.requirements,
+      ...job.tags,
+      ...(job.majorSignals ?? []),
+      ...(job.abilitySignals ?? []),
+    ].join(" "),
+  );
+  const sourceText = normalizeSalarySearchText(job.companyName);
+  const inputCore = stripMajorSuffix(normalizeSalarySearchText(inputMajor));
+  let score = 0;
+
+  if (inputCore.length >= 2 && haystack.includes(inputCore)) score += 36;
+
+  profile.majors.forEach((major) => {
+    const normalized = normalizeSalarySearchText(major);
+    const core = stripMajorSuffix(normalized);
+    if (normalized && haystack.includes(normalized)) score += 46;
+    if (core.length >= 2 && haystack.includes(core)) score += 30;
+    if ((job.majorSignals ?? []).some((signal) => areMarketTermsRelated(signal, major))) score += 42;
+  });
+
+  profile.roles.forEach((role) => {
+    const normalized = normalizeSalarySearchText(role);
+    const core = normalized.replace(/(工程师|经理|分析师|顾问|管培生|助理)$/g, "");
+    if (normalized && haystack.includes(normalized)) score += 30;
+    if (core.length >= 2 && haystack.includes(core)) score += 18;
+  });
+
+  profile.coreSkills.forEach((skill) => {
+    const normalized = normalizeSalarySearchText(skill);
+    if (normalized && haystack.includes(normalized)) score += 8;
+  });
+
+  if (profile.companies.some((company) => areMarketTermsRelated(company, job.companyName) || sourceText.includes(normalizeSalarySearchText(company)))) score += 12;
+  if (job.salary.source === "official") score += 16;
+  return score;
+}
+
+function scoreFinalMajorReview(profile: MajorSalaryProfile | null, evidenceCount: number, officialSalaryCount: number, salaryRange: [number, number]) {
+  if (!profile) return Math.min(48, 24 + evidenceCount);
+  return Math.min(
+    99,
+    Math.round(profile.demandScore * 0.58 + Math.min(24, evidenceCount * 0.9) + Math.min(10, officialSalaryCount * 2) + Math.min(7, salaryRange[1] / 12)),
+  );
+}
+
+function getFinalMajorDecision(profile: MajorSalaryProfile | null, score: number, evidenceCount: number): FinalMajorDecision {
+  if (!profile) return "不建议只因名字好听就填";
+  if (score >= 82 && evidenceCount >= 8) return "优先保留";
+  if (score >= 68 && evidenceCount >= 3) return "谨慎保留";
+  return "需要补证据";
+}
+
+function buildFinalMajorReason(inputMajor: string, profile: MajorSalaryProfile | null, evidenceCount: number) {
+  if (!profile) return `${inputMajor} 暂未命中稳定专业画像，需要先补岗位和学校就业证据。`;
+  return `命中 ${profile.group}，可连接 ${profile.roles.slice(0, 3).join(" / ")}，当前匹配 ${evidenceCount} 条岗位样本。`;
+}
+
+function buildFinalMajorNextAction(inputMajor: string, profile: MajorSalaryProfile | null, decision: FinalMajorDecision) {
+  if (!profile) return `先用“${inputMajor} + 校招 + 薪资 + 就业质量报告”补三类证据，再决定是否放入志愿表。`;
+  if (decision === "优先保留") return `把 ${inputMajor} 继续放在候选表里，同时核对目标学校近三年录取位次、城市实习机会和专业培养方案。`;
+  if (decision === "谨慎保留") return `保留但不要单押，至少再找 3 条岗位证据和 1 份学校就业报告确认路径。`;
+  return `先补证据再排序，重点查这个专业在目标学校是否真实开设、谁来校招、毕业生实际去向。`;
+}
+
+function getSalaryRangeFromJobs(matchedJobs: Job[]): [number, number] | null {
+  if (matchedJobs.length === 0) return null;
+  const mins = matchedJobs.map((job) => job.salary.monthlyMinK).sort((left, right) => left - right);
+  const maxes = matchedJobs.map((job) => job.salary.monthlyMaxK).sort((left, right) => left - right);
+  return [mins[Math.floor((mins.length - 1) * 0.2)] ?? mins[0], maxes[Math.ceil((maxes.length - 1) * 0.8)] ?? maxes[maxes.length - 1]];
+}
+
+function getAverageStarterSalary(reviews: FinalMajorReview[]) {
+  if (reviews.length === 0) return "待生成";
+  const min = Math.round(reviews.reduce((total, review) => total + review.salaryRange[0], 0) / reviews.length);
+  const max = Math.round(reviews.reduce((total, review) => total + review.salaryRange[1], 0) / reviews.length);
+  return formatMonthlyRange([min, max]);
+}
+
+function getFinalReviewDecisionClass(decision: FinalMajorDecision) {
+  if (decision === "优先保留") return "keep";
+  if (decision === "谨慎保留") return "caution";
+  if (decision === "需要补证据") return "evidence";
+  return "weak";
+}
+
+function stripMajorSuffix(value: string) {
+  return value.replace(/(科学与技术|工程及其自动化|设计与集成系统|经济与管理|艺术与管理|科学|技术|工程|管理|学)$/g, "");
 }
 
 function buildSalaryCompanyProfiles(): SalaryCompanyProfile[] {
