@@ -1204,24 +1204,39 @@ function FinalMajorReviewPanel() {
     <>
       <section className="final-review-hero">
         <div className="final-review-hero-copy">
-          <span className="final-review-kicker">Sista kollen</span>
-          <h1>把已经选好的专业放进来，最后看一眼未来岗位和薪资底盘。</h1>
+          <span className="final-review-kicker">Final Check</span>
+          <h1>把志愿表里的专业丢进来，系统直接告诉你怎么处理。</h1>
           <p>
-            这一步不再替你海选专业，而是站在填报最后关头复核：它能通向哪些岗位，起薪大概在哪里，证据够不够，风险有没有被看见。
+            现在只填专业名，不填学校、不填分数。系统会给你岗位方向、薪资底盘、证据缺口和志愿表动作。
           </p>
+          <div className="final-review-guidance">
+            <strong>先做这 3 步</strong>
+            <ol>
+              <li>把已经准备填报的专业名粘进右侧输入框。</li>
+              <li>看每个专业能通向哪些岗位、公司和能力要求。</li>
+              <li>按“保留、谨慎保留、补证据、移出主表”修改志愿表。</li>
+            </ol>
+          </div>
           <div className="final-review-actions">
-            <button type="button" onClick={() => setMajorInput(finalReviewDefaultMajors)}>填入样例</button>
-            <button type="button" onClick={() => setMajorInput("")}>清空重填</button>
+            <button type="button" onClick={() => setMajorInput(finalReviewDefaultMajors)}>用样例演示</button>
+            <button type="button" onClick={() => setMajorInput("")}>清空</button>
           </div>
         </div>
         <div className="final-review-input-card">
-          <label htmlFor="final-major-input">已选专业清单</label>
+          <div className="final-review-input-heading">
+            <label htmlFor="final-major-input">现在只填专业名</label>
+            <span>不用填院校、分数、批次，先把候选专业拆清楚。</span>
+          </div>
           <textarea
             id="final-major-input"
             value={majorInput}
             onChange={(event) => setMajorInput(event.target.value)}
             placeholder="每行一个专业，也可以用空格或逗号分隔，例如：园林 土木 人工智能"
           />
+          <div className="final-review-input-status">
+            <strong>{selectedMajors.length}</strong>
+            <span>{selectedMajors.length ? `已识别：${selectedMajors.join(" / ")}` : "输入后会自动拆分、去重并生成复核结论"}</span>
+          </div>
           <div className="final-review-input-hints">
             {["园林", "土木工程", "人工智能", "护理学", "会计学", "数字媒体技术"].map((major) => (
               <button
@@ -1236,9 +1251,27 @@ function FinalMajorReviewPanel() {
         </div>
       </section>
 
+      <section className="final-review-flow" aria-label="使用流程">
+        <article>
+          <span>01</span>
+          <strong>填候选专业</strong>
+          <p>把你已经选好的专业全部放进来，系统最多处理 8 个，避免最后关头信息过载。</p>
+        </article>
+        <article>
+          <span>02</span>
+          <strong>看就业证据</strong>
+          <p>每个专业都会映射岗位、薪资、公司、能力要求，并标出证据够不够。</p>
+        </article>
+        <article>
+          <span>03</span>
+          <strong>改志愿表</strong>
+          <p>结论会落到“保留、谨慎、补证据、移出主表”，不是只给一堆数据让你猜。</p>
+        </article>
+      </section>
+
       <section className="final-review-summary" aria-label="临门复核摘要">
         <article>
-          <span>已复核专业</span>
+          <span>本轮候选</span>
           <strong>{reviews.length}</strong>
           <em>最多建议一次放入 8 个候选</em>
         </article>
@@ -1263,11 +1296,11 @@ function FinalMajorReviewPanel() {
         <>
           <section className="final-review-verdict">
             <div>
-              <span>最后建议</span>
-              <h2>{topReview ? `先保留 ${topReview.inputMajor}` : "先填入专业"}</h2>
+              <span>职业侧结论</span>
+              <h2>{topReview ? `${topReview.inputMajor}：${getFinalReviewFormAction(topReview).title}` : "先填入专业"}</h2>
               <p>
                 {topReview
-                  ? `${topReview.inputMajor} 当前匹配到 ${topReview.evidenceCount} 条岗位证据，起薪底盘 ${formatMonthlyRange(topReview.salaryRange)}，建议放在候选表里继续和录取位次、城市、学校层次一起比较。`
+                  ? `${topReview.inputMajor} 当前匹配到 ${topReview.evidenceCount} 条岗位证据，起薪底盘 ${formatMonthlyRange(topReview.salaryRange)}。它不能替你判断录取概率；没有省份、分数、位次和院校线时，这里只做职业侧复核。`
                   : "先把候选专业填进来，再看岗位和薪资基础。"}
               </p>
             </div>
@@ -1287,11 +1320,15 @@ function FinalMajorReviewPanel() {
               <FinalMajorReviewCard key={review.id} review={review} />
             ))}
           </section>
+          <section className="final-review-limits" aria-label="使用边界">
+            <strong>先说清楚边界</strong>
+            <p>它不能替你判断录取概率。真正决定志愿排序，还要叠加省份、科类、分数、位次、批次、院校近三年录取线和家庭城市约束。</p>
+          </section>
         </>
       ) : (
         <section className="final-review-empty">
           <h2>先填一个专业。</h2>
-          <p>这里会把专业翻译成岗位、薪资、公司和第一年验证动作，帮助你在最后关头做取舍。</p>
+          <p>这里会把专业翻译成岗位、薪资、公司、证据缺口和志愿表动作，帮助你在最后关头做取舍。</p>
         </section>
       )}
     </>
@@ -1299,6 +1336,8 @@ function FinalMajorReviewPanel() {
 }
 
 function FinalMajorReviewCard({ review }: { review: FinalMajorReview }) {
+  const formAction = getFinalReviewFormAction(review);
+
   return (
     <article className={`final-review-card ${getFinalReviewDecisionClass(review.decision)}`}>
       <div className="final-review-card-head">
@@ -1308,6 +1347,12 @@ function FinalMajorReviewCard({ review }: { review: FinalMajorReview }) {
           <p>{review.reason}</p>
         </div>
         <strong>{review.score}</strong>
+      </div>
+
+      <div className="final-review-form-action">
+        <span>志愿表动作</span>
+        <strong>{formAction.title}</strong>
+        <p>{formAction.description}</p>
       </div>
 
       <div className="final-review-card-metrics">
@@ -1553,6 +1598,34 @@ function buildFinalMajorNextAction(inputMajor: string, profile: MajorSalaryProfi
   if (decision === "优先保留") return `把 ${inputMajor} 继续放在候选表里，同时核对目标学校近三年录取位次、城市实习机会和专业培养方案。`;
   if (decision === "谨慎保留") return `保留但不要单押，至少再找 3 条岗位证据和 1 份学校就业报告确认路径。`;
   return `先补证据再排序，重点查这个专业在目标学校是否真实开设、谁来校招、毕业生实际去向。`;
+}
+
+function getFinalReviewFormAction(review: FinalMajorReview) {
+  if (!review.profile) {
+    return {
+      title: "先别放进主表",
+      description: `${review.inputMajor} 暂时没有稳定市场画像，先补学校就业报告和真实岗位样本。`,
+    };
+  }
+
+  if (review.decision === "优先保留") {
+    return {
+      title: "职业侧先保留",
+      description: "就业路径和薪资底盘相对清楚，可以继续留在候选表，再叠加录取位次排序。",
+    };
+  }
+
+  if (review.decision === "谨慎保留") {
+    return {
+      title: "放在备选层",
+      description: "不要放在唯一主线，先和同院校相邻专业比较校招、课程和城市实习机会。",
+    };
+  }
+
+  return {
+    title: "先补证据",
+    description: "暂时不要凭名字或热度上表，先补岗位、公司、薪资和学校去向四类证据。",
+  };
 }
 
 function getSalaryRangeFromJobs(matchedJobs: Job[]): [number, number] | null {
